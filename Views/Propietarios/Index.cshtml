@@ -1,0 +1,25 @@
+@model IEnumerable<Inmobiliaria.Models.Propietario>
+
+<h2>Listado de Propietarios</h2>
+<a asp-action="Create">Nuevo Propietario</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>DNI</th>
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Domicilio</th>
+    </tr>
+@foreach (var p in Model)
+{
+    <tr>
+        <td>@p.Dni_Propietario</td>
+        <td>@p.Apellido</td>
+        <td>@p.Nombre</td>
+        <td>@p.Email</td>
+        <td>@p.Telefono</td>
+        <td>@p.Domicilio_Personal</td>
+    </tr>
+}
+</table>
