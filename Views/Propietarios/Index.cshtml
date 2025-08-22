@@ -10,16 +10,21 @@
         <th>Email</th>
         <th>Teléfono</th>
         <th>Domicilio</th>
+        <th>Acciones</th>
     </tr>
-@foreach (var p in Model)
-{
-    <tr>
-        <td>@p.Dni_Propietario</td>
-        <td>@p.Apellido</td>
-        <td>@p.Nombre</td>
-        <td>@p.Email</td>
-        <td>@p.Telefono</td>
-        <td>@p.Domicilio_Personal</td>
-    </tr>
-}
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Dni_Propietario</td>
+            <td>@p.Apellido</td>
+            <td>@p.Nombre</td>
+            <td>@p.Email</td>
+            <td>@p.Telefono</td>
+            <td>@p.Domicilio_Personal</td>
+            <td>
+            <a asp-action="Edit" asp-route-id="@p.Id_Propietario">Editar</a> |
+            <a asp-action="Delete" asp-route-id="@p.Id_Propietario">Eliminar</a>
+            </td>
+        </tr>
+    }
 </table>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\PruebaDotNETMVC\\PruebaDotNETMVC.csproj": {}
+    "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\PruebaDotNETMVC\\PruebaDotNETMVC.csproj": {
+    "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\PruebaDotNETMVC\\PruebaDotNETMVC.csproj",
+        "projectUniqueName": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj",
         "projectName": "PruebaDotNETMVC",
-        "projectPath": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\PruebaDotNETMVC\\PruebaDotNETMVC.csproj",
+        "projectPath": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj",
         "packagesPath": "C:\\Users\\thefl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\PruebaDotNETMVC\\obj\\",
+        "outputPath": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thefl\\AppData\\Roaming\\NuGet\\NuGet.Config"
