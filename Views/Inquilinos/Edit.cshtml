@@ -1,0 +1,27 @@
+@model Inmobiliaria.Models.Inquilino
+
+<h2>Editar Inquilino</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id_Inquilino" />
+
+    <label>DNI:</label>
+    <input asp-for="Dni_Inquilino" /><br />
+
+    <label>Apellido:</label>
+    <input asp-for="Apellido" /><br />
+
+    <label>Nombre:</label>
+    <input asp-for="Nombre" /><br />
+
+    <label>Teléfono:</label>
+    <input asp-for="Telefono" /><br />
+
+    <label>Email:</label>
+    <input asp-for="Email" /><br />
+
+    <label>Domicilio:</label>
+    <input asp-for="Domicilio_Personal" /><br />
+
+    <button type="submit">Guardar cambios</button>
+</form>
