@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PruebaDotNETMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< Updated upstream
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b55fa3728de688b1724632c97a1d0a43a561803")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5bee8c315c67ed97ae326557a7ba251644f24514")]
->>>>>>> Stashed changes
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ee5f2fcecf25dd4aa03a414a7c0efc87939c307")]
 [assembly: System.Reflection.AssemblyProductAttribute("PruebaDotNETMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PruebaDotNETMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

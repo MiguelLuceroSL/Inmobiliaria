@@ -5,11 +5,16 @@ namespace Inmobiliaria.Controllers
 {
     public class PropietariosController : Controller
     {
-        private PropietarioRepository repo = new PropietarioRepository();
+        private readonly PropietarioRepository repo;
+
+        public PropietariosController()
+        {
+            this.repo = new PropietarioRepository();
+        }
 
         public IActionResult Index()
         {
-            var lista = repo.GetAll();
+            var lista = this.repo.GetAll();
             return View(lista);
         }
 
@@ -72,7 +77,7 @@ namespace Inmobiliaria.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        /*[HttpGet] //con ajax
         [Route("[controller]/Buscar/{query}", Name = "Buscar")]
         public IActionResult Buscar(string query)
         {
@@ -86,6 +91,6 @@ namespace Inmobiliaria.Controllers
                 //registramos la excepción en ex
                 return Json(new { Error = "Ocurrió un error al buscar el propietario.", ex.Message });
             }
-        }
+        }*/
     }
 }

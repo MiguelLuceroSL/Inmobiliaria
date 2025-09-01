@@ -1,15 +1,17 @@
 @model IEnumerable<Inmobiliaria.Models.Inmueble>
 
 <h2>Listado de Inmuebles</h2>
-CreateNuevo Inmueble</a>
+<p>
+    <a asp-action="Create">Nuevo Inmueble</a>
+</p>
 <table border="1" cellpadding="5">
     <tr>
         <th>Dirección</th>
-        <th>Uso</th>
+        <!-- <th>Uso</th> no tiene ese atributo el inmueble ni precio, asique te los comento-->
         <th>Tipo</th>
         <th>Ambientes</th>
         <th>Superficie</th>
-        <th>Precio</th>
+        <!--  <th>Precio</th> -->
         <th>Propietario</th>
         <th>Acciones</th>
     </tr>
@@ -17,15 +19,15 @@ CreateNuevo Inmueble</a>
     {
         <tr>
             <td>@i.Direccion</td>
-            <td>@i.Uso</td>
+            <!--<td> arroba i.Uso (no me deja comentarlo sino)</td> -->
             <td>@i.Tipo</td>
             <td>@i.Ambientes</td>
             <td>@i.Superficie</td>
-            <td>@i.Precio</td>
-            <td>@i.Propietario?.Nombre @i.Propietario?.Apellido</td>
+            <!-- <td> arroba i.Precio </td> 
+            <td> arroba i.Propietario?.Nombre arroba i.Propietario?.Apellido</td> -->
             <td>
-                EditEditar</a> |
-                DeleteEliminar</a>
+                <a asp-action="Edit" asp-route-id="@i.Id_Inmueble">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@i.Id_Inmueble">Eliminar</a>
             </td>
         </tr>
     }
