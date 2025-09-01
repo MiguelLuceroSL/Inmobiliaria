@@ -22,8 +22,24 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Create(Propietario p)
         {
-            repo.Alta(p);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repo.Alta(p);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(p);
+                }
+            }
+            catch (Exception ex)
+            {
+                //registramos la excepción en ex
+                ModelState.AddModelError(string.Empty, "Ocurrió un error al crear el propietario.");
+                return View(p);
+            }
         }
 
         [HttpGet]
@@ -54,6 +70,22 @@ namespace Inmobiliaria.Controllers
         {
             repo.Borrar(id);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("[controller]/Buscar/{query}", Name = "Buscar")]
+        public IActionResult Buscar(string query)
+        {
+            try
+            {
+                var res = repo.BuscarPorNombre(query);
+                return Json(new { Datos = res });
+            }
+            catch (Exception ex)
+            {
+                //registramos la excepción en ex
+                return Json(new { Error = "Ocurrió un error al buscar el propietario.", ex.Message });
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Inmobiliaria.Models
 {
@@ -42,14 +43,16 @@ namespace Inmobiliaria.Models
             return lista;
         }
 
-        public void Alta(Propietario p)
+        public int Alta(Propietario p)
         {
+            int res = -1;
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 var sql = @"INSERT INTO propietarios 
                            (dni_propietario, apellido, nombre, telefono, email, domicilio_personal) 
-                           VALUES (@dni, @ape, @nom, @tel, @mail, @dom)";
+                           VALUES (@dni, @ape, @nom, @tel, @mail, @dom);
+                           SELECT LAST_INSERT_ID();";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@dni", p.Dni_Propietario);
@@ -58,9 +61,12 @@ namespace Inmobiliaria.Models
                     cmd.Parameters.AddWithValue("@tel", p.Telefono);
                     cmd.Parameters.AddWithValue("@mail", p.Email);
                     cmd.Parameters.AddWithValue("@dom", p.Domicilio_Personal);
-                    cmd.ExecuteNonQuery();
+                    res = Convert.ToInt32(cmd.ExecuteScalar());
+                    p.Id_Propietario = res;
+                    conn.Close();
                 }
             }
+            return res;
         }
 
         public Propietario ObtenerPorId(int id)
@@ -92,11 +98,12 @@ namespace Inmobiliaria.Models
             return p;
         }
 
-        public void Editar(Propietario p)
+        public int Editar(Propietario p)
         {
+            int res = -1;
             using (var conn = new MySqlConnection(connectionString))
             {
-                conn.Open();
+
                 var sql = @"UPDATE propietarios 
                     SET dni_propietario=@dni, apellido=@ape, nombre=@nom, telefono=@tel, 
                         email=@mail, domicilio_personal=@dom 
@@ -110,23 +117,30 @@ namespace Inmobiliaria.Models
                     cmd.Parameters.AddWithValue("@mail", p.Email);
                     cmd.Parameters.AddWithValue("@dom", p.Domicilio_Personal);
                     cmd.Parameters.AddWithValue("@id", p.Id_Propietario);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    res = cmd.ExecuteNonQuery();
+                    conn.Close();
                 }
             }
+            return res;
         }
 
-        public void Borrar(int id)
+        public int Borrar(int id)
         {
+            int res = -1;
             using (var conn = new MySqlConnection(connectionString))
             {
-                conn.Open();
                 var sql = "DELETE FROM propietarios WHERE id_propietario=@id";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
+                    cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@id", id);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    res = cmd.ExecuteNonQuery();
+                    conn.Close();
                 }
             }
+            return res;
         }
     }
 }
