@@ -12,7 +12,7 @@ namespace Inmobiliaria.Models
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                var sql = @"SELECT c.id_contrato, c.fecha_inicio, c.fecha_fin, c.monto,
+                var sql = @"SELECT c.id_contrato, c.fecha_desde, c.fecha_hasta, c.monto,
                            i.nombre AS nombre_inquilino,
                            im.descripcion, im.direccion
                     FROM contratos c
@@ -27,8 +27,8 @@ namespace Inmobiliaria.Models
                         lista.Add(new ContratoDetalle
                         {
                             idContrato = reader.GetInt32("id_contrato"),
-                            fechaInicio = reader.GetDateTime("fecha_inicio"),
-                            fechaFin = reader.GetDateTime("fecha_fin"),
+                            fechaDesde = reader.GetDateTime("fecha_desde"),
+                            fechaHasta = reader.GetDateTime("fecha_hasta"),
                             monto = reader.GetDecimal("monto"),
                             nombreInquilino = reader.GetString("nombre_inquilino"),
                             descripcionInmueble = reader.GetString("descripcion"),
@@ -45,6 +45,31 @@ namespace Inmobiliaria.Models
                 );
             }
             return lista;
+        }
+
+        public int Alta(Contrato c)
+        {
+            int res = -1;
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = @"INSERT INTO contratos
+                           (id_inquilino, id_inmueble, monto, fecha_desde, fecha_hasta) 
+                           VALUES (@idInquilino, @idInmueble, @monto, @fechaDesde, @fechaHasta);
+                           SELECT LAST_INSERT_ID();";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idInquilino", c.idInquilino);
+                    cmd.Parameters.AddWithValue("@idInmueble", c.idInmueble);
+                    cmd.Parameters.AddWithValue("@monto", c.monto);
+                    cmd.Parameters.AddWithValue("@fechaDesde", c.fechaDesde);
+                    cmd.Parameters.AddWithValue("@fechaHasta", c.fechaHasta);
+                    res = Convert.ToInt32(cmd.ExecuteScalar());
+                    c.idContrato = res;
+                    conn.Close();
+                }
+            }
+            return res;
         }
     }
 }
