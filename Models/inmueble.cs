@@ -139,16 +139,16 @@ namespace Inmobiliaria.Models
 {
     public class Inmueble
     {
-        public int Id_Inmueble { get; set; }
-        public string Direccion { get; set; }
-        public string Tipo { get; set; }
-        public double Superficie { get; set; }
-        public int Ambientes { get; set; }
-        public int Baños { get; set; }
-        public bool Cochera { get; set; }
-        public string Estado { get; set; }
-        public string Descripcion { get; set; }
-        public int Id_Propietario { get; set; }
+        public int idInmueble { get; set; }
+        public string direccion { get; set; }
+        public string tipo { get; set; }
+        public double superficie { get; set; }
+        public int ambientes { get; set; }
+        public int baños { get; set; }
+        public bool cochera { get; set; }
+        public string estado { get; set; }
+        public string descripcion { get; set; }
+        public int idPropietario { get; set; }
     }
 }
 

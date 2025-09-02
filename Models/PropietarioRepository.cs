@@ -22,13 +22,13 @@ namespace Inmobiliaria.Models
                     {
                         lista.Add(new Propietario
                         {
-                            Id_Propietario = reader.GetInt32("id_propietario"),
-                            Dni_Propietario = reader.GetString("dni_propietario"),
-                            Apellido = reader.GetString("apellido"),
-                            Nombre = reader.GetString("nombre"),
-                            Telefono = reader.GetString("telefono"),
-                            Email = reader.GetString("email"),
-                            Domicilio_Personal = reader.GetString("domicilio_personal")
+                            idPropietario = reader.GetInt32("id_propietario"),
+                            dniPropietario = reader.GetString("dni_propietario"),
+                            apellido = reader.GetString("apellido"),
+                            nombre = reader.GetString("nombre"),
+                            telefono = reader.GetString("telefono"),
+                            email = reader.GetString("email"),
+                            domicilioPersonal = reader.GetString("domicilio_personal")
                         });
                     }
                 }
@@ -38,7 +38,7 @@ namespace Inmobiliaria.Models
             Console.WriteLine("Propietarios List:");
             foreach (var propietario in lista)
             {
-                Console.WriteLine($"- {propietario.Apellido}, {propietario.Nombre} ({propietario.Dni_Propietario})");
+                Console.WriteLine($"- {propietario.apellido}, {propietario.nombre} ({propietario.dniPropietario})");
             }
             return lista;
         }
@@ -55,14 +55,14 @@ namespace Inmobiliaria.Models
                            SELECT LAST_INSERT_ID();";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@dni", p.Dni_Propietario);
-                    cmd.Parameters.AddWithValue("@ape", p.Apellido);
-                    cmd.Parameters.AddWithValue("@nom", p.Nombre);
-                    cmd.Parameters.AddWithValue("@tel", p.Telefono);
-                    cmd.Parameters.AddWithValue("@mail", p.Email);
-                    cmd.Parameters.AddWithValue("@dom", p.Domicilio_Personal);
+                    cmd.Parameters.AddWithValue("@dni", p.dniPropietario);
+                    cmd.Parameters.AddWithValue("@ape", p.apellido);
+                    cmd.Parameters.AddWithValue("@nom", p.nombre);
+                    cmd.Parameters.AddWithValue("@tel", p.telefono);
+                    cmd.Parameters.AddWithValue("@mail", p.email);
+                    cmd.Parameters.AddWithValue("@dom", p.domicilioPersonal);
                     res = Convert.ToInt32(cmd.ExecuteScalar());
-                    p.Id_Propietario = res;
+                    p.idPropietario = res;
                     conn.Close();
                 }
             }
@@ -84,13 +84,13 @@ namespace Inmobiliaria.Models
                     {
                         p = new Propietario
                         {
-                            Id_Propietario = reader.GetInt32("id_propietario"),
-                            Dni_Propietario = reader.GetString("dni_propietario"),
-                            Apellido = reader.GetString("apellido"),
-                            Nombre = reader.GetString("nombre"),
-                            Telefono = reader.GetString("telefono"),
-                            Email = reader.GetString("email"),
-                            Domicilio_Personal = reader.GetString("domicilio_personal")
+                            idPropietario = reader.GetInt32("id_propietario"),
+                            dniPropietario = reader.GetString("dni_propietario"),
+                            apellido = reader.GetString("apellido"),
+                            nombre = reader.GetString("nombre"),
+                            telefono = reader.GetString("telefono"),
+                            email = reader.GetString("email"),
+                            domicilioPersonal = reader.GetString("domicilio_personal")
                         };
                     }
                 }
@@ -110,13 +110,13 @@ namespace Inmobiliaria.Models
                     WHERE id_propietario=@id";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@dni", p.Dni_Propietario);
-                    cmd.Parameters.AddWithValue("@ape", p.Apellido);
-                    cmd.Parameters.AddWithValue("@nom", p.Nombre);
-                    cmd.Parameters.AddWithValue("@tel", p.Telefono);
-                    cmd.Parameters.AddWithValue("@mail", p.Email);
-                    cmd.Parameters.AddWithValue("@dom", p.Domicilio_Personal);
-                    cmd.Parameters.AddWithValue("@id", p.Id_Propietario);
+                    cmd.Parameters.AddWithValue("@dni", p.dniPropietario);
+                    cmd.Parameters.AddWithValue("@ape", p.apellido);
+                    cmd.Parameters.AddWithValue("@nom", p.nombre);
+                    cmd.Parameters.AddWithValue("@tel", p.telefono);
+                    cmd.Parameters.AddWithValue("@mail", p.email);
+                    cmd.Parameters.AddWithValue("@dom", p.domicilioPersonal);
+                    cmd.Parameters.AddWithValue("@id", p.idPropietario);
                     conn.Open();
                     res = cmd.ExecuteNonQuery();
                     conn.Close();

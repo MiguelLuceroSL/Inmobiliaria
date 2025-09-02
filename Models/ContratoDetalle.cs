@@ -1,12 +1,14 @@
 namespace Inmobiliaria.Models
 {
-    public class Contrato
+    public class ContratoDetalle
     {
         public int idContrato { get; set; }
-        public int idInquilino { get; set; }
-        public int idInmueble { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFin { get; set; }
         public decimal monto { get; set; }
+
+        public string nombreInquilino { get; set; }
+        public string descripcionInmueble { get; set; }
+        public string direccionInmueble { get; set; }
     }
 }

@@ -3,12 +3,12 @@ namespace Inmobiliaria.Models
 
     public class Inquilino
     {
-        public int Id_Inquilino { get; set; }
-        public string Dni_Inquilino { get; set; }
-        public string Apellido { get; set; }
-        public string Nombre { get; set; }
-        public string Telefono { get; set; }
-        public string Email { get; set; }
-        public string Domicilio_Personal { get; set; }
+        public int idInquilino { get; set; }
+        public string dniInquilino { get; set; }
+        public string apellido { get; set; }
+        public string nombre { get; set; }
+        public string telefono { get; set; }
+        public string email { get; set; }
+        public string domicilioPersonal { get; set; }
     }
 }

@@ -21,16 +21,16 @@ namespace Inmobiliaria.Models
                     {
                         lista.Add(new Inmueble
                         {
-                            Id_Inmueble = reader.GetInt32("id_inmueble"),
-                            Direccion = reader.GetString("direccion"),
-                            Tipo = reader.GetString("tipo"),
-                            Superficie = reader.GetDouble("superficie"),
-                            Ambientes = reader.GetInt32("ambientes"),
-                            Baños = reader.GetInt32("baños"),
-                            Cochera = reader.GetBoolean("cochera"),
-                            Estado = reader.GetString("estado"),
-                            Descripcion = reader.GetString("descripcion"),
-                            Id_Propietario = reader.GetInt32("id_propietario")
+                            idInmueble = reader.GetInt32("id_inmueble"),
+                            direccion = reader.GetString("direccion"),
+                            tipo = reader.GetString("tipo"),
+                            superficie = reader.GetDouble("superficie"),
+                            ambientes = reader.GetInt32("ambientes"),
+                            baños = reader.GetInt32("baños"),
+                            cochera = reader.GetBoolean("cochera"),
+                            estado = reader.GetString("estado"),
+                            descripcion = reader.GetString("descripcion"),
+                            idPropietario = reader.GetInt32("id_propietario")
                         });
                     }
                 }
@@ -48,15 +48,15 @@ namespace Inmobiliaria.Models
                             VALUES (@dir, @tipo, @sup, @amb, @ban, @coch, @est, @desc, @prop)";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@dir", i.Direccion);
-                    cmd.Parameters.AddWithValue("@tipo", i.Tipo);
-                    cmd.Parameters.AddWithValue("@sup", i.Superficie);
-                    cmd.Parameters.AddWithValue("@amb", i.Ambientes);
-                    cmd.Parameters.AddWithValue("@ban", i.Baños);
-                    cmd.Parameters.AddWithValue("@coch", i.Cochera);
-                    cmd.Parameters.AddWithValue("@est", i.Estado);
-                    cmd.Parameters.AddWithValue("@desc", i.Descripcion);
-                    cmd.Parameters.AddWithValue("@prop", i.Id_Propietario);
+                    cmd.Parameters.AddWithValue("@dir", i.direccion);
+                    cmd.Parameters.AddWithValue("@tipo", i.tipo);
+                    cmd.Parameters.AddWithValue("@sup", i.superficie);
+                    cmd.Parameters.AddWithValue("@amb", i.ambientes);
+                    cmd.Parameters.AddWithValue("@ban", i.baños);
+                    cmd.Parameters.AddWithValue("@coch", i.cochera);
+                    cmd.Parameters.AddWithValue("@est", i.estado);
+                    cmd.Parameters.AddWithValue("@desc", i.descripcion);
+                    cmd.Parameters.AddWithValue("@prop", i.idPropietario);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -78,16 +78,16 @@ namespace Inmobiliaria.Models
                         {
                             i = new Inmueble
                             {
-                                Id_Inmueble = reader.GetInt32("id_inmueble"),
-                                Direccion = reader.GetString("direccion"),
-                                Tipo = reader.GetString("tipo"),
-                                Superficie = reader.GetDouble("superficie"),
-                                Ambientes = reader.GetInt32("ambientes"),
-                                Baños = reader.GetInt32("baños"),
-                                Cochera = reader.GetBoolean("cochera"),
-                                Estado = reader.GetString("estado"),
-                                Descripcion = reader.GetString("descripcion"),
-                                Id_Propietario = reader.GetInt32("id_propietario")
+                                idInmueble = reader.GetInt32("id_inmueble"),
+                                direccion = reader.GetString("direccion"),
+                                tipo = reader.GetString("tipo"),
+                                superficie = reader.GetDouble("superficie"),
+                                ambientes = reader.GetInt32("ambientes"),
+                                baños = reader.GetInt32("baños"),
+                                cochera = reader.GetBoolean("cochera"),
+                                estado = reader.GetString("estado"),
+                                descripcion = reader.GetString("descripcion"),
+                                idPropietario = reader.GetInt32("id_propietario")
                             };
                         }
                     }
@@ -107,16 +107,16 @@ namespace Inmobiliaria.Models
                             WHERE id_inmueble=@id";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@dir", i.Direccion);
-                    cmd.Parameters.AddWithValue("@tipo", i.Tipo);
-                    cmd.Parameters.AddWithValue("@sup", i.Superficie);
-                    cmd.Parameters.AddWithValue("@amb", i.Ambientes);
-                    cmd.Parameters.AddWithValue("@ban", i.Baños);
-                    cmd.Parameters.AddWithValue("@coch", i.Cochera);
-                    cmd.Parameters.AddWithValue("@est", i.Estado);
-                    cmd.Parameters.AddWithValue("@desc", i.Descripcion);
-                    cmd.Parameters.AddWithValue("@prop", i.Id_Propietario);
-                    cmd.Parameters.AddWithValue("@id", i.Id_Inmueble);
+                    cmd.Parameters.AddWithValue("@dir", i.direccion);
+                    cmd.Parameters.AddWithValue("@tipo", i.tipo);
+                    cmd.Parameters.AddWithValue("@sup", i.superficie);
+                    cmd.Parameters.AddWithValue("@amb", i.ambientes);
+                    cmd.Parameters.AddWithValue("@ban", i.baños);
+                    cmd.Parameters.AddWithValue("@coch", i.cochera);
+                    cmd.Parameters.AddWithValue("@est", i.estado);
+                    cmd.Parameters.AddWithValue("@desc", i.descripcion);
+                    cmd.Parameters.AddWithValue("@prop", i.idPropietario);
+                    cmd.Parameters.AddWithValue("@id", i.idInmueble);
                     cmd.ExecuteNonQuery();
                 }
             }

@@ -22,13 +22,13 @@ namespace Inmobiliaria.Models
                     {
                         lista.Add(new Inquilino
                         {
-                            Id_Inquilino = reader.GetInt32("id_inquilino"),
-                            Dni_Inquilino = reader.GetString("dni_inquilino"),
-                            Apellido = reader.GetString("apellido"),
-                            Nombre = reader.GetString("nombre"),
-                            Telefono = reader.GetString("telefono"),
-                            Email = reader.GetString("email"),
-                            Domicilio_Personal = reader.GetString("domicilio_personal")
+                            idInquilino = reader.GetInt32("id_inquilino"),
+                            dniInquilino = reader.GetString("dni_inquilino"),
+                            apellido = reader.GetString("apellido"),
+                            nombre = reader.GetString("nombre"),
+                            telefono = reader.GetString("telefono"),
+                            email = reader.GetString("email"),
+                            domicilioPersonal = reader.GetString("domicilio_personal")
                         });
                     }
                 }
@@ -46,12 +46,12 @@ namespace Inmobiliaria.Models
                            VALUES (@dni, @ape, @nom, @tel, @mail, @dom)";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@dni", i.Dni_Inquilino);
-                    cmd.Parameters.AddWithValue("@ape", i.Apellido);
-                    cmd.Parameters.AddWithValue("@nom", i.Nombre);
-                    cmd.Parameters.AddWithValue("@tel", i.Telefono);
-                    cmd.Parameters.AddWithValue("@mail", i.Email);
-                    cmd.Parameters.AddWithValue("@dom", i.Domicilio_Personal);
+                    cmd.Parameters.AddWithValue("@dni", i.dniInquilino);
+                    cmd.Parameters.AddWithValue("@ape", i.apellido);
+                    cmd.Parameters.AddWithValue("@nom", i.nombre);
+                    cmd.Parameters.AddWithValue("@tel", i.telefono);
+                    cmd.Parameters.AddWithValue("@mail", i.email);
+                    cmd.Parameters.AddWithValue("@dom", i.domicilioPersonal);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -72,13 +72,13 @@ namespace Inmobiliaria.Models
                     {
                         i = new Inquilino
                         {
-                            Id_Inquilino = reader.GetInt32("id_inquilino"),
-                            Dni_Inquilino = reader.GetString("dni_inquilino"),
-                            Apellido = reader.GetString("apellido"),
-                            Nombre = reader.GetString("nombre"),
-                            Telefono = reader.GetString("telefono"),
-                            Email = reader.GetString("email"),
-                            Domicilio_Personal = reader.GetString("domicilio_personal")
+                            idInquilino = reader.GetInt32("id_inquilino"),
+                            dniInquilino = reader.GetString("dni_inquilino"),
+                            apellido = reader.GetString("apellido"),
+                            nombre = reader.GetString("nombre"),
+                            telefono = reader.GetString("telefono"),
+                            email = reader.GetString("email"),
+                            domicilioPersonal = reader.GetString("domicilio_personal")
                         };
                     }
                 }
@@ -97,13 +97,13 @@ namespace Inmobiliaria.Models
                     WHERE id_inquilino=@id";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@dni", i.Dni_Inquilino);
-                    cmd.Parameters.AddWithValue("@ape", i.Apellido);
-                    cmd.Parameters.AddWithValue("@nom", i.Nombre);
-                    cmd.Parameters.AddWithValue("@tel", i.Telefono);
-                    cmd.Parameters.AddWithValue("@mail", i.Email);
-                    cmd.Parameters.AddWithValue("@dom", i.Domicilio_Personal);
-                    cmd.Parameters.AddWithValue("@id", i.Id_Inquilino);
+                    cmd.Parameters.AddWithValue("@dni", i.dniInquilino);
+                    cmd.Parameters.AddWithValue("@ape", i.apellido);
+                    cmd.Parameters.AddWithValue("@nom", i.nombre);
+                    cmd.Parameters.AddWithValue("@tel", i.telefono);
+                    cmd.Parameters.AddWithValue("@mail", i.email);
+                    cmd.Parameters.AddWithValue("@dom", i.domicilioPersonal);
+                    cmd.Parameters.AddWithValue("@id", i.idInquilino);
                     cmd.ExecuteNonQuery();
                 }
             }
