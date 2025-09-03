@@ -3,25 +3,25 @@
 <h2>Editar Inquilino</h2>
 
 <form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id_Inquilino" />
+    <input type="hidden" asp-for="idInquilino" />
 
     <label>DNI:</label>
-    <input asp-for="Dni_Inquilino" /><br />
+    <input asp-for="dniInquilino" /><br />
 
     <label>Apellido:</label>
-    <input asp-for="Apellido" /><br />
+    <input asp-for="apellido" /><br />
 
     <label>Nombre:</label>
-    <input asp-for="Nombre" /><br />
+    <input asp-for="nombre" /><br />
 
     <label>Teléfono:</label>
-    <input asp-for="Telefono" /><br />
+    <input asp-for="telefono" /><br />
 
     <label>Email:</label>
-    <input asp-for="Email" /><br />
+    <input asp-for="email" /><br />
 
     <label>Domicilio:</label>
-    <input asp-for="Domicilio_Personal" /><br />
+    <input asp-for="domicilioPersonal" /><br />
 
     <button type="submit">Guardar cambios</button>
 </form>

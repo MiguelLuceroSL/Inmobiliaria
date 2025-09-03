@@ -15,15 +15,15 @@
     @foreach (var p in Model)
     {
         <tr>
-            <td>@p.Dni_Inquilino</td>
-            <td>@p.Apellido</td>
-            <td>@p.Nombre</td>
-            <td>@p.Email</td>
-            <td>@p.Telefono</td>
-            <td>@p.Domicilio_Personal</td>
+            <td>@p.dniInquilino</td>
+            <td>@p.apellido</td>
+            <td>@p.nombre</td>
+            <td>@p.email</td>
+            <td>@p.telefono</td>
+            <td>@p.domicilioPersonal</td>
             <td>
-            <a asp-action="Edit" asp-route-id="@p.Id_Inquilino">Editar</a> |
-            <a asp-action="Delete" asp-route-id="@p.Id_Inquilino">Eliminar</a>
+            <a asp-action="Edit" asp-route-id="@p.idInquilino">Editar</a> |
+            <a asp-action="Delete" asp-route-id="@p.idInquilino">Eliminar</a>
             </td>
         </tr>
     }

@@ -3,28 +3,28 @@
 <h2>Editar Inmueble</h2>
 
 <form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id_Inmueble" />
+    <input type="hidden" asp-for="idInmueble" />
 
     <label>Dirección:</label>
-    <input asp-for="Direccion" /><br />
+    <input asp-for="direccion" /><br />
 
     <!-- <label>Uso:</label>
     <input asp-for="Uso" /><br /> -->
 
     <label>Tipo:</label>
-    <input asp-for="Tipo" /><br />
+    <input asp-for="tipo" /><br />
 
     <label>Ambientes:</label>
-    <input asp-for="Ambientes" type="number" /><br />
+    <input asp-for="ambientes" type="number" /><br />
 
     <label>Superficie (m²):</label>
-    <input asp-for="Superficie" type="number" step="0.01" /><br />
+    <input asp-for="superficie" type="number" step="0.01" /><br />
 
     <!--<label>Precio:</label>
     <input asp-for="Precio" type="number" step="0.01" /><br /> -->
 
     <label>Propietario:</label>
-    <select asp-for="Id_Propietario" asp-items="ViewBag.Propietarios"></select><br />
+    <select asp-for="idPropietario" asp-items="ViewBag.Propietarios"></select><br />
 
     <button type="submit">Guardar cambios</button>
 </form>

@@ -18,16 +18,17 @@
     @foreach (var i in Model)
     {
         <tr>
-            <td>@i.Direccion</td>
+            <td>@i.direccion</td>
             <!--<td> arroba i.Uso (no me deja comentarlo sino)</td> -->
-            <td>@i.Tipo</td>
-            <td>@i.Ambientes</td>
-            <td>@i.Superficie</td>
+            <td>@i.tipo</td>
+            <td>@i.ambientes</td>
+            <td>@i.superficie</td>
+            <td>@i.idPropietario</td>
             <!-- <td> arroba i.Precio </td> 
             <td> arroba i.Propietario?.Nombre arroba i.Propietario?.Apellido</td> -->
             <td>
-                <a asp-action="Edit" asp-route-id="@i.Id_Inmueble">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@i.Id_Inmueble">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@i.idInmueble">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@i.idInmueble">Eliminar</a>
             </td>
         </tr>
     }

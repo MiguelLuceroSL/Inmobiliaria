@@ -2,10 +2,10 @@
 
 <h2>¿Seguro que desea eliminar este propietario?</h2>
 
-<p>@Model.Apellido, @Model.Nombre (@Model.Dni_Propietario)</p>
+<p>@Model.apellido, @Model.nombre (@Model.dniPropietario)</p>
 
 <form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id_Propietario" />
+    <input type="hidden" asp-for="idPropietario" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>

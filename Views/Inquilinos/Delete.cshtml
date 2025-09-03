@@ -2,10 +2,10 @@
 
 <h2>¿Seguro que desea eliminar este inquilino?</h2>
 
-<p>@Model.Apellido, @Model.Nombre (@Model.Dni_Inquilino)</p>
+<p>@Model.apellido, @Model.nombre (@Model.dniInquilino)</p>
 
 <form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id_Inquilino" />
+    <input type="hidden" asp-for="idInquilino" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>

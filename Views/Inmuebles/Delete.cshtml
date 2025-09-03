@@ -2,10 +2,10 @@
 
 <h2>¿Seguro que desea eliminar este inmueble?</h2>
 
-<p>@Model.Direccion (@Model.Tipo - <!--arrobaModel.Uso-->)</p>
+<p>@Model.direccion (@Model.tipo - <!--arrobaModel.Uso-->)</p>
 
 <form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id_Inmueble" />
+    <input type="hidden" asp-for="idInmueble" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
