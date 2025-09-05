@@ -1,30 +1,51 @@
+
 @model Inmobiliaria.Models.Inmueble
 
-<h2>Editar Inmueble</h2>
+@{
+    ViewData["Title"] = "Editar Inmueble";
+}
+
+<!-- Estilo para capitalizar la primera letra de las etiquetas -->
+<style>
+    label.form-label {
+        text-transform: capitalize;
+    }
+</style>
+
+<h2 class="mb-4">Editar Inmueble</h2>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="idInmueble" />
 
-    <label>Dirección:</label>
-    <input asp-for="direccion" /><br />
+    <div class="mb-3">
+        <label asp-for="direccion" class="form-label"></label>
+        <input asp-for="direccion" class="form-control" />
+        <span asp-validation-for="direccion" class="text-danger"></span>
+    </div>
 
-    <!-- <label>Uso:</label>
-    <input asp-for="Uso" /><br /> -->
+    <div class="mb-3">
+        <label asp-for="tipo" class="form-label"></label>
+        <input asp-for="tipo" class="form-control" />
+        <span asp-validation-for="tipo" class="text-danger"></span>
+    </div>
 
-    <label>Tipo:</label>
-    <input asp-for="tipo" /><br />
+    <div class="mb-3">
+        <label asp-for="ambientes" class="form-label"></label>
+        <input asp-for="ambientes" type="number" class="form-control" />
+        <span asp-validation-for="ambientes" class="text-danger"></span>
+    </div>
 
-    <label>Ambientes:</label>
-    <input asp-for="ambientes" type="number" /><br />
+    <div class="mb-3">
+        <label asp-for="superficie" class="form-label"></label>
+        <input asp-for="superficie" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="superficie" class="text-danger"></span>
+    </div>
 
-    <label>Superficie (m²):</label>
-    <input asp-for="superficie" type="number" step="0.01" /><br />
+    <div class="mb-3">
+        <label asp-for="idPropietario" class="form-label"></label>
+        <select asp-for="idPropietario" asp-items="ViewBag.Propietarios" class="form-select"></select>
+        <span asp-validation-for="idPropietario" class="text-danger"></span>
+    </div>
 
-    <!--<label>Precio:</label>
-    <input asp-for="Precio" type="number" step="0.01" /><br /> -->
-
-    <label>Propietario:</label>
-    <select asp-for="idPropietario" asp-items="ViewBag.Propietarios"></select><br />
-
-    <button type="submit">Guardar cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
 </form>

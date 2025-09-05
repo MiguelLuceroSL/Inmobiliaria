@@ -1,4 +1,4 @@
-@model Inmobiliaria.Models.Propietario
+@* @model Inmobiliaria.Models.Propietario
 
 <h2>Nuevo Propietario</h2>
 
@@ -22,4 +22,59 @@
     <input asp-for="domicilioPersonal" /><br />
 
     <button type="submit">Guardar</button>
+</form> *@
+@model Inmobiliaria.Models.Propietario
+
+@{
+    ViewData["Title"] = "Nuevo Propietario";
+}
+
+<!-- Estilo para capitalizar la primera letra de las etiquetas -->
+<style>
+    label.form-label {
+        text-transform: capitalize;
+    }
+</style>
+
+<h2 class="mb-4">Nuevo Propietario</h2>
+
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="dniPropietario" class="form-label">DNI:</label>
+        <input asp-for="dniPropietario" class="form-control" />
+        <span asp-validation-for="dniPropietario" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="apellido" class="form-label">Apellido:</label>
+        <input asp-for="apellido" class="form-control" />
+        <span asp-validation-for="apellido" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="nombre" class="form-label">Nombre:</label>
+        <input asp-for="nombre" class="form-control" />
+        <span asp-validation-for="nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="telefono" class="form-label">Teléfono:</label>
+        <input asp-for="telefono" class="form-control" />
+        <span asp-validation-for="telefono" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="email" class="form-label">Email:</label>
+        <input asp-for="email" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="domicilioPersonal" class="form-label">Domicilio personal:</label>
+        <input asp-for="domicilioPersonal" class="form-control" />
+        <span asp-validation-for="domicilioPersonal" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
 </form>

@@ -1,8 +1,25 @@
 @model IEnumerable<Inmobiliaria.Models.Inquilino>
 
-<h2>Listado de Inquilinos</h2>
-<a asp-action="Create">Nuevo Inquilino</a>
-<table border="1" cellpadding="5">
+@* <h2>Listado de Inquilinos</h2> *@
+@* <a asp-action="Create">Nuevo Inquilino</a> *@
+@* <a asp-action="Create" class="btn btn-primary">
+    <h3>+</h3>    
+</a>
+<br><br> *@
+@{
+    ViewData["Title"] = "Inquilinos";
+}
+
+
+<h1>
+	Inquilinos
+	<div class="btn-group pull-right">
+		<a class="btn btn-primary" asp-action="Create" title="Crear"><i class="fa-solid fa-plus">
+            <h4>+</h4>  
+        </i></a>
+	</div>
+</h1>
+<table border="4" cellpadding="5" class="table table-striped">
     <tr>
         <th>DNI</th>
         <th>Apellido</th>
@@ -22,8 +39,8 @@
             <td>@p.telefono</td>
             <td>@p.domicilioPersonal</td>
             <td>
-            <a asp-action="Edit" asp-route-id="@p.idInquilino">Editar</a> |
-            <a asp-action="Delete" asp-route-id="@p.idInquilino">Eliminar</a>
+            <a asp-action="Edit" asp-route-id="@p.idInquilino" class="btn btn-warning">Editar</a> |
+            <a asp-action="Delete" asp-route-id="@p.idInquilino" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
     }

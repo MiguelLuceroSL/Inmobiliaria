@@ -1,4 +1,4 @@
-@model Inmobiliaria.Models.Inmueble
+@* @model Inmobiliaria.Models.Inmueble
 
 <h2>Nuevo Inmueble</h2>
 
@@ -25,4 +25,54 @@
     <select asp-for="idPropietario" asp-items="ViewBag.Propietarios"></select><br />
 
     <button type="submit">Guardar</button>
+</form> *@
+@model Inmobiliaria.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Nuevo Inmueble";
+}
+
+<!-- Estilo para capitalizar la primera letra de las etiquetas -->
+<style>
+    label.form-label {
+        text-transform: capitalize;
+    }
+</style>
+
+<h2 class="mb-4">Nuevo Inmueble</h2>
+
+
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="direccion" class="form-label"></label>
+        <input asp-for="direccion" class="form-control" />
+        <span asp-validation-for="direccion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="tipo" class="form-label"></label>
+        <input asp-for="tipo" class="form-control" />
+        <span asp-validation-for="tipo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ambientes" class="form-label"></label>
+        <input asp-for="ambientes" type="number" class="form-control" />
+        <span asp-validation-for="ambientes" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="superficie" class="form-label"></label>
+        <input asp-for="superficie" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="superficie" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="idPropietario" class="form-label"></label>
+        <select asp-for="idPropietario" asp-items="ViewBag.Propietarios" class="form-select"></select>
+        <span asp-validation-for="idPropietario" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
 </form>

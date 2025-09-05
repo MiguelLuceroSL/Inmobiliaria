@@ -1,10 +1,25 @@
 @model IEnumerable<Inmobiliaria.Models.Inmueble>
 
-<h2>Listado de Inmuebles</h2>
-<p>
-    <a asp-action="Create">Nuevo Inmueble</a>
-</p>
-<table border="1" cellpadding="5">
+@* <h2>Listado de Inmuebles</h2>
+
+    <a asp-action="Create" class="btn btn-primary">
+        <h3>+</h3>    
+    </a>
+<br></br> *@
+
+@{
+	ViewData["Title"] = "Inmuebles";
+}
+
+<h1>
+	Inmuebles
+	<div class="btn-group pull-right">
+		<a class="btn btn-primary" asp-action="Create" title="Crear"><i class="fa-solid fa-plus">
+            <h4>+</h4>
+        </i></a>
+	</div>
+</h1>
+<table border="4" cellpadding="5" class="table table-striped">
     <tr>
         <th>Dirección</th>
         <!-- <th>Uso</th> no tiene ese atributo el inmueble ni precio, asique te los comento-->
@@ -27,9 +42,9 @@
             <!-- <td> arroba i.Precio </td> 
             <td> arroba i.Propietario?.Nombre arroba i.Propietario?.Apellido</td> -->
             <td>
-                <a asp-action="Edit" asp-route-id="@i.idInmueble">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@i.idInmueble">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@i.idInmueble" class="btn btn-warning" class="fa-solid fa-trash-can">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@i.idInmueble" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
     }
-</table>
+</table> 
