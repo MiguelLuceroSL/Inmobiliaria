@@ -71,5 +71,78 @@ namespace Inmobiliaria.Models
             }
             return res;
         }
+
+        public Contrato ObtenerPorId(int id)
+        {
+            Contrato c = new Contrato();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = "SELECT * FROM contratos WHERE id_contrato=@id";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        c = new Contrato
+                        {
+                            idContrato = reader.GetInt32("id_contrato"),
+                            idInquilino = reader.GetInt32("id_inquilino"),
+                            idInmueble = reader.GetInt32("id_inmueble"),
+                            monto = reader.GetDecimal("monto"),
+                            fechaDesde = reader.GetDateTime("fecha_desde"),
+                            fechaHasta = reader.GetDateTime("fecha_hasta")
+                        };
+                    }
+                }
+            }
+            return c;
+        }
+
+        public int Editar(Contrato c)
+        {
+            int res = -1;
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = @"UPDATE contratos SET 
+                           id_inquilino=@idInquilino, 
+                           id_inmueble=@idInmueble, 
+                           monto=@monto, 
+                           fecha_desde=@fechaDesde, 
+                           fecha_hasta=@fechaHasta
+                           WHERE id_contrato=@id";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idInquilino", c.idInquilino);
+                    cmd.Parameters.AddWithValue("@idInmueble", c.idInmueble);
+                    cmd.Parameters.AddWithValue("@monto", c.monto);
+                    cmd.Parameters.AddWithValue("@fechaDesde", c.fechaDesde);
+                    cmd.Parameters.AddWithValue("@fechaHasta", c.fechaHasta);
+                    cmd.Parameters.AddWithValue("@id", c.idContrato);
+                    res = cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            return res;
+        }
+
+        public int Borrar(int id)
+        {
+            int res = -1;
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = "DELETE FROM contratos WHERE id_contrato=@id";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    res = cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            return res;
+        }
     }
 }

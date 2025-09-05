@@ -1,0 +1,30 @@
+@model Inmobiliaria.Models.Contrato
+
+<h1>Eliminar Contrato</h1>
+
+<div>
+    <h4>¿Está seguro de que desea eliminar este contrato?</h4>
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.idContrato</dd>
+        <dt class="col-sm-2">Inquilino</dt>
+        <dd class="col-sm-10">@Model.idInquilino</dd>
+        <dt class="col-sm-2">Inmueble</dt>
+        <dd class="col-sm-10">@Model.idInmueble</dd>
+        <dt class="col-sm-2">Fecha Desde</dt>
+        <dd class="col-sm-10">@Model.fechaDesde.ToShortDateString()</dd>
+        <dt class="col-sm-2">Fecha Hasta</dt>
+        <dd class="col-sm-10">@Model.fechaHasta.ToShortDateString()</dd>
+        <dt class="col-sm-2">Monto</dt>
+        <dd class="col-sm-10">@Model.monto.ToString("C")</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="idContrato" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
