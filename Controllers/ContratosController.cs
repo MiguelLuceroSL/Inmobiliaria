@@ -21,6 +21,8 @@ namespace Inmobiliaria.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var inmuebles = new InmuebleRepository().GetAll();
+            ViewBag.Inmuebles = inmuebles;
             return View();
         }
 
