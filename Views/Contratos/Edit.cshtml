@@ -6,7 +6,13 @@
     <input type="hidden" asp-for="idContrato" />
     <div class="mb-3">
         <label asp-for="idInquilino" class="form-label"></label>
-        <input asp-for="idInquilino" class="form-control" />
+        <select asp-for="idInquilino" class="form-select">
+            <option value="">Seleccione un inquilino</option>
+            @foreach (var inquilino in ViewBag.Inquilinos)
+            {
+                <option value="@inquilino.idInquilino">@inquilino.nombre - @inquilino.apellido</option>
+            }
+        </select>
         <span asp-validation-for="idInquilino" class="text-danger"></span>
     </div>
     <div class="mb-3">

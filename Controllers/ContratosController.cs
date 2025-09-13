@@ -34,7 +34,8 @@ namespace Inmobiliaria.Controllers
                 if (ModelState.IsValid)
                 {
                     repo.Alta(c);
-                    return RedirectToAction("Index");
+                    TempData["SuccessMessage"] = "Contrato creado correctamente.";
+                    return RedirectToAction("Index", "Contratos");
                 }
                 else
                 {
@@ -44,8 +45,8 @@ namespace Inmobiliaria.Controllers
             catch (Exception ex)
             {
                 //registramos la excepción en ex
-                ModelState.AddModelError(string.Empty, "Ocurrió un error al crear el contrato.");
-                return View(c);
+                TempData["ErrorMessage"] = "Ocurrió un error al crear el contrato.";
+                return RedirectToAction("Index", "Contratos");
             }
         }
 
@@ -53,6 +54,11 @@ namespace Inmobiliaria.Controllers
         public IActionResult Edit(int id)
         {
             var contrato = repo.ObtenerPorId(id);
+            var inmuebles = new InmuebleRepository().GetAll();
+            var inquilinos = new InquilinoRepository().GetAll();
+            ViewBag.Inquilinos = inquilinos;
+            ViewBag.Inmuebles = inmuebles;
+
             if (contrato == null)
             {
                 return NotFound();
@@ -63,12 +69,15 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Edit(Contrato c)
         {
+
+            Console.WriteLine($"Editando contrato: {System.Text.Json.JsonSerializer.Serialize(c)}");
             try
             {
                 if (ModelState.IsValid)
                 {
                     repo.Editar(c);
-                    return RedirectToAction("Index");
+                    TempData["SuccessMessage"] = "Contrato editado correctamente.";
+                    return RedirectToAction("Index", "Contratos");
                 }
                 else
                 {
@@ -78,8 +87,8 @@ namespace Inmobiliaria.Controllers
             catch (Exception ex)
             {
                 //registramos la excepción en ex
-                ModelState.AddModelError(string.Empty, "Ocurrió un error al editar el contrato.");
-                return View(c);
+                TempData["ErrorMessage"] = "Ocurrió un error al editar el contrato.";
+                return RedirectToAction("Index", "Contratos");
             }
         }
 
@@ -100,13 +109,14 @@ namespace Inmobiliaria.Controllers
             try
             {
                 repo.Borrar(c.idContrato);
-                return RedirectToAction("Index");
+                TempData["SuccessMessage"] = "Contrato eliminado correctamente.";
+                return RedirectToAction("Index", "Contratos");
             }
             catch (Exception ex)
             {
                 //registramos la excepción en ex
-                ModelState.AddModelError(string.Empty, "Ocurrió un error al eliminar el contrato.");
-                return View(c);
+                TempData["ErrorMessage"] = "Ocurrió un error al eliminar el contrato.";
+                return RedirectToAction("Index", "Contratos");
             }
         }
     }

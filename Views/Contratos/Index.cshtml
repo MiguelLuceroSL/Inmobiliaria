@@ -1,4 +1,16 @@
 @model IEnumerable<Inmobiliaria.Models.ContratoDetalle>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <h1>Lista de Contratos</h1>
 
