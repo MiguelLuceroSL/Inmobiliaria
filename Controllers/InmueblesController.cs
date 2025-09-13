@@ -15,7 +15,7 @@ namespace Inmobiliaria.Controllers
 
         [HttpGet]
         public IActionResult Create()
-        {   
+        {
             return View();
         }
 
@@ -28,6 +28,14 @@ namespace Inmobiliaria.Controllers
                 return RedirectToAction("Index");
             }
             return View(i);
+        }
+
+        [HttpGet]
+        public IActionResult Buscar(string term, int offset = 0, int limit = 20)
+        {
+            var repo = new InmuebleRepository();
+            var resultados = repo.Buscar(term, offset, limit);
+            return Json(resultados);
         }
 
         [HttpGet]

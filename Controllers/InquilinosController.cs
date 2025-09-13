@@ -27,6 +27,14 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        public IActionResult Buscar(string term, int offset = 0, int limit = 20)
+        {
+            var repo = new InquilinoRepository();
+            var resultados = repo.Buscar(term, offset, limit);
+            return Json(resultados);
+        }
+
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var i = repo.ObtenerPorId(id);

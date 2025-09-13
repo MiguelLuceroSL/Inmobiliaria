@@ -43,6 +43,8 @@ namespace Inmobiliaria.Models
             return lista;
         }
 
+        
+
         public int Alta(Propietario p)
         {
             int res = -1;

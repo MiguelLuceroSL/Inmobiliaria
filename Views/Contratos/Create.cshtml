@@ -4,20 +4,16 @@
 
 <form asp-action="Create">
     <div class="mb-3">
-        <label asp-for="idInquilino" class="form-label"></label>
-        <input asp-for="idInquilino" class="form-control" />
-        <span asp-validation-for="idInquilino" class="text-danger"></span>
+        <label for="buscarInquilino">Buscar Inquilino</label>
+        <input type="text" id="buscarInquilino" placeholder="Apellido, nombre o DNI..." />
+        <select id="listaInquilinos" name="InquilinoId"></select>
+        <button id="btnMasInq" type="button" style="display:none;">Traer 20 más</button>
     </div>
     <div class="mb-3">
-        <label asp-for="idInmueble" class="form-label"></label>
-        <select asp-for="idInmueble" class="form-select">
-            <option value="">Seleccione un inmueble</option>
-            @foreach (var inmueble in ViewBag.Inmuebles)
-            {
-                <option value="@inmueble.idInmueble">@inmueble.descripcion - @inmueble.direccion</option>
-            }
-        </select>
-        <span asp-validation-for="idInmueble" class="text-danger"></span>
+        <label for="buscarInmueble">Buscar Inmueble</label>
+        <input type="text" id="buscarInmueble" placeholder="Dirección o tipo..." />
+        <select id="listaInmuebles" name="InmuebleId"></select>
+        <button id="btnMasInm" type="button" style="display:none;">Traer 20 más</button>
     </div>
     <div class="mb-3">
         <label asp-for="fechaDesde" class="form-label"></label>
@@ -39,4 +35,50 @@
 </form>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function setupBusqueda(inputId, selectId, btnMasId, url) {
+            let offset = 0;
+            let terminoActual = "";
+
+            document.getElementById(inputId).addEventListener("keyup", function () {
+                let valor = this.value;
+                if (valor.length >= 3) {
+                    offset = 0;
+                    terminoActual = valor;
+                    cargarResultados(true);
+                }
+            });
+
+            document.getElementById(btnMasId).addEventListener("click", function () {
+                offset += 20;
+                cargarResultados(false);
+            });
+
+            function cargarResultados(limpiar) {
+                fetch(`${url}?term=${encodeURIComponent(terminoActual)}&offset=${offset}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let select = document.getElementById(selectId);
+                        if (limpiar) select.innerHTML = "";
+
+                        data.forEach(item => {
+                            let option = document.createElement("option");
+                            option.value = item.idInquilino ?? item.idInmueble;
+
+                            if (item.apellido) {
+                                option.textContent = `${item.apellido}, ${item.nombre} - ${item.dniInquilino}`;
+                            } else {
+                                option.textContent = `${item.direccion} (${item.tipo})`;
+                            }
+                            select.appendChild(option);
+                        });
+
+                        document.getElementById(btnMasId).style.display = data.length === 20 ? "inline-block" : "none";
+                    });
+            }
+        }
+
+        setupBusqueda("buscarInquilino", "listaInquilinos", "btnMasInq", "/Inquilinos/Buscar");
+        setupBusqueda("buscarInmueble", "listaInmuebles", "btnMasInm", "/Inmuebles/Buscar");
+    </script>
 }
