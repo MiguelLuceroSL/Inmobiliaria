@@ -49,7 +49,7 @@ namespace Inmobiliaria.Models
 
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@filtro", filtro + "%");
+                    cmd.Parameters.AddWithValue("@filtro","%" + filtro + "%");
                     cmd.Parameters.AddWithValue("@limit", limit);
                     cmd.Parameters.AddWithValue("@offset", offset);
 
