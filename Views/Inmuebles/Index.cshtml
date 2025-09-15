@@ -50,9 +50,8 @@
             <td>@i.tipo</td>
             <td>@i.ambientes</td>
             <td>@i.superficie</td>
-            <td>@i.idPropietario</td>
-            <!-- <td> arroba i.Precio </td> 
-            <td> arroba i.Propietario?.Nombre arroba i.Propietario?.Apellido</td> -->
+            @* <td>@i.idPropietario</td> *@
+            <td>@i.nombrePropietario @i.apellidoPropietario</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@i.idInmueble" class="btn btn-warning" class="fa-solid fa-trash-can">Editar</a> |
                 <a asp-action="Delete" asp-route-id="@i.idInmueble" class="btn btn-danger">Eliminar</a>

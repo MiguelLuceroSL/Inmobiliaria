@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria.Models;
+using MySql.Data.MySqlClient;
+
 
 namespace Inmobiliaria.Controllers
 {
@@ -11,7 +13,8 @@ namespace Inmobiliaria.Controllers
         {
             var lista = repo.GetAll();
             return View(lista);
-        }
+        }      
+
 
         [HttpGet]
         public IActionResult Create()
@@ -64,6 +67,31 @@ namespace Inmobiliaria.Controllers
             if (i == null) return NotFound();
             return View(i);
         }
+
+        [HttpPost]
+// [ValidateAntiForgeryToken]
+// public IActionResult Delete(int id)
+// {
+//     try
+//     {
+//         var repo = new InmuebleRepository();
+//         repo.Borrar(id);
+
+//         TempData["SuccessMessage"] = "Inmueble eliminado correctamente";
+//         return RedirectToAction("Index");
+//     }
+//     catch (MySqlException ex)
+//     {
+//         if (ex.Number == 1451) // Código de restricción FK
+//         {
+//             TempData["ErrorMessage"] = "No se puede eliminar el inmueble porque tiene contratos asociados.";
+//             var inmueble = repo.ObtenerPorId(id);
+//             return View(inmueble);
+//         }
+//         throw; // otros errores los relanzamos
+//     }
+// }
+
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)

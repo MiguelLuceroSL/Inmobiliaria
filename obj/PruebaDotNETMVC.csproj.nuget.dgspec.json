@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj": {}
+    "C:\\temp\\.NET\\Inmobiliaria\\PruebaDotNETMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj": {
+    "C:\\temp\\.NET\\Inmobiliaria\\PruebaDotNETMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj",
+        "projectUniqueName": "C:\\temp\\.NET\\Inmobiliaria\\PruebaDotNETMVC.csproj",
         "projectName": "PruebaDotNETMVC",
-        "projectPath": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\PruebaDotNETMVC.csproj",
-        "packagesPath": "C:\\Users\\thefl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thefl\\OneDrive\\Documentos\\GitHub\\Inmobiliaria\\obj\\",
+        "projectPath": "C:\\temp\\.NET\\Inmobiliaria\\PruebaDotNETMVC.csproj",
+        "packagesPath": "C:\\Users\\C\\.nuget\\packages\\",
+        "outputPath": "C:\\temp\\.NET\\Inmobiliaria\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thefl\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\C\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -68,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

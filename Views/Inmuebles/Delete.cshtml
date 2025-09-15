@@ -1,4 +1,4 @@
-@model Inmobiliaria.Models.Inmueble
+@* @model Inmobiliaria.Models.Inmueble
 
 <h2>¿Seguro que desea eliminar este inmueble?</h2>
 
@@ -8,4 +8,32 @@
     <input type="hidden" asp-for="idInmueble" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form> *@
+@model Inmobiliaria.Models.Inmueble
+
+<h2 class="mb-3 text-danger">¿Seguro que desea eliminar este inmueble?</h2>
+
+<div class="alert alert-warning">
+    <strong>Atención:</strong> Esta acción no se puede deshacer.
+</div>
+
+<!-- Mostrar datos del inmueble -->
+<p><strong>Dirección:</strong> @Model.direccion</p>
+<p><strong>Tipo:</strong> @Model.tipo</p>
+<p><strong>Superficie:</strong> @Model.superficie m²</p>
+<p><strong>Ambientes:</strong> @Model.ambientes</p>
+
+<form asp-action="Delete" method="post" onsubmit="return confirm('¿Está seguro de eliminar este inmueble?');">
+    <input type="hidden" asp-for="idInmueble" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <button type="submit" class="btn btn-danger"
+            onclick="this.disabled=true; this.form.submit();">
+        <i class="bi bi-trash"></i> Eliminar
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-x-circle"></i> Cancelar
+    </a>
 </form>

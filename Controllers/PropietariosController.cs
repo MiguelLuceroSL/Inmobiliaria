@@ -32,6 +32,7 @@ namespace Inmobiliaria.Controllers
                 if (ModelState.IsValid)
                 {
                     repo.Alta(p);
+                    TempData["SuccessMessage"] = "Propietario creado correctamente.";
                     return RedirectToAction("Index");
                 }
                 else
@@ -42,7 +43,8 @@ namespace Inmobiliaria.Controllers
             catch (Exception ex)
             {
                 //registramos la excepción en ex
-                ModelState.AddModelError(string.Empty, "Ocurrió un error al crear el propietario.");
+                // ModelState.AddModelError(string.Empty, "Ocurrió un error al crear el .");
+                TempData["ErrorMessage"] = "Ocurrió un error al crear el propietario.";
                 return View(p);
             }
         }

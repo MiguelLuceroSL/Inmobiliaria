@@ -42,9 +42,11 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="idPropietario" class="form-label"></label>
-        <select asp-for="idPropietario" asp-items="ViewBag.Propietarios" class="form-select"></select>
-        <span asp-validation-for="idPropietario" class="text-danger"></span>
+        <label asp-for="nombrePropietario" class="form-label"></label>
+        <input type="text" asp-for="nombrePropietario" class="form-control" value="nonmbrePropietario"/>nombrePropietario
+        @* <select asp-for="nombrePropietario" asp-items="ViewBag.Inmuebles" class="form-select"></select> *@
+        <span asp-validation-for="nombrePropietario" class="text-danger"></span>
+       
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar cambios</button>
