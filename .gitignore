@@ -260,3 +260,23 @@ paket-files/
 __pycache__/
 *.pyc
 .vscode/*
+
+# Archivos y carpetas de compilación
+bin/
+obj/
+
+# Archivos de usuario
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos temporales
+*.cache
+*.log
+
+# Config auto-generada
+project.assets.json
+project.nuget.cache
+*.nuget.g.props
+*.nuget.g.targets
