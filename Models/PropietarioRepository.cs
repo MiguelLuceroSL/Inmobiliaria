@@ -43,7 +43,7 @@ namespace Inmobiliaria.Models
             return lista;
         }
 
-        
+
 
         public int Alta(Propietario p)
         {
@@ -125,6 +125,42 @@ namespace Inmobiliaria.Models
                 }
             }
             return res;
+        }
+
+        public List<Propietario> Buscar(string filtro, int offset, int limit)
+        {
+            var lista = new List<Propietario>();
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = @"SELECT id_propietario, dni_propietario, nombre, apellido
+                    FROM propietarios
+                    WHERE dni_propietario LIKE @filtro
+                       OR nombre LIKE @filtro
+                       OR apellido LIKE @filtro
+                    LIMIT @limit OFFSET @offset";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@filtro", "%" + filtro + "%");
+                    cmd.Parameters.AddWithValue("@limit", limit);
+                    cmd.Parameters.AddWithValue("@offset", offset);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(new Propietario
+                            {
+                                idPropietario = reader.GetInt32("id_propietario"),
+                                dniPropietario = reader.GetString("dni_propietario"),
+                                nombre = reader.GetString("nombre"),
+                                apellido = reader.GetString("apellido")
+                            });
+                        }
+                    }
+                }
+            }
+            return lista;
         }
 
         public int Borrar(int id)

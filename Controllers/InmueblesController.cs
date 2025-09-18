@@ -8,12 +8,13 @@ namespace Inmobiliaria.Controllers
     public class InmueblesController : Controller
     {
         private InmuebleRepository repo = new InmuebleRepository();
+        private PropietarioRepository repoPropietarios = new PropietarioRepository();
 
         public IActionResult Index()
         {
             var lista = repo.GetAll();
             return View(lista);
-        }      
+        }
 
 
         [HttpGet]
@@ -52,12 +53,32 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Edit(Inmueble i)
         {
-            if (ModelState.IsValid)
+            try
             {
-                repo.Editar(i);
+                Console.WriteLine("Inmueble editado antes del ModelState:", i);
+                if (ModelState.IsValid)
+                {
+                    repo.Editar(i);
+                    TempData["SuccessMessage"] = "Inmueble editado correctamente.";
+                    return RedirectToAction("Index", "Inmuebles");
+                }
+                return View(i);
+            }
+            catch (Exception ex)
+            {
+                //registramos la excepción en ex
+                TempData["ErrorMessage"] = "Ocurrió un error al editar el inmueble.";
+                Console.WriteLine("Error al editar el inmueble:", ex);
                 return RedirectToAction("Index");
             }
-            return View(i);
+
+        }
+
+        [HttpGet]
+        public IActionResult BuscarPropietarios(string filtro, int offset = 0, int limit = 10)
+        {
+            var lista = repoPropietarios.Buscar(filtro, offset, limit);
+            return Json(lista);
         }
 
         [HttpGet]
@@ -69,28 +90,28 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
-// [ValidateAntiForgeryToken]
-// public IActionResult Delete(int id)
-// {
-//     try
-//     {
-//         var repo = new InmuebleRepository();
-//         repo.Borrar(id);
+        // [ValidateAntiForgeryToken]
+        // public IActionResult Delete(int id)
+        // {
+        //     try
+        //     {
+        //         var repo = new InmuebleRepository();
+        //         repo.Borrar(id);
 
-//         TempData["SuccessMessage"] = "Inmueble eliminado correctamente";
-//         return RedirectToAction("Index");
-//     }
-//     catch (MySqlException ex)
-//     {
-//         if (ex.Number == 1451) // Código de restricción FK
-//         {
-//             TempData["ErrorMessage"] = "No se puede eliminar el inmueble porque tiene contratos asociados.";
-//             var inmueble = repo.ObtenerPorId(id);
-//             return View(inmueble);
-//         }
-//         throw; // otros errores los relanzamos
-//     }
-// }
+        //         TempData["SuccessMessage"] = "Inmueble eliminado correctamente";
+        //         return RedirectToAction("Index");
+        //     }
+        //     catch (MySqlException ex)
+        //     {
+        //         if (ex.Number == 1451) // Código de restricción FK
+        //         {
+        //             TempData["ErrorMessage"] = "No se puede eliminar el inmueble porque tiene contratos asociados.";
+        //             var inmueble = repo.ObtenerPorId(id);
+        //             return View(inmueble);
+        //         }
+        //         throw; // otros errores los relanzamos
+        //     }
+        // }
 
 
         [HttpPost, ActionName("Delete")]

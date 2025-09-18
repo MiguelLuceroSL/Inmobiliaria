@@ -151,21 +151,23 @@ namespace Inmobiliaria.Models
     //     public int idPropietario { get; set; }
     // }
     public class Inmueble
-{
-    public int idInmueble { get; set; }
-    public string direccion { get; set; }
-    public string tipo { get; set; }
-    public double superficie { get; set; }
-    public int ambientes { get; set; }
-    public int baños { get; set; }
-    public bool cochera { get; set; }
-    public string estado { get; set; }
-    public string descripcion { get; set; }
-    public int idPropietario { get; set; }
+    {
+        public int idInmueble { get; set; }
+        public string direccion { get; set; }
+        public string tipo { get; set; }
+        public double superficie { get; set; }
+        public int ambientes { get; set; }
+        public int baños { get; set; }
+        public bool cochera { get; set; }
+        public string estado { get; set; }
+        public string descripcion { get; set; }
+        public int idPropietario { get; set; }
 
-    // Nuevas propiedades:
-    public string nombrePropietario { get; set; }
-    public string apellidoPropietario { get; set; }
+        // Nuevas propiedades:
+        public string nombrePropietario { get; set; }
+        public string apellidoPropietario { get; set; }
+        public string dniPropietario { get; set; }
+        public Propietario? Propietario { get; set; }
 }
 
 }

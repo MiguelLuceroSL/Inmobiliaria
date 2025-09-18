@@ -38,42 +38,44 @@ namespace Inmobiliaria.Models
         //     return lista;
         // }
         public List<Inmueble> GetAll()
-{
-    var lista = new List<Inmueble>();
-
-    const string sql = @"SELECT i.id_inmueble, i.direccion, i.tipo, i.superficie, i.ambientes, i.baños, 
-                                i.cochera, i.estado, i.descripcion, i.id_propietario,
-                                p.nombre, p.apellido
-                         FROM inmuebles i
-                         JOIN propietarios p ON i.id_propietario = p.id_propietario";
-
-    using var conn = new MySqlConnection(connectionString);
-    conn.Open();
-
-    using var cmd = new MySqlCommand(sql, conn);
-    using var reader = cmd.ExecuteReader();
-
-    while (reader.Read())
-    {
-        lista.Add(new Inmueble
         {
-            idInmueble = reader.GetInt32("id_inmueble"),
-            direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? "" : reader.GetString("direccion"),
-            tipo = reader.IsDBNull(reader.GetOrdinal("tipo")) ? "" : reader.GetString("tipo"),
-            superficie = reader.IsDBNull(reader.GetOrdinal("superficie")) ? 0 : reader.GetDouble("superficie"),
-            ambientes = reader.IsDBNull(reader.GetOrdinal("ambientes")) ? 0 : reader.GetInt32("ambientes"),
-            baños = reader.IsDBNull(reader.GetOrdinal("baños")) ? 0 : reader.GetInt32("baños"),
-            cochera = !reader.IsDBNull(reader.GetOrdinal("cochera")) && reader.GetBoolean("cochera"),
-            estado = reader.IsDBNull(reader.GetOrdinal("estado")) ? "" : reader.GetString("estado"),
-            descripcion = reader.IsDBNull(reader.GetOrdinal("descripcion")) ? "" : reader.GetString("descripcion"),
-            idPropietario = reader.GetInt32("id_propietario"),
-            nombrePropietario = reader.IsDBNull(reader.GetOrdinal("nombre")) ? "" : reader.GetString("nombre"),
-            apellidoPropietario = reader.IsDBNull(reader.GetOrdinal("apellido")) ? "" : reader.GetString("apellido")
-        });
-    }
+            var lista = new List<Inmueble>();
 
-    return lista;
-}
+            const string sql = @"SELECT i.id_inmueble, i.direccion, i.tipo, i.superficie, i.ambientes, i.baños, 
+                                i.cochera, i.estado, i.descripcion, i.id_propietario,
+                                p.nombre, p.apellido, p.dni_propietario
+                         FROM inmuebles i
+                         JOIN propietarios p ON i.id_propietario = p.id_propietario
+                         ORDER BY i.id_inmueble";
+
+            using var conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            using var cmd = new MySqlCommand(sql, conn);
+            using var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                lista.Add(new Inmueble
+                {
+                    idInmueble = reader.GetInt32("id_inmueble"),
+                    direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? "" : reader.GetString("direccion"),
+                    tipo = reader.IsDBNull(reader.GetOrdinal("tipo")) ? "" : reader.GetString("tipo"),
+                    superficie = reader.IsDBNull(reader.GetOrdinal("superficie")) ? 0 : reader.GetDouble("superficie"),
+                    ambientes = reader.IsDBNull(reader.GetOrdinal("ambientes")) ? 0 : reader.GetInt32("ambientes"),
+                    baños = reader.IsDBNull(reader.GetOrdinal("baños")) ? 0 : reader.GetInt32("baños"),
+                    cochera = !reader.IsDBNull(reader.GetOrdinal("cochera")) && reader.GetBoolean("cochera"),
+                    estado = reader.IsDBNull(reader.GetOrdinal("estado")) ? "" : reader.GetString("estado"),
+                    descripcion = reader.IsDBNull(reader.GetOrdinal("descripcion")) ? "" : reader.GetString("descripcion"),
+                    idPropietario = reader.GetInt32("id_propietario"),
+                    nombrePropietario = reader.IsDBNull(reader.GetOrdinal("nombre")) ? "" : reader.GetString("nombre"),
+                    apellidoPropietario = reader.IsDBNull(reader.GetOrdinal("apellido")) ? "" : reader.GetString("apellido"),
+                    dniPropietario = reader.IsDBNull(reader.GetOrdinal("dni_propietario")) ? "" : reader.GetString("dni_propietario")
+                });
+            }
+
+            return lista;
+        }
 
 
         public List<Inmueble> Buscar(string filtro, int offset, int limit = 20)
@@ -89,7 +91,7 @@ namespace Inmobiliaria.Models
 
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@filtro","%" + filtro + "%");
+                    cmd.Parameters.AddWithValue("@filtro", "%" + filtro + "%");
                     cmd.Parameters.AddWithValue("@limit", limit);
                     cmd.Parameters.AddWithValue("@offset", offset);
 

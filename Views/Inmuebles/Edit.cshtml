@@ -1,9 +1,4 @@
-
 @model Inmobiliaria.Models.Inmueble
-
-@{
-    ViewData["Title"] = "Editar Inmueble";
-}
 
 <!-- Estilo para capitalizar la primera letra de las etiquetas -->
 <style>
@@ -42,12 +37,76 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="nombrePropietario" class="form-label"></label>
-        <input type="text" asp-for="nombrePropietario" class="form-control" value="nonmbrePropietario"/>nombrePropietario
-        @* <select asp-for="nombrePropietario" asp-items="ViewBag.Inmuebles" class="form-select"></select> *@
-        <span asp-validation-for="nombrePropietario" class="text-danger"></span>
-       
+        <label asp-for="baños" class="form-label"></label>
+        <input asp-for="baños" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="baños" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="cochera" class="form-label"></label>
+        <input asp-for="cochera" type="checkbox" class="form-check-input" />
+        <span asp-validation-for="cochera" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="descripcion" class="form-label"></label>
+        <input asp-for="descripcion" type="text" class="form-control" />
+        <span asp-validation-for="descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="estado" class="form-label"></label>
+        <select asp-for="estado" class="form-select">
+            <option value="disponible">disponible</option>
+            <option value="alquilado">alquilado</option>
+            <option value="mantenimiento">mantenimiento</option>
+        </select>
+        <span asp-validation-for="estado" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="buscadorProp" class="form-label">Buscar propietario</label>
+        <input id="buscadorProp" type="text" class="form-control" placeholder="Ingrese 3 letras..." />
+
+        <select id="listaPropietarios" name="idPropietario" class="form-select">
+            <option value="@Model.idPropietario">
+                @Model.apellidoPropietario @Model.nombrePropietario (@Model.Propietario?.dniPropietario)
+            </option>
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar cambios</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let offset = 0;
+        const limit = 10;
+        let filtro = "";
+
+        async function buscarPropietarios(reset = false) {
+            const resp = await fetch(`/Inmuebles/BuscarPropietarios?filtro=${filtro}&offset=${offset}&limit=${limit}`);
+            const data = await resp.json();
+            console.log("DATOOOOOOOOOOOOS", data);
+
+            const lista = document.getElementById("listaPropietarios");
+            if (reset) lista.innerHTML = ""; // borra lista si es búsqueda nueva
+
+            data.forEach(p => {
+                const opt = document.createElement("option");
+                opt.value = p.idPropietario;
+                opt.textContent = `${p.apellido} ${p.nombre} (${p.dniPropietario})`;
+                lista.appendChild(opt);
+            });
+        }
+
+        document.getElementById("buscadorProp").addEventListener("input", (e) => {
+            if (e.target.value.length >= 3) {
+                filtro = e.target.value;
+                offset = 0;
+                buscarPropietarios(true);
+            }
+        });
+    </script>
+}
