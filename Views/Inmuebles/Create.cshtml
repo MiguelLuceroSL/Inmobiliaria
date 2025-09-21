@@ -1,38 +1,9 @@
-@* @model Inmobiliaria.Models.Inmueble
-
-<h2>Nuevo Inmueble</h2>
-
-<form asp-action="Create" method="post">
-    <label>Dirección:</label>
-    <input asp-for="direccion" /><br />
-
-    <!--<label>Uso:</label>
-    <input asp-for="Uso" /><br /> -->
-
-    <label>Tipo:</label>
-    <input asp-for="tipo" /><br />
-
-    <label>Ambientes:</label>
-    <input asp-for="ambientes" type="number" /><br />
-
-    <label>Superficie (m²):</label>
-    <input asp-for="superficie" type="number" step="0.01" /><br />
-
-    <!-- <label>Precio:</label>
-    <input asp-for="Precio" type="number" step="0.01" /><br /> no hay precio en Inmueble-->
-
-    <label>Propietario:</label>
-    <select asp-for="idPropietario" asp-items="ViewBag.Propietarios"></select><br />
-
-    <button type="submit">Guardar</button>
-</form> *@
 @model Inmobiliaria.Models.Inmueble
 
 @{
     ViewData["Title"] = "Nuevo Inmueble";
 }
 
-<!-- Estilo para capitalizar la primera letra de las etiquetas -->
 <style>
     label.form-label {
         text-transform: capitalize;
@@ -40,8 +11,6 @@
 </style>
 
 <h2 class="mb-4">Nuevo Inmueble</h2>
-
-
 
 <form asp-action="Create" method="post">
     <div class="mb-3">
@@ -57,22 +26,110 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="ambientes" class="form-label"></label>
-        <input asp-for="ambientes" type="number" class="form-control" />
-        <span asp-validation-for="ambientes" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
         <label asp-for="superficie" class="form-label"></label>
         <input asp-for="superficie" type="number" step="0.01" class="form-control" />
         <span asp-validation-for="superficie" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="idPropietario" class="form-label"></label>
-        <select asp-for="idPropietario" asp-items="ViewBag.Propietarios" class="form-select"></select>
-        <span asp-validation-for="idPropietario" class="text-danger"></span>
+        <label asp-for="ambientes" class="form-label"></label>
+        <input asp-for="ambientes" type="number" class="form-control" />
+        <span asp-validation-for="ambientes" class="text-danger"></span>
     </div>
+
+    <div class="mb-3">
+        <label asp-for="baños" class="form-label"></label>
+        <input asp-for="baños" type="number" class="form-control" min="1" />
+        <span asp-validation-for="baños" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="cochera" class="form-check-input" />
+        <label asp-for="cochera" class="form-check-label"></label>
+        <span asp-validation-for="cochera" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="estado" class="form-label"></label>
+        <select asp-for="estado" class="form-select">
+            <option value="">Seleccione estado</option>
+            <option value="Alquilado">Alquilado</option>
+            <option value="Mantenimiento">Mantenimiento</option>
+            <option value="Disponible">Disponible</option>
+        </select>
+        <span asp-validation-for="estado" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="descripcion" class="form-label"></label>
+        <textarea asp-for="descripcion" class="form-control" rows="4" placeholder="Incluir una descripción"></textarea>
+        <span asp-validation-for="descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        @* <label asp-for="idPropietario" class="form-label">Propietario</label>
+        <select asp-for="idPropietario" asp-items="ViewBag.Propietarios" class="form-select">
+            <option value="">Seleccione un propietario</option>
+        </select>
+        <span asp-validation-for="idPropietario" class="text-danger"></span> *@
+            <label for="buscadorProp" class="form-label">Propietario</label>
+            <input id="buscadorProp" type="text" class="form-control" placeholder="Buscar propietario: Ingrese 3 letras..." />
+
+            <select asp-for="idPropietario" id="listaPropietarios" class="form-select mt-2">
+                <option value="idPropietario" selected>
+                   @* @Model.apellidoPropietario @Model.nombrePropietario (@Model.Propietario?.dniPropietario) *@
+                </option>
+             </select>
+            <span asp-validation-for="idPropietario" class="text-danger"></span>
+    </div>
+    @* <div class="mb-3">
+        <label for="buscadorProp" class="form-label">Propietario</label>
+        <select asp-for="idPropietario" id="listaPropietarios" class="form-select">
+            <option value="@Model.idPropietario" selected>
+                @Model.apellidoPropietario @Model.nombrePropietario (@Model.Propietario?.dniPropietario)
+            </option>
+        </select>
+        <input id="buscadorProp" type="text" class="form-control" placeholder="Buscar propietario: Ingrese 3 letras..." />  
+    </div> *@
+
 
     <button type="submit" class="btn btn-success">Guardar</button>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let offset = 0;
+        const limit = 10;
+        let filtro = "";
+
+        async function buscarPropietarios(reset = false) {
+            const resp = await fetch(`/Inmuebles/BuscarPropietarios?filtro=${filtro}&offset=${offset}&limit=${limit}`);
+            const data = await resp.json();
+            console.log("DATOS", data);
+
+            const lista = document.getElementById("listaPropietarios");
+            if (reset) lista.innerHTML = ""; // borra lista si es búsqueda nueva
+
+            data.forEach(p => {
+                const opt = document.createElement("option");
+                opt.value = p.idPropietario;
+                opt.textContent = `${p.apellido} ${p.nombre} (${p.dniPropietario})`;
+                lista.appendChild(opt);
+            });
+        }
+
+        document.getElementById("buscadorProp").addEventListener("input", (e) => {
+            if (e.target.value.length >= 3) {
+                filtro = e.target.value;
+                offset = 0;
+                buscarPropietarios(true);
+            }
+        });
+    </script>
+  
+
+        
+}
