@@ -198,6 +198,7 @@ namespace Inmobiliaria.Models
 
         public bool Editar(Inmueble i)
         {
+            Console.WriteLine("MODEL Editar Inmueble llamado con datos:", i.apellidoPropietario);
             if (i == null || i.idInmueble <= 0)
             {
                 Console.WriteLine("Datos inválidos para editar el inmueble.");

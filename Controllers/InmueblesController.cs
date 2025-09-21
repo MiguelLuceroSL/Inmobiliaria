@@ -53,11 +53,12 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Edit(Inmueble i)
         {
+            Console.WriteLine("Controller id Propietario: " + i.idPropietario);
             try
             {
-                Console.WriteLine("Inmueble editado antes del ModelState:", i);
+                Console.WriteLine("Inmueble editado antes del ModelState:");
                 if (ModelState.IsValid)
-                {
+                {   
                     repo.Editar(i);
                     TempData["SuccessMessage"] = "Inmueble editado correctamente.";
                     return RedirectToAction("Index", "Inmuebles");

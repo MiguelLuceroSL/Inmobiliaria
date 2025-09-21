@@ -164,9 +164,9 @@ namespace Inmobiliaria.Models
         public int idPropietario { get; set; }
 
         // Nuevas propiedades:
-        public string nombrePropietario { get; set; }
-        public string apellidoPropietario { get; set; }
-        public string dniPropietario { get; set; }
+        public string? nombrePropietario { get; set; }
+        public string? apellidoPropietario { get; set; }
+        public string? dniPropietario { get; set; }
         public Propietario? Propietario { get; set; }
 }
 
