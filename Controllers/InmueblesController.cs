@@ -29,7 +29,8 @@ namespace Inmobiliaria.Controllers
             if (ModelState.IsValid)
             {
                 repo.Alta(i);
-                return RedirectToAction("Index");
+                TempData["SuccessMessage"] = "Inmueble creado correctamente.";
+                return RedirectToAction("Index", "Inmuebles");
             }
             return View(i);
         }
