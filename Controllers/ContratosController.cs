@@ -95,6 +95,28 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        public IActionResult Detalles(int id)
+        {
+            var contrato = repo.ObtenerPorId(id);
+            var pagosRepo = new PagoRepository();
+            var pagosRealizados = pagosRepo.ContarPagosPorContrato(id);
+
+            var service = new ContratoService();
+
+            var mesesContrato = service.CalcularMesesContrato(contrato);
+            var cuota = service.CalcularMontoMensual(contrato);
+            var pagosEsperados = service.CalcularPagosEsperados(contrato);
+            var deuda = service.CalcularDeuda(contrato, pagosRealizados);
+
+            ViewBag.MesesContrato = mesesContrato;
+            ViewBag.CuotaMensual = cuota;
+            ViewBag.PagosEsperados = pagosEsperados;
+            ViewBag.Deuda = deuda;
+
+            return View(contrato);
+        }
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             var contrato = repo.ObtenerPorId(id);

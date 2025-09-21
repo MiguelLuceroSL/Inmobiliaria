@@ -1,0 +1,12 @@
+@model Inmobiliaria.Models.Contrato
+
+<h2>Contrato @Model.idContrato</h2>
+
+@*<p><b>Inquilino:</b> @Model.inquilino?.nombre</p>
+<p><b>Propiedad:</b> @Model.inmueble?.direccion</p>*@
+<p><b>Duración:</b> @ViewBag.MesesContrato meses</p>
+<p><b>Cuota mensual:</b> @ViewBag.CuotaMensual.ToString("C")</p>
+<p><b>Pagos esperados hasta hoy:</b> @ViewBag.PagosEsperados</p>
+<p><b>Deuda acumulada:</b> @ViewBag.Deuda.ToString("C")</p>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>
