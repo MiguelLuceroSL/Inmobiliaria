@@ -57,7 +57,6 @@ namespace Inmobiliaria.Controllers
             Console.WriteLine("Controller id Propietario: " + i.idPropietario);
             try
             {
-                Console.WriteLine("Inmueble editado antes del ModelState:");
                 if (ModelState.IsValid)
                 {   
                     repo.Editar(i);
