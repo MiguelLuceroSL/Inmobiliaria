@@ -7,36 +7,6 @@ namespace Inmobiliaria.Models
     {
         private readonly string connectionString = "server=localhost;database=inmobiliaria;user=root;password=;";
 
-        // public List<Inmueble> GetAll()
-        // {
-        //     var lista = new List<Inmueble>();
-        //     using (var conn = new MySqlConnection(connectionString))
-        //     {
-        //         conn.Open();
-        //         var sql = "SELECT * FROM inmuebles";
-        //         using (var cmd = new MySqlCommand(sql, conn))
-        //         using (var reader = cmd.ExecuteReader())
-        //         {
-        //             while (reader.Read())
-        //             {
-        //                 lista.Add(new Inmueble
-        //                 {
-        //                     idInmueble = reader.GetInt32("id_inmueble"),
-        //                     direccion = reader.GetString("direccion"),
-        //                     tipo = reader.GetString("tipo"),
-        //                     superficie = reader.GetDouble("superficie"),
-        //                     ambientes = reader.GetInt32("ambientes"),
-        //                     baños = reader.GetInt32("baños"),
-        //                     cochera = reader.GetBoolean("cochera"),
-        //                     estado = reader.GetString("estado"),
-        //                     descripcion = reader.GetString("descripcion"),
-        //                     idPropietario = reader.GetInt32("id_propietario")
-        //                 });
-        //             }
-        //         }
-        //     }
-        //     return lista;
-        // }
         public List<Inmueble> GetAll()
         {
             var lista = new List<Inmueble>();
@@ -54,6 +24,49 @@ namespace Inmobiliaria.Models
             using var cmd = new MySqlCommand(sql, conn);
             using var reader = cmd.ExecuteReader();
 
+            while (reader.Read())
+            {
+                lista.Add(new Inmueble
+                {
+                    idInmueble = reader.GetInt32("id_inmueble"),
+                    direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? "" : reader.GetString("direccion"),
+                    tipo = reader.IsDBNull(reader.GetOrdinal("tipo")) ? "" : reader.GetString("tipo"),
+                    superficie = reader.IsDBNull(reader.GetOrdinal("superficie")) ? 0 : reader.GetDouble("superficie"),
+                    ambientes = reader.IsDBNull(reader.GetOrdinal("ambientes")) ? 0 : reader.GetInt32("ambientes"),
+                    baños = reader.IsDBNull(reader.GetOrdinal("baños")) ? 0 : reader.GetInt32("baños"),
+                    cochera = !reader.IsDBNull(reader.GetOrdinal("cochera")) && reader.GetBoolean("cochera"),
+                    estado = reader.IsDBNull(reader.GetOrdinal("estado")) ? "" : reader.GetString("estado"),
+                    descripcion = reader.IsDBNull(reader.GetOrdinal("descripcion")) ? "" : reader.GetString("descripcion"),
+                    idPropietario = reader.GetInt32("id_propietario"),
+                    nombrePropietario = reader.IsDBNull(reader.GetOrdinal("nombre")) ? "" : reader.GetString("nombre"),
+                    apellidoPropietario = reader.IsDBNull(reader.GetOrdinal("apellido")) ? "" : reader.GetString("apellido"),
+                    dniPropietario = reader.IsDBNull(reader.GetOrdinal("dni_propietario")) ? "" : reader.GetString("dni_propietario")
+                });
+            }
+
+            return lista;
+        }
+      public List<Inmueble> Lista(int pagina, int tamaño)
+        {
+            var lista = new List<Inmueble>();
+            int offset = (Math.Max(pagina, 1) - 1) * tamaño;
+
+            const string baseSql = @"SELECT i.id_inmueble, i.direccion, i.tipo, i.superficie, i.ambientes, i.baños, 
+                                        i.cochera, i.estado, i.descripcion, i.id_propietario,
+                                        p.nombre, p.apellido, p.dni_propietario
+                                FROM inmuebles i
+                                JOIN propietarios p ON i.id_propietario = p.id_propietario
+                                ORDER BY i.id_inmueble
+                                LIMIT @tamaño OFFSET @offset";
+
+            using var conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            using var cmd = new MySqlCommand(baseSql, conn);
+            cmd.Parameters.AddWithValue("@tamaño", tamaño);
+            cmd.Parameters.AddWithValue("@offset", offset);
+
+            using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 lista.Add(new Inmueble
