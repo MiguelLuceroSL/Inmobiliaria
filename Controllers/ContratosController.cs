@@ -98,6 +98,13 @@ namespace Inmobiliaria.Controllers
         public IActionResult Detalles(int id)
         {
             var contrato = repo.ObtenerPorId(id);
+
+            var inqRepo = new InquilinoRepository();
+            var inmuebleRepo = new InmuebleRepository();
+
+            var inquilino = inqRepo.ObtenerPorId(contrato.idInquilino);
+            var inmueble = inmuebleRepo.ObtenerPorId(contrato.idInmueble);
+
             var pagosRepo = new PagoRepository();
             var pagosRealizados = pagosRepo.ContarPagosPorContrato(id);
 
@@ -108,10 +115,14 @@ namespace Inmobiliaria.Controllers
             var pagosEsperados = service.CalcularPagosEsperados(contrato);
             var deuda = service.CalcularDeuda(contrato, pagosRealizados);
 
+
+
             ViewBag.MesesContrato = mesesContrato;
             ViewBag.CuotaMensual = cuota;
             ViewBag.PagosEsperados = pagosEsperados;
             ViewBag.Deuda = deuda;
+            ViewBag.NombreInquilino = $"{inquilino.nombre} {inquilino.apellido}";
+            ViewBag.DireccionInmueble = inmueble.direccion;
 
             return View(contrato);
         }

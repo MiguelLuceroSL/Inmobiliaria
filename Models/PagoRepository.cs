@@ -61,13 +61,13 @@ namespace Inmobiliaria.Models
 
         public int ContarPagosPorContrato(int idContrato)
         {
-            int cantidad = 0;
+            int cantidad = 0, cantidadFinal = 0;
             using (var connection = new MySqlConnection(connectionString))
             {
-                string sql = "SELECT COUNT(*) FROM pagos WHERE idContrato = @idContrato";
+                string sql = "SELECT COUNT(*) FROM pagos WHERE id_contrato = @id_contrato";
                 using (var command = new MySqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@idContrato", idContrato);
+                    command.Parameters.AddWithValue("@id_contrato", idContrato);
                     connection.Open();
                     cantidad = Convert.ToInt32(command.ExecuteScalar());
                 }
