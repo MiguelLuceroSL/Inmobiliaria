@@ -34,6 +34,27 @@ namespace Inmobiliaria.Controllers
             }
             return View(i);
         }
+        // public async Task<IActionResult> Details(int id)
+        //     {
+        //     var inmueble = await _context.Inmuebles
+        //             .Include(i => i.Propietario)
+        //             .FirstOrDefaultAsync(i => i.idInmueble == id);
+
+        //         if (inmueble == null)
+        //         {
+        //             return NotFound();
+        //         }
+
+        //         // Asignar datos del propietario si están disponibles
+        //         if (inmueble.Propietario != null)
+        //         {
+        //             inmueble.nombrePropietario = inmueble.Propietario.nombre;
+        //             inmueble.apellidoPropietario = inmueble.Propietario.apellido;
+        //             inmueble.dniPropietario = inmueble.Propietario.dniPropietario;
+        //         }
+
+        //         return View(inmueble);
+        //     }
 
         [HttpGet]
         public IActionResult Buscar(string term, int offset = 0, int limit = 20)
@@ -90,29 +111,7 @@ namespace Inmobiliaria.Controllers
             return View(i);
         }
 
-        [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult Delete(int id)
-        // {
-        //     try
-        //     {
-        //         var repo = new InmuebleRepository();
-        //         repo.Borrar(id);
-
-        //         TempData["SuccessMessage"] = "Inmueble eliminado correctamente";
-        //         return RedirectToAction("Index");
-        //     }
-        //     catch (MySqlException ex)
-        //     {
-        //         if (ex.Number == 1451) // Código de restricción FK
-        //         {
-        //             TempData["ErrorMessage"] = "No se puede eliminar el inmueble porque tiene contratos asociados.";
-        //             var inmueble = repo.ObtenerPorId(id);
-        //             return View(inmueble);
-        //         }
-        //         throw; // otros errores los relanzamos
-        //     }
-        // }
+      
 
 
         [HttpPost, ActionName("Delete")]
