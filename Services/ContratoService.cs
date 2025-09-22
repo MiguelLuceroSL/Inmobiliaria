@@ -37,14 +37,18 @@ public class ContratoService
         return Math.Min(mesesTotales, mesesTranscurridos);
     }
 
-    public decimal CalcularDeuda(Contrato contrato, int pagosRealizados, decimal interesPorAtraso = 20m)
-    {
-        decimal cuotaMensual = CalcularMontoMensual(contrato);
-        int pagosEsperados = CalcularPagosEsperados(contrato);
+    public decimal CalcularDeuda(Contrato contrato, int pagosRealizados, decimal interesPorcentaje = 0.05m)
+{
+    decimal cuotaMensual = CalcularMontoMensual(contrato);
+    int pagosEsperados = CalcularPagosEsperados(contrato);
 
-        if (pagosRealizados >= pagosEsperados) return 0; // al día
+    if (pagosRealizados >= pagosEsperados) return 0; // al día
 
-        int cuotasAtrasadas = pagosEsperados - pagosRealizados;
-        return cuotasAtrasadas * (cuotaMensual + interesPorAtraso);
-    }
+    int cuotasAtrasadas = pagosEsperados - pagosRealizados;
+
+    // interés = 5% de la cuota
+    decimal interes = cuotaMensual * interesPorcentaje;
+
+    return cuotasAtrasadas * (cuotaMensual + interes);
+}
 }
