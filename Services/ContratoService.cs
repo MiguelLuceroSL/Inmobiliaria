@@ -12,8 +12,8 @@ public class ContratoService
     public decimal CalcularMontoMensual(Contrato contrato)
     {
         int meses = CalcularMesesContrato(contrato);
-        if (meses <= 0) return contrato.monto; // contrato raro
-        return contrato.monto / meses;
+        if (meses <= 0) return contrato.montoInicial; // contrato raro
+        return contrato.montoInicial / meses;
     }
 
     public int CalcularMesesTranscurridos(Contrato contrato)

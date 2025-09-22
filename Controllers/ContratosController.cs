@@ -35,6 +35,12 @@ namespace Inmobiliaria.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //debo setearlo logica
+                    c.estadoContrato = "Activo";
+                    c.alDia = true;
+                    c.fechaRescision = null;
+                    c.interesMora = 0;
+
                     repo.Alta(c);
                     TempData["SuccessMessage"] = "Contrato creado correctamente.";
                     return RedirectToAction("Index", "Contratos");
