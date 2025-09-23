@@ -45,30 +45,8 @@
                 <td>@contrato.fechaHasta.ToShortDateString()</td>
                 <td>@contrato.montoInicial.ToString("C")</td>
                 <td>
-                    @* <a asp-action="Edit" asp-route-id="@contrato.idContrato" class="btn btn-warning">Editar</a> |
-                    <a asp-action="Delete" asp-route-id="@contrato.idContrato" class="btn btn-danger">Eliminar</a>|
-                    <a asp-controller="Pagos" asp-action="Create" asp-route-idContrato="@contrato.idContrato"
-                        class="btn btn-success">
-                        Registrar Pago
-                    </a>
-                    <a asp-controller="Pagos" asp-action="Index" asp-route-contratoId="@contrato.idContrato"
-                        class="btn btn-success">
-                        Ver Pagos
-                    </a>
-                    <a asp-action="Detalles" asp-route-id="@contrato.idContrato" class="btn btn-info">
-                        Ver detalles
-                    </a> *@
-                    <td>
-                <div class="d-flex flex-wrap gap-2">
-                    @* <a asp-action="Edit" asp-route-id="@contrato.idContrato" class="btn btn-warning btn-sm">Editar</a> *@
-                    @* <a asp-action="Edit" asp-route-id="@contrato.idContrato" class="btn btn-warning btn-sm">
-                    <i class="bi bi-pencil-square"></i>
-                    </a>
-
-                    <a asp-action="Delete" asp-route-id="@contrato.idContrato" class="btn btn-danger btn-sm">Eliminar</a>
-                    <a asp-controller="Pagos" asp-action="Create" asp-route-idContrato="@contrato.idContrato" class="btn btn-success btn-sm">Registrar Pago</a>
-                    <a asp-controller="Pagos" asp-action="Index" asp-route-contratoId="@contrato.idContrato" class="btn btn-success btn-sm">Ver Pagos</a>
-                    <a asp-action="Detalles" asp-route-id="@contrato.idContrato" class="btn btn-info btn-sm">Ver detalles</a> *@
+                    
+                    <div class="d-flex flex-wrap gap-2">                 
 
                         <a asp-action="Edit" asp-route-id="@contrato.idContrato" class="btn btn-warning btn-sm" title="Editar">
                             <i class="bi bi-pencil-square"></i>
@@ -85,7 +63,9 @@
                         <a asp-action="Detalles" asp-route-id="@contrato.idContrato" class="btn btn-info btn-sm" title="Ver detalles">
                             <i class="bi bi-info-circle"></i>
                         </a>
-                </div>
+                    </div>
+                    <td>
+                
 </td>
 
                 </td>
