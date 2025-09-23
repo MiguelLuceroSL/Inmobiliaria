@@ -35,16 +35,30 @@ namespace Inmobiliaria.Controllers
             return View();
         }
 
-        [HttpPost]
+       [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Inquilino i)
         {
-            if (!ModelState.IsValid)
+            try
             {
+                if (ModelState.IsValid)
+                {
+                    repo.Alta(i);
+                    TempData["SuccessMessage"] = "Inquilino creado correctamente.";
+                    return RedirectToAction("Index", "Inquilinos");
+                }
+
+                TempData["ErrorMessage"] = "Los datos ingresados no son válidos.";
                 return View(i);
             }
-            repo.Alta(i);
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocurrió un error al crear el inquilino.";
+                Console.WriteLine("Error al crear el inquilino:", ex);
+                return RedirectToAction("Index");
+            }
         }
+
 
         [HttpGet]
         public IActionResult Buscar(string term, int offset = 0, int limit = 20)
@@ -62,11 +76,26 @@ namespace Inmobiliaria.Controllers
             return View(i);
         }
 
-        [HttpPost]
+      [HttpPost]
+      [ValidateAntiForgeryToken]
         public IActionResult Edit(Inquilino i)
         {
-            repo.Editar(i);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repo.Editar(i);
+                    TempData["SuccessMessage"] = "Inquilino editado correctamente.";
+                    return RedirectToAction("Index", "Inquilinos");
+                }
+                return View(i);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocurrió un error al editar el inquilino.";
+                Console.WriteLine("Error al editar el inquilino:", ex);
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
