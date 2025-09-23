@@ -90,6 +90,15 @@ namespace Inmobiliaria.Models
             return lista;
         }
 
+        public int ObtenerCantidad()
+        {
+            const string sql = "SELECT COUNT(*) FROM inmuebles";
+             using var conn = new MySqlConnection(connectionString);
+            conn.Open();
+            using var cmd = new MySqlCommand(sql, conn);
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+
 
         public List<Inmueble> Buscar(string filtro, int offset, int limit = 20)
         {

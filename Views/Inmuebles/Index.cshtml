@@ -1,11 +1,5 @@
-@model IEnumerable<Inmobiliaria.Models.Inmueble>
+@* @model IEnumerable<Inmobiliaria.Models.Inmueble>
 
-@* <h2>Listado de Inmuebles</h2>
-
-    <a asp-action="Create" class="btn btn-primary">
-        <h3>+</h3>    
-    </a>
-<br></br> *@
 
 @{
 	ViewData["Title"] = "Inmuebles";
@@ -50,7 +44,7 @@
             <td>@i.tipo</td>
             <td>@i.ambientes</td>
             <td>@i.superficie</td>
-            @* <td>@i.idPropietario</td> *@
+            @* <td>@i.idPropietario</td> 
             <td>@i.nombrePropietario @i.apellidoPropietario (@i.dniPropietario)</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@i.idInmueble" class="btn btn-warning" class="fa-solid fa-trash-can">Editar</a> 
@@ -59,4 +53,86 @@
             </td>
         </tr>
     }
-</table> 
+</table>  *@
+@model IEnumerable<Inmobiliaria.Models.Inmueble>
+
+@{
+    ViewData["Title"] = "Inmuebles";
+    int pagina = ViewBag.Pagina ?? 1;
+    int totalPaginas = ViewBag.TotalPaginas ?? 1;
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<h1>
+    Inmuebles
+    <div class="btn-group pull-right">
+        <a class="btn btn-primary" asp-action="Create" title="Crear">
+            <i class="fa-solid fa-plus"><h4>+</h4></i>
+        </a>
+    </div>
+</h1>
+
+<table border="4" cellpadding="5" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Dirección</th>
+            <th>Tipo</th>
+            <th>Ambientes</th>
+            <th>Superficie</th>
+            <th>Propietario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.direccion</td>
+                <td>@i.tipo</td>
+                <td>@i.ambientes</td>
+                <td>@i.superficie</td>
+                <td>@i.nombrePropietario @i.apellidoPropietario (@i.dniPropietario)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@i.idInmueble" class="btn btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@i.idInmueble" class="btn btn-danger">Eliminar</a>
+                    <a asp-action="Details" asp-route-id="@i.idInmueble" class="btn btn-primary">Detalles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- 🔄 Paginación -->
+<nav aria-label="Paginación de inmuebles">
+    <ul class="pagination justify-content-left">
+        <!-- Botón Anterior -->
+        <li class="page-item @(pagina <= 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pagina="@(pagina - 1)">« Anterior</a>
+        </li>
+
+        <!-- Botones numerados -->
+        @for (int i = 1; i <= totalPaginas; i++)
+        {
+            <li class="page-item @(i == pagina ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-pagina="@i">@i</a>
+            </li>
+        }
+
+        <!-- Botón Siguiente -->
+        <li class="page-item @(pagina >= totalPaginas ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pagina="@(pagina + 1)">Siguiente »</a>
+        </li>
+    </ul>
+</nav>
