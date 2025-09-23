@@ -57,12 +57,34 @@ namespace Inmobiliaria.Controllers
             return View(p);
         }
 
+        // [HttpPost]
+        // public IActionResult Edit(Propietario p)
+        // {
+        //     repo.Editar(p);
+        //     return RedirectToAction("Index");
+        // }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Propietario p)
         {
-            repo.Editar(p);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repo.Editar(p);
+                    TempData["SuccessMessage"] = "Propietario editado correctamente.";
+                    return RedirectToAction("Index", "Propietarios");
+                }
+                return View(p);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocurrió un error al editar el propietario.";
+                Console.WriteLine("Error al editar el propietario:", ex);
+                return RedirectToAction("Index");
+            }
         }
+
 
         [HttpGet]
         public IActionResult Delete(int id)

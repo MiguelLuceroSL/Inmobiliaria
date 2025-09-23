@@ -77,7 +77,7 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Edit(Inmueble i)
         {
-            Console.WriteLine("Controller id Propietario: " + i.idPropietario);
+           
             try
             {
                 if (ModelState.IsValid)
