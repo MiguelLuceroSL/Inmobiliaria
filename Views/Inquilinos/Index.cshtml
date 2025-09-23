@@ -1,11 +1,5 @@
-@model IEnumerable<Inmobiliaria.Models.Inquilino>
+@* @model IEnumerable<Inmobiliaria.Models.Inquilino>
 
-@* <h2>Listado de Inquilinos</h2> *@
-@* <a asp-action="Create">Nuevo Inquilino</a> *@
-@* <a asp-action="Create" class="btn btn-primary">
-    <h3>+</h3>    
-</a>
-<br><br> *@
 @{
     ViewData["Title"] = "Inquilinos";
 }
@@ -56,4 +50,85 @@
             </td>
         </tr>
     }
+</table> *@
+@model IEnumerable<Inmobiliaria.Models.Inquilino>
+
+@{
+    ViewData["Title"] = "Inquilinos";
+    int pagina = ViewBag.Pagina ?? 1;
+    int totalPaginas = ViewBag.TotalPaginas ?? 1;
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<h1>
+    Inquilinos
+    <div class="btn-group pull-right">
+        <a class="btn btn-primary" asp-action="Create" title="Crear">
+            <i class="fa-solid fa-plus"><h4>+</h4></i>
+        </a>
+    </div>
+</h1>
+
+<table border="4" cellpadding="5" class="table table-striped">
+    <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Domicilio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.dniInquilino</td>
+                <td>@i.apellido</td>
+                <td>@i.nombre</td>
+                <td>@i.telefono</td>
+                <td>@i.email</td>
+                <td>@i.domicilioPersonal</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@i.idInquilino" class="btn btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@i.idInquilino" class="btn btn-danger">Eliminar</a>
+                    <a asp-action="Details" asp-route-id="@i.idInquilino" class="btn btn-primary">Detalles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+<!-- 🔄 Paginación -->
+<nav aria-label="Paginación de inquilinos">
+    <ul class="pagination justify-content-left">
+        <li class="page-item @(pagina <= 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pagina="@(pagina - 1)">« Anterior</a>
+        </li>
+
+        @for (int i = 1; i <= totalPaginas; i++)
+        {
+            <li class="page-item @(i == pagina ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-pagina="@i">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(pagina >= totalPaginas ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pagina="@(pagina + 1)">Siguiente »</a>
+        </li>
+    </ul>
+</nav>

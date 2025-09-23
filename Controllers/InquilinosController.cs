@@ -7,11 +7,27 @@ namespace Inmobiliaria.Controllers
     {
         private InquilinoRepository repo = new InquilinoRepository();
 
-        public IActionResult Index()
+        // public IActionResult Index()
+        // {
+        //     var lista = repo.GetAll();
+        //     return View(lista);
+        // }
+         public IActionResult Index(int pagina = 1)
         {
-            var lista = repo.GetAll();
+
+             int tamPagina = 10;
+           
+            var lista = repo.ObtenerListaInquilinos(pagina, tamPagina);
+            // Calcular total de páginas (ejemplo básico, ajusta según tu lógica)
+            int totalRegistros = repo.ContarInquilinos(); // Este método debe contar los registros totales
+            int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamPagina);
+
+            ViewBag.Pagina = pagina;
+            ViewBag.TotalPaginas = totalPaginas;
             return View(lista);
-        }
+         }
+
+
 
         [HttpGet]
         public IActionResult Create()

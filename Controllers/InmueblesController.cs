@@ -14,47 +14,17 @@ namespace Inmobiliaria.Controllers
         {
 
              int tamPagina = 10;
-            //var repo = new InmuebleRepository();
+           
             var lista = repo.ObtenerListaInmuebles(pagina, tamPagina);
-
             // Calcular total de páginas (ejemplo básico, ajusta según tu lógica)
             int totalRegistros = repo.ContarInmuebles(); // Este método debe contar los registros totales
             int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamPagina);
 
             ViewBag.Pagina = pagina;
             ViewBag.TotalPaginas = totalPaginas;
-
             return View(lista);
 
 
-
-            //  var lista = repo.GetAll();
-           //var lista = repo.ObtenerListaInmuebles();
-            //return View(lista);
-            //      int tamaño = 5; // cantidad de inmuebles por página
-            //      var lista = repo.Lista(pagina, tamaño); // método paginado
-
-            //     ViewBag.Pagina = pagina;
-            //     int total = repo.ObtenerCantidad(); // total de registros
-            //     ViewBag.TotalPaginas = (int)Math.Ceiling((double)total / tamaño);
-
-            //     return View(lista);
-            // }
-
-            // public IActionResult Index()
-            // {
-            //     var lista = repo.GetAll();
-            //     return View(lista);
-            //     //      int tamaño = 5; // cantidad de inmuebles por página
-            //     //      var lista = repo.Lista(pagina, tamaño); // método paginado
-
-            //     //     ViewBag.Pagina = pagina;
-            //     //     int total = repo.ObtenerCantidad(); // total de registros
-            //     //     ViewBag.TotalPaginas = (int)Math.Ceiling((double)total / tamaño);
-
-            //     //     return View(lista);
-            //     // 
-            //
          }
 
 
@@ -77,13 +47,7 @@ namespace Inmobiliaria.Controllers
         }
    
 
-        // [HttpGet]
-        // // public IActionResult Buscar(string term, int offset = 0, int limit = 20)
-        // // {
-        // //     var repo = new InmuebleRepository();
-        // //     var resultados = repo.Buscar(term, offset, limit);
-        // //     return Json(resultados);
-        // // }
+      
 
         [HttpGet]
         public IActionResult Edit(int id)
