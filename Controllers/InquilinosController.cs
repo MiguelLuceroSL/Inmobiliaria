@@ -38,6 +38,10 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Create(Inquilino i)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(i);
+            }
             repo.Alta(i);
             return RedirectToAction("Index");
         }

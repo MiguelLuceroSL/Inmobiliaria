@@ -1,28 +1,3 @@
-@* @model Inmobiliaria.Models.Inquilino
-
-<h2>Nuevo Inquilino</h2>
-
-<form asp-action="Create" method="post">
-    <label>DNI:</label>
-    <input asp-for="dniInquilino" /><br />
-
-    <label>Apellido:</label>
-    <input asp-for="apellido" /><br />
-
-    <label>Nombre:</label>
-    <input asp-for="nombre" /><br />
-
-    <label>Teléfono:</label>
-    <input asp-for="telefono" /><br />
-
-    <label>Email:</label>
-    <input asp-for="email" /><br />
-
-    <label>Domicilio:</label>
-    <input asp-for="domicilioPersonal" /><br />
-
-    <button type="submit">Guardar</button>
-</form> *@
 
 @model Inmobiliaria.Models.Inquilino
 
@@ -80,3 +55,6 @@
 
     <button type="submit" class="btn btn-success">Guardar</button>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
