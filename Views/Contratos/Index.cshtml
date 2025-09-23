@@ -44,8 +44,6 @@
                 <td>@contrato.montoInicial.ToString("C")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@contrato.idContrato" class="btn btn-warning">Editar</a> |
-                    <a asp-action="Delete" asp-route-id="@contrato.idContrato" class="btn btn-danger">Eliminar</a>
-                    <a asp-controller="Pagos" asp-action="Create" asp-route-contratoId="@contrato.idContrato"></a>
                     <a asp-action="Delete" asp-route-id="@contrato.idContrato" class="btn btn-danger">Eliminar</a>|
                     <a asp-controller="Pagos" asp-action="Create" asp-route-idContrato="@contrato.idContrato"
                         class="btn btn-success">
