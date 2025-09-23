@@ -46,7 +46,24 @@ namespace Inmobiliaria.Controllers
             return View(i);
         }
    
+    [HttpGet]
+    public IActionResult Details(int id)
+    {
+        var inmueble = repo.ObtenerPorId(id);
+        if (inmueble == null)
+        {
+            return NotFound();
+        }
 
+        // Si el inmueble tiene un propietario, lo buscamos
+        if (inmueble.idPropietario != 0)
+        {
+            var propietario = repoPropietarios.ObtenerPorId(inmueble.idPropietario);
+            inmueble.Propietario = propietario;
+        }
+
+        return View(inmueble);
+    }
       
 
         [HttpGet]

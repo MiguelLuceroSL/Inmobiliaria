@@ -1,0 +1,196 @@
+@* @model Inmobiliaria.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Detalles del Inmueble";
+}
+
+<style>
+    label.form-label {
+        text-transform: capitalize;
+        font-weight: bold;
+    }
+
+    .form-control-plaintext {
+        padding-left: 0;
+        font-size: 1rem;
+        color: #212529;
+    }
+</style>
+
+<h2 class="mb-4">Detalles del Inmueble</h2>
+
+<div class="mb-3">
+    <label class="form-label">Dirección</label>
+    <p class="form-control-plaintext">@Model.direccion</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Tipo</label>
+    <p class="form-control-plaintext">@Model.tipo</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Ambientes</label>
+    <p class="form-control-plaintext">@Model.ambientes</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Superficie</label>
+    <p class="form-control-plaintext">@Model.superficie m²</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Baños</label>
+    <p class="form-control-plaintext">@Model.baños</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Cochera</label>
+    <p class="form-control-plaintext">@((Model.cochera ? "Sí" : "No"))</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Descripción</label>
+    <p class="form-control-plaintext">@Model.descripcion</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Estado</label>
+    <p class="form-control-plaintext">@Model.estado</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Propietario</label>
+    @if (Model.Propietario != null)
+    {
+        <p class="form-control-plaintext">
+            @Model.apellidoPropietario @Model.nombrePropietario (@Model.Propietario.dniPropietario)
+        </p>
+    }
+    else
+    {
+        <p class="form-control-plaintext text-muted">Sin propietario asignado</p>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.idInmueble" class="btn btn-primary me-2">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div> *@
+@model Inmobiliaria.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Detalles del Inmueble";
+}
+
+<style>
+    .detalle-inmueble {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .detalle-inmueble h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        color: #343a40;
+    }
+
+    .detalle-item {
+        margin-bottom: 1rem;
+    }
+
+    .detalle-item label {
+        display: block;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.25rem;
+        text-transform: capitalize;
+    }
+
+    .detalle-item p {
+        margin: 0;
+        font-size: 1rem;
+        color: #212529;
+        padding-left: 0.25rem;
+    }
+
+    .btn-group {
+        margin-top: 2rem;
+    }
+</style>
+
+<div class="detalle-inmueble">
+    <h2>Detalles del Inmueble</h2>
+
+    <div class="detalle-item">
+        <label>Dirección</label>
+        <p>@Model.direccion</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Tipo</label>
+        <p>@Model.tipo</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Ambientes</label>
+        <p>@Model.ambientes</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Superficie</label>
+        <p>@($"{Model.superficie} m²")</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Baños</label>
+        <p>@Model.baños</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Cochera</label>
+        <p>@(Model.cochera ? "Sí" : "No")</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Descripción</label>
+        <p>@Model.descripcion</p>
+    </div>
+
+    <div class="detalle-item">
+        <label>Estado</label>
+        <p>@Model.estado</p>
+    </div>
+
+    @* <div class="detalle-item">
+        <label>Propietario</label>
+        @if (Model.Propietario != null)
+        {
+            <p>@Model.Propietario.apellidoPropietario @Model.Propietario.nombrePropietario (@Model.Propietario.dniPropietario)</p>
+        }
+        else
+        {
+            <p class="text-muted">Sin propietario asignado</p>
+        }
+    </div> *@
+    <div class="detalle-item">
+         <label>Propietario</label>
+    @if (Model.Propietario != null)
+    {
+        <p class="form-control-plaintext">
+            @Model.Propietario.apellido @Model.Propietario.nombre (@Model.Propietario.dniPropietario)
+        </p>
+    }
+    else
+    {
+        <p class="form-control-plaintext text-muted">Sin propietario asignado</p>
+    }
+</div>
+
+    <div class="btn-group">
+        <a asp-action="Edit" asp-route-id="@Model.idInmueble" class="btn btn-primary me-2">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
