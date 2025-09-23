@@ -45,9 +45,13 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@contrato.idContrato" class="btn btn-warning">Editar</a> |
                     <a asp-action="Delete" asp-route-id="@contrato.idContrato" class="btn btn-danger">Eliminar</a>
-                    <a asp-controller="Pagos" asp-action="Create" asp-route-idContrato="@contrato.idContrato"
+                    <a asp-controller="Pagos" asp-action="Create" asp-route-contratoId="@contrato.idContrato"
                         class="btn btn-success">
                         Registrar Pago
+                    </a>
+                    <a asp-controller="Pagos" asp-action="Index" asp-route-contratoId="@contrato.idContrato"
+                        class="btn btn-success">
+                        Ver Pagos
                     </a>
                     <a asp-action="Detalles" asp-route-id="@contrato.idContrato" class="btn btn-info">
                         Ver detalles
