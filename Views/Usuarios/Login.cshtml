@@ -2,21 +2,29 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
+<h1 class="mb-4">Login</h1>
 
 @if (ViewBag.Error != null)
 {
-    <div style="color:red">@ViewBag.Error</div>
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
 }
 
-<form method="post" asp-action="Login">
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email" required />
-    </div>
-    <div>
-        <label>Contraseña:</label>
-        <input type="password" name="clave" required />
-    </div>
-    <button type="submit">Ingresar</button>
-</form>
+<div class="card shadow-sm p-4" style="max-width: 500px; margin: auto;">
+    <form method="post" asp-action="Login">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" id="email" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="clave" class="form-label">Contraseña:</label>
+            <input type="password" name="clave" id="clave" class="form-control" required />
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-box-arrow-in-right"></i> Ingresar
+            </button>
+        </div>
+    </form>
+</div>
