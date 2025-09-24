@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PruebaDotNETMVC.Models;
 
@@ -13,12 +14,27 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    // Página pública
     public IActionResult Index()
     {
         return View();
     }
 
     public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    //vista restringida, solo usuarios logueados pueden entrar
+    [Authorize]
+    public IActionResult Panel()
+    {
+        return View();
+    }
+
+    //vista restringida solo para Admin
+    [Authorize(Roles = "Admin")]
+    public IActionResult PanelAdmin()
     {
         return View();
     }
