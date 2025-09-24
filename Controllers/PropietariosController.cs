@@ -57,12 +57,7 @@ namespace Inmobiliaria.Controllers
             return View(p);
         }
 
-        // [HttpPost]
-        // public IActionResult Edit(Propietario p)
-        // {
-        //     repo.Editar(p);
-        //     return RedirectToAction("Index");
-        // }
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Propietario p)
@@ -101,20 +96,6 @@ namespace Inmobiliaria.Controllers
             return RedirectToAction("Index");
         }
 
-        /*[HttpGet] //con ajax
-        [Route("[controller]/Buscar/{query}", Name = "Buscar")]
-        public IActionResult Buscar(string query)
-        {
-            try
-            {
-                var res = repo.BuscarPorNombre(query);
-                return Json(new { Datos = res });
-            }
-            catch (Exception ex)
-            {
-                //registramos la excepción en ex
-                return Json(new { Error = "Ocurrió un error al buscar el propietario.", ex.Message });
-            }
-        }*/
+       
     }
 }
