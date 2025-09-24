@@ -49,6 +49,45 @@ namespace Inmobiliaria.Repositories
             return usuario;
         }
 
+        public List<Usuario> GetAll()
+    {
+        var lista = new List<Usuario>();
+        try
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = "SELECT id, nombre, apellido, avatar, email, clave, rol FROM usuarios";
+                using (var cmd = new MySqlCommand(sql, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new Usuario
+                        {
+                            Id = reader.GetInt32("id"),
+                            Nombre = reader.GetString("nombre"),
+                            Apellido = reader.GetString("apellido"),
+                            Avatar = reader.GetString("avatar"),
+                            Email = reader.GetString("email"),
+                            Clave = reader.GetString("clave"),
+                            Rol = reader.GetString("rol")
+                        });
+                    }
+                }
+            }
+        }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al obtener usuarios: {ex.Message}");
+    }
+
+    return lista;
+}
+
+
+
+
         // Hashear password
         public static string HashPassword(string password)
         {
@@ -66,4 +105,9 @@ namespace Inmobiliaria.Repositories
             return hashIngresado == hashGuardado;
         }
     }
+
+
+
+
+
 }

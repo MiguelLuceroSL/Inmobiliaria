@@ -33,9 +33,9 @@ namespace Inmobiliaria.Models
                     }
                 }
             }
-            Console.WriteLine($"Total Propietarios: {lista.Count}");
-            Console.WriteLine("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ:");
-            Console.WriteLine("Propietarios List:");
+            // Console.WriteLine($"Total Propietarios: {lista.Count}");
+            // Console.WriteLine("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ:");
+            // Console.WriteLine("Propietarios List:");
             foreach (var propietario in lista)
             {
                 Console.WriteLine($"- {propietario.apellido}, {propietario.nombre} ({propietario.dniPropietario})");

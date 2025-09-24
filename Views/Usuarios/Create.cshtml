@@ -1,9 +1,8 @@
 
-
 @model Inmobiliaria.Models.Inquilino
 
 @{
-    ViewData["Title"] = "Editar Inquilino";
+    ViewData["Title"] = "Nuevo Inquilino";
 }
 
 <!-- Estilo para capitalizar la primera letra de las etiquetas -->
@@ -13,48 +12,50 @@
     }
 </style>
 
-<h2 class="mb-4">Editar Inquilino</h2>
+<h2 class="mb-4">Nuevo Inquilino</h2>
 
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="idInquilino" />
-
+<form asp-action="Create" method="post">
     <div class="mb-3">
-        <label asp-for="dniInquilino" class="form-label">DNI:</label>
+        <label for="dniInquilino" class="form-label">DNI</label>
+        @* <label asp-for="dniInquilino" class="form-label"></label> *@
         <input asp-for="dniInquilino" class="form-control" />
         <span asp-validation-for="dniInquilino" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="apellido" class="form-label">Apellido:</label>
+        <label asp-for="apellido" class="form-label"></label>
         <input asp-for="apellido" class="form-control" />
         <span asp-validation-for="apellido" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="nombre" class="form-label">Nombre:</label>
+        <label asp-for="nombre" class="form-label"></label>
         <input asp-for="nombre" class="form-control" />
         <span asp-validation-for="nombre" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="telefono" class="form-label">Teléfono:</label>
+        <label asp-for="telefono" class="form-label"></label>
         <input asp-for="telefono" class="form-control" />
         <span asp-validation-for="telefono" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="email" class="form-label">Email:</label>
+        <label asp-for="email" class="form-label"></label>
         <input asp-for="email" class="form-control" />
         <span asp-validation-for="email" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="domicilioPersonal" class="form-label">Domicilio personal:</label>
-        <input asp-for="domicilioPersonal" class="form-control" />
-        <span asp-validation-for="domicilioPersonal" class="text-danger"></span>
-    </div>
+    <label for="domicilioPersonal" class="form-label">Domicilio personal</label>
+    <input asp-for="domicilioPersonal" class="form-control" />
+    <span asp-validation-for="domicilioPersonal" class="text-danger"></span>
+</div>
 
-    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <button type="submit" class="btn btn-success">Guardar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
