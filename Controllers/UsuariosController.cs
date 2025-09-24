@@ -60,4 +60,6 @@ namespace Inmobiliaria.Controllers
             return RedirectToAction("Login", "Usuarios");
         }
     }
+
+    
 }
