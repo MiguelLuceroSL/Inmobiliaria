@@ -1,84 +1,62 @@
-@* @model Inmobiliaria.Models.Inquilino
-
-<h2>Editar Inquilino</h2>
-
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="idInquilino" />
-
-    <label>DNI:</label>
-    <input asp-for="dniInquilino" /><br />
-
-    <label>Apellido:</label>
-    <input asp-for="apellido" /><br />
-
-    <label>Nombre:</label>
-    <input asp-for="nombre" /><br />
-
-    <label>Teléfono:</label>
-    <input asp-for="telefono" /><br />
-
-    <label>Email:</label>
-    <input asp-for="email" /><br />
-
-    <label>Domicilio:</label>
-    <input asp-for="domicilioPersonal" /><br />
-
-    <button type="submit">Guardar cambios</button>
-</form> *@
-
-@model Inmobiliaria.Models.Inquilino
+@model Inmobiliaria.Models.Usuario
 
 @{
-    ViewData["Title"] = "Editar Inquilino";
+    ViewData["Title"] = "Editar Usuario";
 }
 
-<!-- Estilo para capitalizar la primera letra de las etiquetas -->
 <style>
     label.form-label {
         text-transform: capitalize;
     }
 </style>
 
-<h2 class="mb-4">Editar Inquilino</h2>
+<h2 class="mb-4">Editar Usuario</h2>
 
-
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="idInquilino" />
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">
-        <label asp-for="dniInquilino" class="form-label">DNI:</label>
-        <input asp-for="dniInquilino" class="form-control" />
-        <span asp-validation-for="dniInquilino" class="text-danger"></span>
+        <label asp-for="Nombre" class="form-label">Nombre:</label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="apellido" class="form-label">Apellido:</label>
-        <input asp-for="apellido" class="form-control" />
-        <span asp-validation-for="apellido" class="text-danger"></span>
+        <label asp-for="Apellido" class="form-label">Apellido:</label>
+        <input asp-for="Apellido" class="form-control" />
+        <span asp-validation-for="Apellido" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="nombre" class="form-label">Nombre:</label>
-        <input asp-for="nombre" class="form-control" />
-        <span asp-validation-for="nombre" class="text-danger"></span>
+        <label class="form-label">Avatar:</label>
+        <input type="file" name="AvatarArchivo" class="form-control" />
+        @if (!string.IsNullOrEmpty(Model.Avatar))
+        {
+            <img src="@Url.Content(Model.Avatar)" alt="Avatar actual" class="img-thumbnail mt-2" style="max-height: 150px;" />
+        }
     </div>
 
     <div class="mb-3">
-        <label asp-for="telefono" class="form-label">Teléfono:</label>
-        <input asp-for="telefono" class="form-control" />
-        <span asp-validation-for="telefono" class="text-danger"></span>
+        <label asp-for="Email" class="form-label">Email:</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="email" class="form-label">Email:</label>
-        <input asp-for="email" class="form-control" />
-        <span asp-validation-for="email" class="text-danger"></span>
+        <label asp-for="Clave" class="form-label">Clave:</label>
+        <input asp-for="Clave" type="password" class="form-control" />
+        <span asp-validation-for="Clave" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="domicilioPersonal" class="form-label">Domicilio personal:</label>
-        <input asp-for="domicilioPersonal" class="form-control" />
-        <span asp-validation-for="domicilioPersonal" class="text-danger"></span>
+        <label asp-for="Rol" class="form-label">Rol:</label>
+        <select asp-for="Rol" class="form-select">
+            <option value="">Seleccione un rol</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Empleado">Empleado</option>
+            <option value="Cliente">Cliente</option>
+        </select>
+        <span asp-validation-for="Rol" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar cambios</button>

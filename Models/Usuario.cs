@@ -13,7 +13,7 @@ namespace Inmobiliaria.Models
         public string Apellido { get; set; } = string.Empty;
 
         [Required]
-        public string Avatar { get; set; } = string.Empty;
+        public string? Avatar { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]

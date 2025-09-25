@@ -59,7 +59,88 @@ namespace Inmobiliaria.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Usuarios");
         }
-    }
-
     
+
+     public IActionResult Index()
+        {
+            var lista = repo.GetAll();
+            return View(lista);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Usuario u)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repo.Alta(u);
+                    TempData["SuccessMessage"] = "Usuario creado correctamente.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(u);
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocurrió un error al crear el usuario.";
+                return View(u);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var u = repo.ObtenerPorId(id);
+            if (u == null) return NotFound();
+            return View(u);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Usuario u)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repo.Editar(u);
+                    TempData["SuccessMessage"] = "Usuario editado correctamente.";
+                    return RedirectToAction("Index", "Usuarios");
+                }
+                return View(u);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocurrió un error al editar el usuario.";
+                Console.WriteLine("Error al editar el usuario:", ex);
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var u = repo.ObtenerPorId(id);
+            if (u == null) return NotFound();
+            return View(u);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            repo.Borrar(id);
+            return RedirectToAction("Index");
+        }
+
+
+    }
 }
