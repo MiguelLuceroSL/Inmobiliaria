@@ -175,31 +175,6 @@ public int ContarInmuebles()
             return i;
         }
 
-        // public void Editar(Inmueble i)
-        // {
-        //     using (var conn = new MySqlConnection(connectionString))
-        //     {
-        //         conn.Open();
-        //         var sql = @"UPDATE inmuebles 
-        //                     SET direccion=@dir, tipo=@tipo, superficie=@sup, ambientes=@amb, baños=@ban, cochera=@coch, 
-        //                         estado=@est, descripcion=@desc, id_propietario=@prop 
-        //                     WHERE id_inmueble=@id";
-        //         using (var cmd = new MySqlCommand(sql, conn))
-        //         {
-        //             cmd.Parameters.AddWithValue("@dir", i.direccion);
-        //             cmd.Parameters.AddWithValue("@tipo", i.tipo);
-        //             cmd.Parameters.AddWithValue("@sup", i.superficie);
-        //             cmd.Parameters.AddWithValue("@amb", i.ambientes);
-        //             cmd.Parameters.AddWithValue("@ban", i.baños);
-        //             cmd.Parameters.AddWithValue("@coch", i.cochera);
-        //             cmd.Parameters.AddWithValue("@est", i.estado);
-        //             cmd.Parameters.AddWithValue("@desc", i.descripcion);
-        //             cmd.Parameters.AddWithValue("@prop", i.idPropietario);
-        //             cmd.Parameters.AddWithValue("@id", i.idInmueble);
-        //             cmd.ExecuteNonQuery();
-        //         }
-        //     }
-        // }
 
         public bool Editar(Inmueble i)
         {

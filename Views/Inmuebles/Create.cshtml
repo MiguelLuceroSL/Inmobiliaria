@@ -67,11 +67,7 @@
     </div>
 
     <div class="mb-3">
-        @* <label asp-for="idPropietario" class="form-label">Propietario</label>
-        <select asp-for="idPropietario" asp-items="ViewBag.Propietarios" class="form-select">
-            <option value="">Seleccione un propietario</option>
-        </select>
-        <span asp-validation-for="idPropietario" class="text-danger"></span> *@
+     
             <label for="buscadorProp" class="form-label">Propietario</label>
             <input id="buscadorProp" type="text" class="form-control" placeholder="Buscar propietario: Ingrese 3 letras..." />
 
@@ -82,15 +78,7 @@
              </select>
             <span asp-validation-for="idPropietario" class="text-danger"></span>
     </div>
-    @* <div class="mb-3">
-        <label for="buscadorProp" class="form-label">Propietario</label>
-        <select asp-for="idPropietario" id="listaPropietarios" class="form-select">
-            <option value="@Model.idPropietario" selected>
-                @Model.apellidoPropietario @Model.nombrePropietario (@Model.Propietario?.dniPropietario)
-            </option>
-        </select>
-        <input id="buscadorProp" type="text" class="form-control" placeholder="Buscar propietario: Ingrese 3 letras..." />  
-    </div> *@
+  
 
 
     <button type="submit" class="btn btn-success">Guardar</button>

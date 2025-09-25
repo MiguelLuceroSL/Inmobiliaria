@@ -1,14 +1,4 @@
-@* @model Inmobiliaria.Models.Inmueble
 
-<h2>¿Seguro que desea eliminar este inmueble?</h2>
-
-<p>@Model.direccion (@Model.tipo - <!--arrobaModel.Uso-->)</p>
-
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="idInmueble" />
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form> *@
 @model Inmobiliaria.Models.Inmueble
 
 <h2 class="mb-3 text-danger">¿Seguro que desea eliminar este inmueble?</h2>
