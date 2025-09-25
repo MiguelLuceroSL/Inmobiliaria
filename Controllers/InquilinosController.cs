@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class InquilinosController : Controller
     {
         private InquilinoRepository repo = new InquilinoRepository();
@@ -12,11 +14,11 @@ namespace Inmobiliaria.Controllers
         //     var lista = repo.GetAll();
         //     return View(lista);
         // }
-         public IActionResult Index(int pagina = 1)
+        public IActionResult Index(int pagina = 1)
         {
 
-             int tamPagina = 10;
-           
+            int tamPagina = 10;
+
             var lista = repo.ObtenerListaInquilinos(pagina, tamPagina);
             // Calcular total de páginas (ejemplo básico, ajusta según tu lógica)
             int totalRegistros = repo.ContarInquilinos(); // Este método debe contar los registros totales
@@ -25,7 +27,7 @@ namespace Inmobiliaria.Controllers
             ViewBag.Pagina = pagina;
             ViewBag.TotalPaginas = totalPaginas;
             return View(lista);
-         }
+        }
 
 
 
@@ -35,7 +37,7 @@ namespace Inmobiliaria.Controllers
             return View();
         }
 
-       [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Inquilino i)
         {
@@ -76,8 +78,8 @@ namespace Inmobiliaria.Controllers
             return View(i);
         }
 
-      [HttpPost]
-      [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Inquilino i)
         {
             try

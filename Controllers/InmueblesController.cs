@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria.Models;
 using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class InmueblesController : Controller
     {
         private InmuebleRepository repo = new InmuebleRepository();
@@ -13,8 +15,8 @@ namespace Inmobiliaria.Controllers
         public IActionResult Index(int pagina = 1)
         {
 
-             int tamPagina = 10;
-           
+            int tamPagina = 10;
+
             var lista = repo.ObtenerListaInmuebles(pagina, tamPagina);
             // Calcular total de páginas (ejemplo básico, ajusta según tu lógica)
             int totalRegistros = repo.ContarInmuebles(); // Este método debe contar los registros totales
@@ -25,7 +27,7 @@ namespace Inmobiliaria.Controllers
             return View(lista);
 
 
-         }
+        }
 
 
         [HttpGet]
@@ -45,26 +47,26 @@ namespace Inmobiliaria.Controllers
             }
             return View(i);
         }
-   
-    [HttpGet]
-    public IActionResult Details(int id)
-    {
-        var inmueble = repo.ObtenerPorId(id);
-        if (inmueble == null)
+
+        [HttpGet]
+        public IActionResult Details(int id)
         {
-            return NotFound();
+            var inmueble = repo.ObtenerPorId(id);
+            if (inmueble == null)
+            {
+                return NotFound();
+            }
+
+            // Si el inmueble tiene un propietario, lo buscamos
+            if (inmueble.idPropietario != 0)
+            {
+                var propietario = repoPropietarios.ObtenerPorId(inmueble.idPropietario);
+                inmueble.Propietario = propietario;
+            }
+
+            return View(inmueble);
         }
 
-        // Si el inmueble tiene un propietario, lo buscamos
-        if (inmueble.idPropietario != 0)
-        {
-            var propietario = repoPropietarios.ObtenerPorId(inmueble.idPropietario);
-            inmueble.Propietario = propietario;
-        }
-
-        return View(inmueble);
-    }
-      
 
         [HttpGet]
         public IActionResult Edit(int id)
@@ -77,11 +79,11 @@ namespace Inmobiliaria.Controllers
         [HttpPost]
         public IActionResult Edit(Inmueble i)
         {
-           
+
             try
             {
                 if (ModelState.IsValid)
-                {   
+                {
                     repo.Editar(i);
                     TempData["SuccessMessage"] = "Inmueble editado correctamente.";
                     return RedirectToAction("Index", "Inmuebles");
@@ -113,7 +115,7 @@ namespace Inmobiliaria.Controllers
             return View(i);
         }
 
-      
+
 
 
         [HttpPost, ActionName("Delete")]

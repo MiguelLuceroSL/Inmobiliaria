@@ -1,8 +1,10 @@
 using Inmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PagosController : Controller
     {
         private readonly PagoRepository repo;

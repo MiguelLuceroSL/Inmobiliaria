@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PropietariosController : Controller
     {
         private readonly PropietarioRepository repo;
@@ -57,7 +59,7 @@ namespace Inmobiliaria.Controllers
             return View(p);
         }
 
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Propietario p)
@@ -96,6 +98,6 @@ namespace Inmobiliaria.Controllers
             return RedirectToAction("Index");
         }
 
-       
+
     }
 }
