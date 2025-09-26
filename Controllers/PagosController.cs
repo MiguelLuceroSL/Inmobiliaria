@@ -56,7 +56,6 @@ namespace Inmobiliaria.Controllers
             try
             {
                 repo.Anular(idPago, User.Identity.Name);
-                TempData["SuccessMessage"] = "Pago anulado correctamente.";
             }
             catch (Exception ex)
             {

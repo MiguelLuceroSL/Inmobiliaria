@@ -31,7 +31,8 @@ namespace Inmobiliaria.Controllers
             return View();
         }
 
-        [HttpPost]
+        //VIEJO CREATE
+        /*[HttpPost]
         [Authorize]
         public IActionResult Create(Contrato c)
         {
@@ -57,6 +58,41 @@ namespace Inmobiliaria.Controllers
             catch (Exception ex)
             {
                 //registramos la excepción en ex
+                TempData["ErrorMessage"] = "Ocurrió un error al crear el contrato.";
+                return RedirectToAction("Index", "Contratos");
+            }
+        }*/
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Create(Contrato c)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (repo.ExisteContratoEnRango(c.idInmueble, c.fechaDesde, c.fechaHasta))
+                    {
+                        TempData["ErrorMessage"] = "El inmueble ya tiene un contrato en ese rango de fechas.";
+                        return View(c);
+                    }
+
+                    c.estadoContrato = "Vigente";
+                    c.alDia = true;
+                    c.fechaRescision = null;
+                    c.canceladoPor = "";
+
+                    repo.Alta(c);
+                    TempData["SuccessMessage"] = "Contrato creado correctamente.";
+                    return RedirectToAction("Index", "Contratos");
+                }
+                else
+                {
+                    return View(c);
+                }
+            }
+            catch (Exception ex)
+            {
                 TempData["ErrorMessage"] = "Ocurrió un error al crear el contrato.";
                 return RedirectToAction("Index", "Contratos");
             }

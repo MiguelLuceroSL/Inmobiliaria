@@ -84,6 +84,30 @@ namespace Inmobiliaria.Models
             return res;
         }
 
+        public bool ExisteContratoEnRango(int idInmueble, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = @"SELECT COUNT(*) 
+                    FROM contratos 
+                    WHERE id_inmueble = @idInmueble 
+                      AND estado_contrato = 'Vigente'
+                      AND (
+                          (fecha_desde <= @fechaHasta AND fecha_hasta >= @fechaDesde)
+                      )";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idInmueble", idInmueble);
+                    cmd.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+                    cmd.Parameters.AddWithValue("@fechaHasta", fechaHasta);
+
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
+
         public Contrato ObtenerPorId(int id)
         {
             Contrato c = new Contrato();
@@ -171,7 +195,7 @@ namespace Inmobiliaria.Models
                 }
             }
             return res;
-            
+
         }
 
         public int Borrar(int id)
