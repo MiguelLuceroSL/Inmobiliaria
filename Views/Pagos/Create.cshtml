@@ -5,8 +5,24 @@
 <form asp-action="Create">
     <input type="hidden" asp-for="idContrato" />
     <div class="mb-3">
+        <label for="mesPago">Mes a pagar</label>
+        <select id="mesPago" name="mesPago" class="form-control">
+            @for (int i = 1; i <= (int)ViewBag.meses; i++)
+            {
+                <option value="@i">Mes @i</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
         <label asp-for="numeroPago"></label>
-        <input asp-for="numeroPago" class="form-control" />
+        <input asp-for="numeroPago" class="form-control" id="numeroPago" value="" readonly />
+        <script>
+            document.getElementById('mesPago').addEventListener('change', function() {
+            document.getElementById('numeroPago').value = this.value;
+            });
+            //inicia apenas cargamos la web
+            document.getElementById('numeroPago').value = document.getElementById('mesPago').value;
+        </script>
     </div>
     <div class="mb-3">
         <label asp-for="fechaPago"></label>
@@ -18,7 +34,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="importe"></label>
-        <input asp-for="importe" class="form-control" type="number" step="0.01" />
+        <input asp-for="importe" class="form-control" value="@ViewBag.cuotaMensual" readonly/>
     </div>
     <button type="submit" class="btn btn-success">Guardar</button>
     <a asp-action="Index" asp-route-contratoId="@Model.idContrato" class="btn btn-secondary">Cancelar</a>

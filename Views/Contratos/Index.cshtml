@@ -31,6 +31,7 @@
             <th>Fecha Desde</th>
             <th>Fecha Hasta</th>
             <th>Cuota Mensual</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -44,6 +45,7 @@
                 <td>@contrato.fechaDesde.ToShortDateString()</td>
                 <td>@contrato.fechaHasta.ToShortDateString()</td>
                 <td>@contrato.cuotaMensual.ToString("C")</td>
+                <td>@contrato.estadoContrato.ToString()</td>
                 <td>
                     
                     <div class="d-flex flex-wrap gap-2">                 

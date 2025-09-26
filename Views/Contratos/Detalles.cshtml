@@ -7,10 +7,14 @@
 <p><b>Duración:</b> @ViewBag.MesesContrato meses</p>
 <p><b>Cuota mensual:</b> @ViewBag.CuotaMensual.ToString("C")</p>
 <p><b>Pagos esperados hasta hoy:</b> @ViewBag.PagosEsperados</p>
-<p>
-    <b>Monto debido:</b>
-     @ViewBag.Deuda.ToString("C")
-    <span style="cursor: pointer;" title="Se aplicará un 5% de interés a cada cuota si está atrasada la misma. Formula: cuotas atrasadas * (cuota mensual + interes) en este caso sería: @ViewBag.PagosEsperados * (@ViewBag.CuotaMensual.ToString("C") + 5%) donde el 5% ya lo calculamos previamente.">❓</span>
-</p>
+<p><b>Pagos realizados:</b> @ViewBag.PagosRealizados</p>
+@if (ViewBag.AlDia)
+{
+    <p style="color:green;"><b>El contrato está al día con los pagos.</b></p>
+}
+else
+{
+    <p style="color:red;"><b>El contrato tiene pagos pendientes.</b></p>
+}
 
 <a asp-action="Index" class="btn btn-secondary">Volver</a>

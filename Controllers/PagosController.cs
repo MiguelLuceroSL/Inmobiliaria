@@ -24,9 +24,15 @@ namespace Inmobiliaria.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Create(int contratoId)
+        public IActionResult Create(int idContrato)
         {
-            var pago = new Pago { idContrato = contratoId, fechaPago = DateTime.Today };
+            var pago = new Pago { idContrato = idContrato, fechaPago = DateTime.Today };
+            var contratoRepo = new ContratoRepository();
+            var contrato = contratoRepo.ObtenerPorId(idContrato);
+            var service = new ContratoService();
+            var meses = service.CalcularMesesContrato(contrato);
+            ViewBag.CuotaMensual = contrato?.cuotaMensual ?? 0;
+            ViewBag.Meses = meses;
             return View(pago);
         }
 
@@ -42,11 +48,20 @@ namespace Inmobiliaria.Controllers
             return View(p);
         }
 
-        [HttpPost]
+
+        [HttpGet]
         [Authorize]
         public IActionResult Anular(int idPago, int contratoId)
         {
-            repo.Anular(idPago);
+            try
+            {
+                repo.Anular(idPago, User.Identity.Name);
+                TempData["SuccessMessage"] = "Pago anulado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocurrió un error al anular el pago.";
+            }
             return RedirectToAction("Index", new { contratoId });
         }
     }

@@ -11,7 +11,9 @@
             <th>Detalle</th>
             <th>Importe</th>
             <th>Anulado</th>
+            <th>Anulado por</th>
             <th>Acciones</th>
+
         </tr>
     </thead>
     <tbody>
@@ -23,12 +25,22 @@
                 <td>@p.detalle</td>
                 <td>@p.importe.ToString("C")</td>
                 <td>@(p.anulado ? "Sí" : "No")</td>
+                @if (p.anulado)
+                {
+                    <td>@p.anuladoPor</td>
+                }
+                else
+                {
+                    <td></td>
+                }
                 <td>
                     @if (!p.anulado)
                     {
-                        <a asp-action="Anular" asp-route-idPago="@p.idPago" asp-route-contratoId="@p.idContrato" class="btn btn-danger">Anular</a>
+                        <a asp-action="Anular" asp-route-idPago="@p.idPago" asp-route-contratoId="@ViewBag.ContratoId" class="btn btn-danger">Anular</a>
                     }
                 </td>
+                
+                
             </tr>
         }
     </tbody>

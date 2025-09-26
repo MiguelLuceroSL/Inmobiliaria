@@ -25,9 +25,10 @@ namespace Inmobiliaria.Models
                             idContrato = reader.GetInt32("id_contrato"),
                             numeroPago = reader.GetInt32("numero_pago"),
                             fechaPago = reader.GetDateTime("fecha_pago"),
-                            detalle = reader.GetString("detalle"),
+                            detalle = reader.IsDBNull(reader.GetOrdinal("detalle")) ? null : reader.GetString("detalle"),
                             importe = reader.GetDecimal("importe"),
-                            anulado = reader.GetBoolean("anulado")
+                            anulado = reader.GetBoolean("anulado"),
+                            anuladoPor = reader.IsDBNull(reader.GetOrdinal("anulado_por")) ? null : reader.GetString("anulado_por")
                         });
                     }
                 }
@@ -75,16 +76,17 @@ namespace Inmobiliaria.Models
             return cantidad;
         }
 
-        public int Anular(int idPago)
+        public int Anular(int idPago, string anuladoPor)
         {
             int res = -1;
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                var sql = "UPDATE pagos SET anulado=1 WHERE id_pago=@id";
+                var sql = "UPDATE pagos SET anulado=1, anulado_por=@anuladoPor WHERE id_pago=@id";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", idPago);
+                    cmd.Parameters.AddWithValue("@anuladoPor", anuladoPor);
                     res = cmd.ExecuteNonQuery();
                 }
             }

@@ -108,7 +108,9 @@ namespace Inmobiliaria.Models
                             fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
                             ? null
                             : reader.GetDateTime("fecha_rescision"),
-                            canceladoPor = reader.GetString("cancelado_por"),
+                            canceladoPor = reader.IsDBNull(reader.GetOrdinal("cancelado_por"))
+                            ? null
+                            : reader.GetString("cancelado_por"),
                             fechaDesde = reader.GetDateTime("fecha_desde"),
                             fechaHasta = reader.GetDateTime("fecha_hasta")
                         };
@@ -152,6 +154,24 @@ namespace Inmobiliaria.Models
                 }
             }
             return res;
+        }
+
+        public int cancelarContrato(int idContrato, string anuladoPor)
+        {
+            int res = -1;
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = "UPDATE contratos SET estado_contrato='Cancelado', cancelado_por=@anuladoPor, fecha_rescision=CURDATE() WHERE id_contrato=@id";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", idContrato);
+                    cmd.Parameters.AddWithValue("@anuladoPor", anuladoPor);
+                    res = cmd.ExecuteNonQuery();
+                }
+            }
+            return res;
+            
         }
 
         public int Borrar(int id)

@@ -125,7 +125,7 @@ namespace Inmobiliaria.Controllers
 
             var mesesContrato = service.CalcularMesesContrato(contrato);
             var pagosEsperados = service.CalcularPagosEsperados(contrato);
-
+            var alDia = pagosEsperados <= pagosRealizados;
 
 
             ViewBag.MesesContrato = mesesContrato;
@@ -133,6 +133,8 @@ namespace Inmobiliaria.Controllers
             ViewBag.PagosEsperados = pagosEsperados;
             ViewBag.NombreInquilino = $"{inquilino.nombre} {inquilino.apellido}";
             ViewBag.DireccionInmueble = inmueble.direccion;
+            ViewBag.PagosRealizados = pagosRealizados;
+            ViewBag.AlDia = alDia;
 
             return View(contrato);
         }
@@ -149,14 +151,16 @@ namespace Inmobiliaria.Controllers
             return View(contrato);
         }
 
+
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public IActionResult Delete(Contrato c)
         {
             try
             {
-                repo.Borrar(c.idContrato);
-                TempData["SuccessMessage"] = "Contrato eliminado correctamente.";
+                repo.cancelarContrato(c.idContrato, User.Identity.Name);
+                TempData["SuccessMessage"] = "Contrato cancelado correctamente.";
                 return RedirectToAction("Index", "Contratos");
             }
             catch (Exception ex)
