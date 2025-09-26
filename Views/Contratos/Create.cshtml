@@ -54,7 +54,7 @@
                 cargarResultados(false);
             });
 
-            function cargarResultados(limpiar) {
+            @* function cargarResultados(limpiar) {
                 fetch(`${url}?term=${encodeURIComponent(terminoActual)}&offset=${offset}`)
                     .then(response => response.json())
                     .then(data => {
@@ -75,7 +75,33 @@
 
                         document.getElementById(btnMasId).style.display = data.length === 20 ? "inline-block" : "none";
                     });
-            }
+            } *@
+            function cargarResultados(limpiar) {
+             fetch(`${url}?term=${encodeURIComponent(terminoActual)}&offset=${offset}`)
+                .then(response => response.json())
+                .then(data => {
+                    let select = document.getElementById(selectId);
+                    if (limpiar) select.innerHTML = "";
+
+                    data.forEach(item => {
+                        let option = document.createElement("option");
+                        option.value = item.idInmueble ?? item.idInquilino;
+                        option.textContent = item.apellido
+                            ? `${item.apellido}, ${item.nombre} - ${item.dniInquilino}`
+                            : `${item.direccion} (${item.tipo})`;
+                        select.appendChild(option);
+                    });
+
+                    // Selecciona automáticamente la primera opción si hay resultados
+                    if (data.length > 0) {
+                        select.selectedIndex = 0;
+                    }
+
+                    document.getElementById(btnMasId).style.display = data.length === 20 ? "inline-block" : "none";
+                });
+        }
+
+
         }
 
         setupBusqueda("buscarInquilino", "listaInquilinos", "btnMasInq", "/Inquilinos/Buscar");

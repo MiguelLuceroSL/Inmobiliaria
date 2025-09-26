@@ -29,6 +29,20 @@ namespace Inmobiliaria.Controllers
 
 
         }
+        [HttpGet]
+        [Authorize]
+        public IActionResult Buscar(string term, int offset = 0)
+        {
+            var resultados = repo.Buscar(term, offset); // Este método debe existir en tu repositorio
+
+            var lista = resultados.Select(i => new {
+                idInmueble = i.idInmueble,
+                direccion = i.direccion,
+                tipo = i.tipo
+            });
+
+            return Json(lista);
+        }
 
 
         [HttpGet]

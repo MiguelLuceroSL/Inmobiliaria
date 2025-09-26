@@ -9,51 +9,59 @@ namespace Inmobiliaria.Models
         public List<ContratoDetalle> GetAllConDetalles()
         {
             var lista = new List<ContratoDetalle>();
-            using (var conn = new MySqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                var sql = @"SELECT c.id_contrato, c.fecha_desde, c.fecha_hasta, c.cuota_mensual, c.estado_contrato, c.al_dia, c.fecha_rescision, c.cancelado_por,
-                           i.nombre AS nombre_inquilino,
-                           im.descripcion, im.direccion
-                    FROM contratos c
-                    JOIN inquilinos i ON c.id_inquilino = i.id_inquilino
-                    JOIN inmuebles im ON c.id_inmueble = im.id_inmueble";
-
-                using (var cmd = new MySqlCommand(sql, conn))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    conn.Open();
+                    var sql = @"SELECT c.id_contrato, c.fecha_desde, c.fecha_hasta, c.cuota_mensual, c.estado_contrato, c.al_dia, c.fecha_rescision, c.cancelado_por,
+                                    i.nombre AS nombre_inquilino,
+                                    im.descripcion, im.direccion
+                                FROM contratos c
+                                JOIN inquilinos i ON c.id_inquilino = i.id_inquilino
+                                JOIN inmuebles im ON c.id_inmueble = im.id_inmueble";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        lista.Add(new ContratoDetalle
+                        while (reader.Read())
                         {
-                            idContrato = reader.GetInt32("id_contrato"),
-                            fechaDesde = reader.GetDateTime("fecha_desde"),
-                            fechaHasta = reader.GetDateTime("fecha_hasta"),
-                            cuotaMensual = reader.GetDecimal("cuota_mensual"),
-                            estadoContrato = reader.GetString("estado_contrato"),
-                            alDia = reader.GetBoolean("al_dia"),
-                            fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
-                            ? null
-                            : reader.GetDateTime("fecha_rescision"),
-                            canceladoPor = reader.IsDBNull(reader.GetOrdinal("cancelado_por"))
-                            ? null
-                            : reader.GetString("cancelado_por"),
-                            nombreInquilino = reader.GetString("nombre_inquilino"),
-                            descripcionInmueble = reader.GetString("descripcion"),
-                            direccionInmueble = reader.GetString("direccion")
-                        });
+                            lista.Add(new ContratoDetalle
+                            {
+                                idContrato = reader.GetInt32("id_contrato"),
+                                fechaDesde = reader.GetDateTime("fecha_desde"),
+                                fechaHasta = reader.GetDateTime("fecha_hasta"),
+                                cuotaMensual = reader.GetDecimal("cuota_mensual"),
+                                estadoContrato = reader.GetString("estado_contrato"),
+                                alDia = reader.GetBoolean("al_dia"),
+                                fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
+                                    ? null
+                                    : reader.GetDateTime("fecha_rescision"),
+                                canceladoPor = reader.IsDBNull(reader.GetOrdinal("cancelado_por"))
+                                    ? null
+                                    : reader.GetString("cancelado_por"),
+                                nombreInquilino = reader.IsDBNull(reader.GetOrdinal("nombre_inquilino"))
+                                    ? string.Empty
+                                    : reader.GetString("nombre_inquilino"),
+                                descripcionInmueble = reader.IsDBNull(reader.GetOrdinal("descripcion"))
+                                    ? string.Empty
+                                    : reader.GetString("descripcion"),
+                                direccionInmueble = reader.IsDBNull(reader.GetOrdinal("direccion"))
+                                    ? string.Empty
+                                    : reader.GetString("direccion")
+                            });
+                        }
                     }
                 }
             }
-            foreach (var contratoEach in lista)
+            catch (Exception ex)
             {
-                Console.WriteLine(
-                    $"Contrato {contratoEach.idContrato}: Inquilino {contratoEach.nombreInquilino} | " +
-                    $"Inmueble: {contratoEach.descripcionInmueble} - {contratoEach.direccionInmueble}"
-                );
+                throw new ApplicationException("Error al obtener los contratos", ex);
             }
+
             return lista;
         }
+
 
         public int Alta(Contrato c)
         {

@@ -48,13 +48,52 @@ namespace Inmobiliaria.Models
             return lista;
         }
         
-    
-    public IList<Inmueble> ObtenerListaInmuebles(int paginaNro = 1, int tamPagina = 10)
-    {   
-        IList<Inmueble> res = new List<Inmueble>();
-        using (var connection = new MySqlConnection(connectionString))
+    public List<Inmueble> Buscar(string term, int offset = 0, int limit = 20)
+{
+    var lista = new List<Inmueble>();
+    using (var connection = new MySqlConnection(connectionString))
+    {
+        string sql = @"SELECT * FROM inmuebles 
+                       WHERE direccion LIKE @term OR tipo LIKE @term 
+                       LIMIT @limit OFFSET @offset";
+
+        using (var command = new MySqlCommand(sql, connection))
         {
-            string sql = @"
+            command.Parameters.AddWithValue("@term", "%" + term + "%");
+            command.Parameters.AddWithValue("@limit", limit);
+            command.Parameters.AddWithValue("@offset", offset);
+
+            connection.Open();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var i = new Inmueble
+                {
+                    idInmueble = reader.GetInt32("id_Inmueble"),
+                    direccion = reader.GetString("direccion"),
+                    tipo = reader.GetString("tipo")
+                    // Agregá más campos si los necesitás
+                };
+                lista.Add(i);
+            }
+        }
+    }
+    return lista;
+}
+
+    
+
+
+
+
+
+
+    public IList<Inmueble> ObtenerListaInmuebles(int paginaNro = 1, int tamPagina = 10)
+        {
+            IList<Inmueble> res = new List<Inmueble>();
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                string sql = @"
                 SELECT i.id_inmueble, i.direccion, i.tipo, i.superficie, i.ambientes, i.baños, i.cochera,
                     i.estado, i.descripcion, i.id_propietario,
                     p.nombre AS nombrePropietario, p.apellido AS apellidoPropietario, p.dni_propietario AS dni_propietario
@@ -63,40 +102,40 @@ namespace Inmobiliaria.Models
                 LIMIT @limit OFFSET @offset
             ";
 
-        using (var command = new MySqlCommand(sql, connection))
-        {
-            command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@limit", tamPagina);
-            command.Parameters.AddWithValue("@offset", (paginaNro - 1) * tamPagina);
-
-            connection.Open();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    Inmueble i = new Inmueble
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@limit", tamPagina);
+                    command.Parameters.AddWithValue("@offset", (paginaNro - 1) * tamPagina);
+
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        idInmueble = reader.GetInt32("id_inmueble"),
-                        direccion = reader.GetString("direccion"),
-                        tipo = reader.GetString("tipo"),
-                        superficie = reader.GetDouble("superficie"),
-                        ambientes = reader.GetInt32("ambientes"),
-                        baños = reader.GetInt32("baños"),
-                        cochera = reader.GetBoolean("cochera"),
-                        estado = reader.GetString("estado"),
-                        descripcion = reader.GetString("descripcion"),
-                        idPropietario = reader.GetInt32("id_propietario"),
-                        nombrePropietario = reader.IsDBNull(reader.GetOrdinal("nombrePropietario")) ? null : reader.GetString("nombrePropietario"),
-                        apellidoPropietario = reader.IsDBNull(reader.GetOrdinal("apellidoPropietario")) ? null : reader.GetString("apellidoPropietario"),
-                        dniPropietario = reader.IsDBNull(reader.GetOrdinal("dni_propietario")) ? null : reader.GetString("dni_propietario")
-                    };
-                    res.Add(i);
+                        while (reader.Read())
+                        {
+                            Inmueble i = new Inmueble
+                            {
+                                idInmueble = reader.GetInt32("id_inmueble"),
+                                direccion = reader.GetString("direccion"),
+                                tipo = reader.GetString("tipo"),
+                                superficie = reader.GetDouble("superficie"),
+                                ambientes = reader.GetInt32("ambientes"),
+                                baños = reader.GetInt32("baños"),
+                                cochera = reader.GetBoolean("cochera"),
+                                estado = reader.GetString("estado"),
+                                descripcion = reader.GetString("descripcion"),
+                                idPropietario = reader.GetInt32("id_propietario"),
+                                nombrePropietario = reader.IsDBNull(reader.GetOrdinal("nombrePropietario")) ? null : reader.GetString("nombrePropietario"),
+                                apellidoPropietario = reader.IsDBNull(reader.GetOrdinal("apellidoPropietario")) ? null : reader.GetString("apellidoPropietario"),
+                                dniPropietario = reader.IsDBNull(reader.GetOrdinal("dni_propietario")) ? null : reader.GetString("dni_propietario")
+                            };
+                            res.Add(i);
+                        }
+                    }
                 }
             }
+            return res;
         }
-    }
-    return res;
-}
 
 
 public int ContarInmuebles()
