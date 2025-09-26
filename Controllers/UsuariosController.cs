@@ -2,6 +2,7 @@ using Inmobiliaria.Models;
 using Inmobiliaria.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -23,34 +24,41 @@ namespace Inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string clave)
         {
-            var usuario = repo.Login(email, clave);
+            // busca el usuario en la base de datos usando el email y la clave
+            var usuario = repo.obtenerPorEmail(email);
 
-            if (usuario == null)
+            if (usuario != null && BCrypt.Net.BCrypt.Verify(clave, usuario.Clave))
             {
-                ViewBag.Error = "Email o contraseña incorrectos";
-                return View();
-            }
+                // el usuario y la clave son correctos, continúa con el login
+                // crea una lista de claims con el nombre, email y rol del usuario
+                var claims = new List<Claim>
+                    {
+                    new Claim(ClaimTypes.Name, usuario.Nombre + " " + usuario.Apellido),
+                    new Claim(ClaimTypes.Email, usuario.Email),
+                    new Claim(ClaimTypes.Role, usuario.Rol)
+                    };
 
-            // Claims
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, usuario.Nombre + " " + usuario.Apellido),
-                new Claim(ClaimTypes.Email, usuario.Email),
-                new Claim(ClaimTypes.Role, usuario.Rol)
-            };
-
-            var claimsIdentity = new ClaimsIdentity(
+                // crea la identidad de claims usando autenticación por cookies
+                var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            await HttpContext.SignInAsync(
+                // inicia sesión en la aplicación con los claims del usuario
+                await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
 
-            //redirección según rol
-            if (usuario.Rol == "admin")
-                return RedirectToAction("PanelAdmin", "Home");
+                // redirige según el rol del usuario
+                if (usuario.Rol == "Admin")
+                    return RedirectToAction("PanelAdmin", "Home");
+                else
+                    return RedirectToAction("PanelUsuario", "Home");
+            }
             else
-                return RedirectToAction("Panel", "Home");
+            {
+                // si la clave es incorrecta, muestra un error en la vista
+                ViewBag.Error = "Email o contraseña incorrectos";
+                return View();
+            }
         }
 
         [HttpGet]
@@ -59,15 +67,16 @@ namespace Inmobiliaria.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Usuarios");
         }
-    
 
-     public IActionResult Index()
+
+        public IActionResult Index()
         {
             var lista = repo.GetAll();
             return View(lista);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -80,12 +89,15 @@ namespace Inmobiliaria.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Console.WriteLine("Modelo válido");
+                    u.Clave = BCrypt.Net.BCrypt.HashPassword(u.Clave);
                     repo.Alta(u);
                     TempData["SuccessMessage"] = "Usuario creado correctamente.";
                     return RedirectToAction("Index");
                 }
                 else
                 {
+                    Console.WriteLine("Modelo inválido");
                     return View(u);
                 }
             }

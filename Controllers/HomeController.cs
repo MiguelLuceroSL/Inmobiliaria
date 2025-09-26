@@ -20,6 +20,12 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize(Roles = "Empleado")]
+    public IActionResult PanelUsuario()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();

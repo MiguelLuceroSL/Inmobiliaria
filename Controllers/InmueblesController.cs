@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class InmueblesController : Controller
     {
         private InmuebleRepository repo = new InmuebleRepository();

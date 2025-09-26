@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class ContratosController : Controller
     {
         private readonly ContratoRepository repo;

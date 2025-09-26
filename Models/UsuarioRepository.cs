@@ -132,6 +132,35 @@ namespace Inmobiliaria.Repositories
             return res;
         }
 
+        public Usuario obtenerPorEmail(string email)
+        {
+            Usuario u = null;
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                var sql = "SELECT * FROM usuarios WHERE email=@mail";
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@mail", email);
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        u = new Usuario
+                        {
+                            Id = reader.GetInt32("id"),
+                            Nombre = reader.GetString("nombre"),
+                            Apellido = reader.GetString("apellido"),
+                            Avatar = reader.GetString("avatar"),
+                            Email = reader.GetString("email"),
+                            Clave = reader.GetString("clave"),
+                            Rol = reader.GetString("rol")
+                        };
+                    }
+                }
+            }
+            return u;
+        }
+
         public Usuario ObtenerPorId(int id)
         {
             Usuario u = null;
