@@ -70,7 +70,8 @@ namespace Inmobiliaria.Controllers
             return RedirectToAction("Login", "Usuarios");
         }
 
-
+        [HttpGet]
+        [Authorize]
         public IActionResult Index()
         {
             var lista = repo.GetAll();
@@ -136,17 +137,13 @@ namespace Inmobiliaria.Controllers
                     if (u.Id != userId && !User.IsInRole("Admin"))
                     {
                         TempData["ErrorMessage"] = "No tenés permiso para editar este usuario.";
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Usuarios");
                     }
 
                     repo.Editar(u);
                     TempData["SuccessMessage"] = "Usuario editado correctamente.";
 
-                    // si el admin editó a otro, vuelve al listado, si es empleado vuelve a su perfil
-                    if (User.IsInRole("Admin"))
-                        return RedirectToAction("Index", "Usuarios");
-                    else
-                        return RedirectToAction("Details", new { id = userId });
+                    return RedirectToAction("Index", "Usuarios");
                 }
 
                 return View(u);
