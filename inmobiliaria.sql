@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2025 at 07:54 AM
+-- Generation Time: Sep 26, 2025 at 09:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,22 +33,20 @@ CREATE TABLE `contratos` (
   `id_inmueble` int(11) NOT NULL,
   `fecha_desde` date NOT NULL,
   `fecha_hasta` date NOT NULL,
-  `monto_inicial` decimal(10,2) NOT NULL,
-  `monto_actual` decimal(10,2) NOT NULL,
   `cuota_mensual` decimal(10,2) NOT NULL,
-  `estado_contrato` varchar(20) DEFAULT 'Vigente',
+  `estado_contrato` enum('Vigente','Finalizado','Cancelado','') DEFAULT 'Vigente',
   `al_dia` tinyint(1) DEFAULT 1,
   `fecha_rescision` date DEFAULT NULL,
-  `interes_mora` decimal(5,2) DEFAULT 0.00
+  `cancelado_por` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `contratos`
 --
 
-INSERT INTO `contratos` (`id_contrato`, `id_inquilino`, `id_inmueble`, `fecha_desde`, `fecha_hasta`, `monto_inicial`, `monto_actual`, `cuota_mensual`, `estado_contrato`, `al_dia`, `fecha_rescision`, `interes_mora`) VALUES
-(1, 1, 1, '2025-09-13', '2025-12-17', 0.00, 0.00, 0.00, 'Vigente', 1, NULL, 0.00),
-(3, 2, 15, '2025-09-12', '2026-04-30', 0.00, 0.00, 0.00, 'Vigente', 1, NULL, 0.00);
+INSERT INTO `contratos` (`id_contrato`, `id_inquilino`, `id_inmueble`, `fecha_desde`, `fecha_hasta`, `cuota_mensual`, `estado_contrato`, `al_dia`, `fecha_rescision`, `cancelado_por`) VALUES
+(1, 1, 1, '2025-09-13', '2025-12-17', 70.00, 'Cancelado', 1, '2025-09-26', 'Admin Principal'),
+(3, 2, 15, '2025-09-12', '2026-04-30', 95.00, 'Vigente', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -375,8 +373,16 @@ CREATE TABLE `pagos` (
   `fecha_pago` date NOT NULL,
   `importe` decimal(10,2) NOT NULL,
   `detalle` varchar(255) DEFAULT NULL,
-  `anulado` tinyint(1) NOT NULL DEFAULT 0
+  `anulado` tinyint(1) NOT NULL DEFAULT 0,
+  `anulado_por` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pagos`
+--
+
+INSERT INTO `pagos` (`id_pago`, `id_contrato`, `numero_pago`, `fecha_pago`, `importe`, `detalle`, `anulado`, `anulado_por`) VALUES
+(2, 1, 1, '2025-09-26', 70.00, '1er pago', 1, 'Admin Principal');
 
 -- --------------------------------------------------------
 
@@ -426,7 +432,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `avatar`, `email`, `clave`, `rol`) VALUES
-(1, 'Admin', 'Principal', 'default.png', 'admin@admin.com', '$2a$11$x8/fubXLlMg7ngNOoIkvLO914d7Tsy5pUL77BNsuglN0XEnNAjFRW', 'Admin'),
+(1, 'Admin', 'Principal', '', 'admin@admin.com', '$2a$11$x8/fubXLlMg7ngNOoIkvLO914d7Tsy5pUL77BNsuglN0XEnNAjFRW', 'Admin'),
 (2, 'Miguel', 'Lucero', '', 'miguellucero@gmail.com', '$2a$11$FX5HJgkPBxKz13aqG/qQOOxz0Flo2hjNqpQ2tpItoY4tAD.N36Dke', 'Empleado'),
 (3, 'Roque', 'Fernandez', '', 'rfernandez08@gmail.com', '$2a$11$66G38R20W2AOAHkF7k7lieiWG2hg2XNCT/fYbEFOUolzRGBB4Dvm6', 'Empleado');
 
@@ -501,7 +507,7 @@ ALTER TABLE `inquilinos`
 -- AUTO_INCREMENT for table `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `propietarios`
