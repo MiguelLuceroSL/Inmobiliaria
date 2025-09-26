@@ -30,7 +30,7 @@
             <th>Inmueble</th>
             <th>Fecha Desde</th>
             <th>Fecha Hasta</th>
-            <th>Monto Inicial</th>
+            <th>Cuota Mensual</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -43,7 +43,7 @@
                 <td>@contrato.descripcionInmueble - @contrato.direccionInmueble</td>
                 <td>@contrato.fechaDesde.ToShortDateString()</td>
                 <td>@contrato.fechaHasta.ToShortDateString()</td>
-                <td>@contrato.montoInicial.ToString("C")</td>
+                <td>@contrato.cuotaMensual.ToString("C")</td>
                 <td>
                     
                     <div class="d-flex flex-wrap gap-2">                 

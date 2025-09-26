@@ -12,7 +12,7 @@ namespace Inmobiliaria.Models
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                var sql = @"SELECT c.id_contrato, c.fecha_desde, c.fecha_hasta, c.monto_inicial, c.monto_actual, c.cuota_mensual, c.estado_contrato, c.al_dia, c.fecha_rescision, c.interes_mora,
+                var sql = @"SELECT c.id_contrato, c.fecha_desde, c.fecha_hasta, c.cuota_mensual, c.estado_contrato, c.al_dia, c.fecha_rescision, c.cancelado_por,
                            i.nombre AS nombre_inquilino,
                            im.descripcion, im.direccion
                     FROM contratos c
@@ -29,15 +29,15 @@ namespace Inmobiliaria.Models
                             idContrato = reader.GetInt32("id_contrato"),
                             fechaDesde = reader.GetDateTime("fecha_desde"),
                             fechaHasta = reader.GetDateTime("fecha_hasta"),
-                            montoInicial = reader.GetDecimal("monto_inicial"),
-                            montoActual = reader.GetDecimal("monto_actual"),
                             cuotaMensual = reader.GetDecimal("cuota_mensual"),
                             estadoContrato = reader.GetString("estado_contrato"),
                             alDia = reader.GetBoolean("al_dia"),
                             fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
                             ? null
                             : reader.GetDateTime("fecha_rescision"),
-                            interesMora = reader.GetDecimal("interes_mora"),
+                            canceladoPor = reader.IsDBNull(reader.GetOrdinal("cancelado_por"))
+                            ? null
+                            : reader.GetString("cancelado_por"),
                             nombreInquilino = reader.GetString("nombre_inquilino"),
                             descripcionInmueble = reader.GetString("descripcion"),
                             direccionInmueble = reader.GetString("direccion")
@@ -62,20 +62,18 @@ namespace Inmobiliaria.Models
             {
                 conn.Open();
                 var sql = @"INSERT INTO contratos
-                           (id_inquilino, id_inmueble, monto_inicial, monto_actual, cuota_mensual, estado_contrato, al_dia, fecha_rescision, interes_mora, fecha_desde, fecha_hasta) 
-                           VALUES (@idInquilino, @idInmueble, @montoInicial, @montoActual, @cuotaMensual, @estadoContrato, @alDia, @fechaRescision, @interesMora, @fechaDesde, @fechaHasta);
+                           (id_inquilino, id_inmueble, cuota_mensual, estado_contrato, al_dia, fecha_rescision, cancelado_por, fecha_desde, fecha_hasta) 
+                           VALUES (@idInquilino, @idInmueble, @cuotaMensual, @estadoContrato, @alDia, @fechaRescision, @canceladoPor, @fechaDesde, @fechaHasta);
                            SELECT LAST_INSERT_ID();";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@idInquilino", c.idInquilino);
                     cmd.Parameters.AddWithValue("@idInmueble", c.idInmueble);
-                    cmd.Parameters.AddWithValue("@montoInicial", c.montoInicial);
-                    cmd.Parameters.AddWithValue("@montoActual", c.montoActual);
                     cmd.Parameters.AddWithValue("@cuotaMensual", c.cuotaMensual);
                     cmd.Parameters.AddWithValue("@estadoContrato", c.estadoContrato);
                     cmd.Parameters.AddWithValue("@alDia", c.alDia);
                     cmd.Parameters.AddWithValue("@fechaRescision", c.fechaRescision);
-                    cmd.Parameters.AddWithValue("@interesMora", c.interesMora);
+                    cmd.Parameters.AddWithValue("@canceladoPor", c.canceladoPor);
                     cmd.Parameters.AddWithValue("@fechaDesde", c.fechaDesde);
                     cmd.Parameters.AddWithValue("@fechaHasta", c.fechaHasta);
                     res = Convert.ToInt32(cmd.ExecuteScalar());
@@ -104,15 +102,13 @@ namespace Inmobiliaria.Models
                             idContrato = reader.GetInt32("id_contrato"),
                             idInquilino = reader.GetInt32("id_inquilino"),
                             idInmueble = reader.GetInt32("id_inmueble"),
-                            montoInicial = reader.GetDecimal("monto_inicial"),
-                            montoActual = reader.GetDecimal("monto_actual"),
                             cuotaMensual = reader.GetDecimal("cuota_mensual"),
                             estadoContrato = reader.GetString("estado_contrato"),
                             alDia = reader.GetBoolean("al_dia"),
                             fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
                             ? null
                             : reader.GetDateTime("fecha_rescision"),
-                            interesMora = reader.GetDecimal("interes_mora"),
+                            canceladoPor = reader.GetString("cancelado_por"),
                             fechaDesde = reader.GetDateTime("fecha_desde"),
                             fechaHasta = reader.GetDateTime("fecha_hasta")
                         };
@@ -131,13 +127,11 @@ namespace Inmobiliaria.Models
                 var sql = @"UPDATE contratos SET 
                            id_inquilino=@idInquilino, 
                            id_inmueble=@idInmueble, 
-                           monto_inicial=@montoInicial, 
-                           monto_actual=@montoActual, 
                            cuota_mensual=@cuotaMensual, 
                            estado_contrato=@estadoContrato, 
                            al_dia=@alDia, 
                            fecha_rescision=@fechaRescision, 
-                           interes_mora=@interesMora, 
+                           cancelado_por=@canceladoPor, 
                            fecha_desde=@fechaDesde, 
                            fecha_hasta=@fechaHasta
                            WHERE id_contrato=@id";
@@ -145,13 +139,11 @@ namespace Inmobiliaria.Models
                 {
                     cmd.Parameters.AddWithValue("@idInquilino", c.idInquilino);
                     cmd.Parameters.AddWithValue("@idInmueble", c.idInmueble);
-                    cmd.Parameters.AddWithValue("@montoInicial", c.montoInicial);
-                    cmd.Parameters.AddWithValue("@montoActual", c.montoActual);
                     cmd.Parameters.AddWithValue("@cuotaMensual", c.cuotaMensual);
                     cmd.Parameters.AddWithValue("@estadoContrato", c.estadoContrato);
                     cmd.Parameters.AddWithValue("@alDia", c.alDia);
                     cmd.Parameters.AddWithValue("@fechaRescision", c.fechaRescision);
-                    cmd.Parameters.AddWithValue("@interesMora", c.interesMora);
+                    cmd.Parameters.AddWithValue("@canceladoPor", c.canceladoPor);
                     cmd.Parameters.AddWithValue("@fechaDesde", c.fechaDesde);
                     cmd.Parameters.AddWithValue("@fechaHasta", c.fechaHasta);
                     cmd.Parameters.AddWithValue("@id", c.idContrato);

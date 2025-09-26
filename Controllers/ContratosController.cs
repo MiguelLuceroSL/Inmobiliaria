@@ -43,7 +43,7 @@ namespace Inmobiliaria.Controllers
                     c.estadoContrato = "Activo";
                     c.alDia = true;
                     c.fechaRescision = null;
-                    c.interesMora = 0;
+                    c.canceladoPor = "";
 
                     repo.Alta(c);
                     TempData["SuccessMessage"] = "Contrato creado correctamente.";
@@ -124,16 +124,13 @@ namespace Inmobiliaria.Controllers
             var service = new ContratoService();
 
             var mesesContrato = service.CalcularMesesContrato(contrato);
-            var cuota = service.CalcularMontoMensual(contrato);
             var pagosEsperados = service.CalcularPagosEsperados(contrato);
-            var deuda = service.CalcularDeuda(contrato, pagosRealizados);
 
 
 
             ViewBag.MesesContrato = mesesContrato;
-            ViewBag.CuotaMensual = cuota;
+            ViewBag.CuotaMensual = contrato.cuotaMensual;
             ViewBag.PagosEsperados = pagosEsperados;
-            ViewBag.Deuda = deuda;
             ViewBag.NombreInquilino = $"{inquilino.nombre} {inquilino.apellido}";
             ViewBag.DireccionInmueble = inmueble.direccion;
 

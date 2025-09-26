@@ -9,13 +9,6 @@ public class ContratoService
              + contrato.fechaHasta.Month - contrato.fechaDesde.Month;
     }
 
-    public decimal CalcularMontoMensual(Contrato contrato)
-    {
-        int meses = CalcularMesesContrato(contrato);
-        if (meses <= 0) return contrato.montoInicial; // contrato raro
-        return contrato.montoInicial / meses;
-    }
-
     public int CalcularMesesTranscurridos(Contrato contrato)
     {
         var hoy = DateTime.Today;
@@ -37,18 +30,4 @@ public class ContratoService
         return Math.Min(mesesTotales, mesesTranscurridos);
     }
 
-    public decimal CalcularDeuda(Contrato contrato, int pagosRealizados, decimal interesPorcentaje = 0.05m)
-{
-    decimal cuotaMensual = CalcularMontoMensual(contrato);
-    int pagosEsperados = CalcularPagosEsperados(contrato);
-
-    if (pagosRealizados >= pagosEsperados) return 0; // al día
-
-    int cuotasAtrasadas = pagosEsperados - pagosRealizados;
-
-    // interés = 5% de la cuota
-    decimal interes = cuotaMensual * interesPorcentaje;
-
-    return cuotasAtrasadas * (cuotaMensual + interes);
-}
 }
