@@ -70,13 +70,37 @@ namespace Inmobiliaria.Controllers
             return RedirectToAction("Login", "Usuarios");
         }
 
+        // [HttpGet]
+        // [Authorize]
+        // public IActionResult Index()
+        // {
+        //     var lista = repo.GetAll();
+        //     return View(lista);
+        // }
+
         [HttpGet]
         [Authorize]
         public IActionResult Index()
         {
-            var lista = repo.GetAll();
-            return View(lista);
+            var userId = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
+
+            if (User.IsInRole("Admin"))
+            {
+                var lista = repo.GetAll();
+                return View(lista);
+            }
+            else
+            {
+                var usuario = repo.ObtenerPorId(userId);
+                return View(new List<Usuario> { usuario });
+            }
         }
+
+
+
+
+
+
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -121,6 +145,41 @@ namespace Inmobiliaria.Controllers
             return View(u);
         }
 
+        // [HttpPost]
+        // [Authorize]
+        // [ValidateAntiForgeryToken]
+        // public IActionResult Edit(Usuario u)
+        // {
+        //     try
+        //     {
+        //         if (ModelState.IsValid)
+        //         {
+        //             // saco el id del usuario logueado desde los claims
+        //             var userId = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
+
+        //             // si no es admin y quiere editar a otro => no se lo permito
+        //             if (u.Id != userId && !User.IsInRole("Admin"))
+        //             {
+        //                 TempData["ErrorMessage"] = "No tenés permiso para editar este usuario.";
+        //                 return RedirectToAction("Index", "Usuarios");
+        //             }
+
+        //             repo.Editar(u);
+        //             TempData["SuccessMessage"] = "Usuario editado correctamente.";
+
+        //             return RedirectToAction("Index", "Usuarios");
+        //         }
+
+        //         return View(u);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         TempData["ErrorMessage"] = "Ocurrió un error al editar el usuario.";
+        //         Console.WriteLine("Error al editar el usuario:", ex);
+        //         return RedirectToAction("Index");
+        //     }
+        // }
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -130,19 +189,27 @@ namespace Inmobiliaria.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // saco el id del usuario logueado desde los claims
                     var userId = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
 
-                    // si no es admin y quiere editar a otro => no se lo permito
+                    // Obtener el usuario original desde la base de datos
+                    var original = repo.ObtenerPorId(u.Id);
+                    if (original == null) return NotFound();
+
+                    // Si no es admin y quiere editar a otro => no se lo permito
                     if (u.Id != userId && !User.IsInRole("Admin"))
                     {
                         TempData["ErrorMessage"] = "No tenés permiso para editar este usuario.";
                         return RedirectToAction("Index", "Usuarios");
                     }
 
+                    // Si no es admin, mantener el rol original
+                    if (!User.IsInRole("Admin"))
+                    {
+                        u.Rol = original.Rol;
+                    }
+
                     repo.Editar(u);
                     TempData["SuccessMessage"] = "Usuario editado correctamente.";
-
                     return RedirectToAction("Index", "Usuarios");
                 }
 
@@ -155,6 +222,13 @@ namespace Inmobiliaria.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+
+
+
+
+
+
 
         [HttpGet]
         [Authorize(Roles = "Admin")]

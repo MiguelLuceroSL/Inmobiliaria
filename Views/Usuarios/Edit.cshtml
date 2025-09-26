@@ -47,17 +47,25 @@
         <input asp-for="Clave" type="password" class="form-control" />
         <span asp-validation-for="Clave" class="text-danger"></span>
     </div>
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="mb-3">
+            <label asp-for="Rol" class="form-label">Rol:</label>
+            <select asp-for="Rol" class="form-select">
+                <option value="">Seleccione un rol</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Empleado">Empleado</option>
+                @* <option value="Cliente">Cliente</option> *@
+            </select>
+            <span asp-validation-for="Rol" class="text-danger"></span>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" asp-for="Rol" />
+    }
 
-    <div class="mb-3">
-        <label asp-for="Rol" class="form-label">Rol:</label>
-        <select asp-for="Rol" class="form-select">
-            <option value="">Seleccione un rol</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Empleado">Empleado</option>
-            <option value="Cliente">Cliente</option>
-        </select>
-        <span asp-validation-for="Rol" class="text-danger"></span>
-    </div>
 
     <button type="submit" class="btn btn-primary">Guardar cambios</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
