@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class PagosController : Controller
     {
         private readonly PagoRepository repo;
@@ -14,6 +13,8 @@ namespace Inmobiliaria.Controllers
             this.repo = new PagoRepository();
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Index(int contratoId)
         {
             var lista = repo.GetByContrato(contratoId);
@@ -22,6 +23,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create(int contratoId)
         {
             var pago = new Pago { idContrato = contratoId, fechaPago = DateTime.Today };
@@ -29,6 +31,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(Pago p)
         {
             if (ModelState.IsValid)
@@ -39,6 +42,8 @@ namespace Inmobiliaria.Controllers
             return View(p);
         }
 
+        [HttpPost]
+        [Authorize]
         public IActionResult Anular(int idPago, int contratoId)
         {
             repo.Anular(idPago);

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class ContratosController : Controller
     {
         private readonly ContratoRepository repo;
@@ -14,6 +13,7 @@ namespace Inmobiliaria.Controllers
             this.repo = new ContratoRepository();
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var lista = this.repo.GetAllConDetalles();
@@ -21,6 +21,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             /*var inmuebles = new InmuebleRepository().GetAll();
@@ -31,6 +32,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(Contrato c)
         {
             try
@@ -61,6 +63,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var contrato = repo.ObtenerPorId(id);
@@ -77,6 +80,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(Contrato c)
         {
 
@@ -103,6 +107,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Detalles(int id)
         {
             var contrato = repo.ObtenerPorId(id);
@@ -136,6 +141,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var contrato = repo.ObtenerPorId(id);
@@ -147,6 +153,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(Contrato c)
         {
             try

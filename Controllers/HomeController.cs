@@ -20,7 +20,7 @@ public class HomeController : Controller
         return View();
     }
 
-    [Authorize(Roles = "Empleado")]
+    [Authorize]
     public IActionResult PanelUsuario()
     {
         return View();
@@ -34,6 +34,11 @@ public class HomeController : Controller
     //vista restringida, solo usuarios logueados pueden entrar
     [Authorize]
     public IActionResult Panel()
+    {
+        return View();
+    }
+
+    public IActionResult Restringido()
     {
         return View();
     }

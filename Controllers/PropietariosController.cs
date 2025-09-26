@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class PropietariosController : Controller
     {
         private readonly PropietarioRepository repo;
@@ -14,6 +13,8 @@ namespace Inmobiliaria.Controllers
             this.repo = new PropietarioRepository();
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Index()
         {
             var lista = this.repo.GetAll();
@@ -21,12 +22,14 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(Propietario p)
         {
             try
@@ -52,6 +55,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var p = repo.ObtenerPorId(id);
@@ -61,6 +65,7 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Propietario p)
         {
@@ -84,6 +89,7 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var p = repo.ObtenerPorId(id);
@@ -92,6 +98,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             repo.Borrar(id);

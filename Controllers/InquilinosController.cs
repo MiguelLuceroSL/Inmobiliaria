@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class InquilinosController : Controller
     {
         private InquilinoRepository repo = new InquilinoRepository();
@@ -14,6 +13,8 @@ namespace Inmobiliaria.Controllers
         //     var lista = repo.GetAll();
         //     return View(lista);
         // }
+        [HttpGet]
+        [Authorize]
         public IActionResult Index(int pagina = 1)
         {
 
@@ -32,12 +33,14 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Inquilino i)
         {
@@ -63,6 +66,7 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Buscar(string term, int offset = 0, int limit = 20)
         {
             var repo = new InquilinoRepository();
@@ -71,6 +75,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var i = repo.ObtenerPorId(id);
@@ -79,6 +84,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Inquilino i)
         {
@@ -101,6 +107,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var i = repo.ObtenerPorId(id);
@@ -109,6 +116,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             repo.Borrar(id);

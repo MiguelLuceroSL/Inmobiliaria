@@ -35,7 +35,8 @@ namespace Inmobiliaria.Controllers
                     {
                     new Claim(ClaimTypes.Name, usuario.Nombre + " " + usuario.Apellido),
                     new Claim(ClaimTypes.Email, usuario.Email),
-                    new Claim(ClaimTypes.Role, usuario.Rol)
+                    new Claim(ClaimTypes.Role, usuario.Rol),
+                    new Claim("UserId", usuario.Id.ToString())
                     };
 
                 // crea la identidad de claims usando autenticación por cookies
@@ -62,6 +63,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -83,6 +85,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(Usuario u)
         {
             try
@@ -109,6 +112,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var u = repo.ObtenerPorId(id);
@@ -117,6 +121,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Usuario u)
         {
@@ -124,10 +129,26 @@ namespace Inmobiliaria.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // saco el id del usuario logueado desde los claims
+                    var userId = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
+
+                    // si no es admin y quiere editar a otro => no se lo permito
+                    if (u.Id != userId && !User.IsInRole("Admin"))
+                    {
+                        TempData["ErrorMessage"] = "No tenés permiso para editar este usuario.";
+                        return RedirectToAction("Index", "Home");
+                    }
+
                     repo.Editar(u);
                     TempData["SuccessMessage"] = "Usuario editado correctamente.";
-                    return RedirectToAction("Index", "Usuarios");
+
+                    // si el admin editó a otro, vuelve al listado, si es empleado vuelve a su perfil
+                    if (User.IsInRole("Admin"))
+                        return RedirectToAction("Index", "Usuarios");
+                    else
+                        return RedirectToAction("Details", new { id = userId });
                 }
+
                 return View(u);
             }
             catch (Exception ex)
@@ -139,6 +160,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var u = repo.ObtenerPorId(id);
@@ -147,6 +169,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             repo.Borrar(id);

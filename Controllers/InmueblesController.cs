@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Inmobiliaria.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class InmueblesController : Controller
     {
         private InmuebleRepository repo = new InmuebleRepository();
         private PropietarioRepository repoPropietarios = new PropietarioRepository();
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Index(int pagina = 1)
         {
 
@@ -31,12 +32,14 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(Inmueble i)
         {
             if (ModelState.IsValid)
@@ -49,6 +52,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Details(int id)
         {
             var inmueble = repo.ObtenerPorId(id);
@@ -69,6 +73,7 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var i = repo.ObtenerPorId(id);
@@ -77,6 +82,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(Inmueble i)
         {
 
@@ -101,6 +107,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult BuscarPropietarios(string filtro, int offset = 0, int limit = 10)
         {
             var lista = repoPropietarios.Buscar(filtro, offset, limit);
@@ -108,6 +115,7 @@ namespace Inmobiliaria.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var i = repo.ObtenerPorId(id);
@@ -119,6 +127,7 @@ namespace Inmobiliaria.Controllers
 
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             repo.Borrar(id);
