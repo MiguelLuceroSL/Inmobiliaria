@@ -1,4 +1,4 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Home";
 }
 
@@ -50,5 +50,93 @@
 
     <div class="mt-5">
         <a asp-controller="Usuarios" asp-action="Login" class="btn btn-primary">Iniciar Sesión</a>
+    </div>
+</div> *@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    .card-hover {
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .card-hover:hover {
+        transform: scale(1.05);
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .icon-large {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Bienvenido a Inmobiliaria</h2>
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-3 mb-4">
+            <a href="/Propietarios" class="card-link">
+                <div class="card shadow-sm card-hover">
+                    <div class="card-body">
+                        <i class="bi bi-person-badge icon-large"></i>
+                        <h5 class="card-title">Propietarios</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <a href="/Inquilinos" class="card-link">
+                <div class="card shadow-sm card-hover">
+                    <div class="card-body">
+                        <i class="bi bi-people icon-large"></i>
+                        <h5 class="card-title">Inquilinos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <a href="/Inmuebles" class="card-link">
+                <div class="card shadow-sm card-hover">
+                    <div class="card-body">
+                        <i class="bi bi-house-door icon-large"></i>
+                        <h5 class="card-title">Inmuebles</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <a href="/Contratos" class="card-link">
+                <div class="card shadow-sm card-hover">
+                    <div class="card-body">
+                        <i class="bi bi-file-earmark-text icon-large"></i>
+                        <h5 class="card-title">Contratos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <a asp-controller="Usuarios" asp-action="Login" class="btn btn-lg btn-primary">Iniciar Sesión</a>
     </div>
 </div>
