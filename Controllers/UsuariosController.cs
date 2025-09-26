@@ -223,11 +223,14 @@ namespace Inmobiliaria.Controllers
             }
         }
 
-
-
-
-
-
+        [HttpGet]
+        [Authorize]
+        public IActionResult Detail(int id)
+        {
+            var u = repo.ObtenerPorId(id);
+            if (u == null) return NotFound();
+            return View(u);
+        }
 
 
         [HttpGet]

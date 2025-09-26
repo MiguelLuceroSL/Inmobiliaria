@@ -10,44 +10,58 @@
     }
 </style>
 
-<h2 class="mb-4">Editar Usuario</h2>
-
+@if (User.IsInRole("Admin")){
+    <h2 class="mb-4">Editar Usuario</h2>
+} else {
+    <h2 class="mb-4">Editar Mi Perfil</h2>
+}
 <form asp-action="Edit" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
 
-    <div class="mb-3">
-        <label asp-for="Nombre" class="form-label">Nombre:</label>
-        <input asp-for="Nombre" class="form-control" />
-        <span asp-validation-for="Nombre" class="text-danger"></span>
-    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label">Nombre:</label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Apellido" class="form-label">Apellido:</label>
-        <input asp-for="Apellido" class="form-control" />
-        <span asp-validation-for="Apellido" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Apellido" class="form-label">Apellido:</label>
+            <input asp-for="Apellido" class="form-control" />
+            <span asp-validation-for="Apellido" class="text-danger"></span>
+        </div>
+    }
+
+
 
     <div class="mb-3">
         <label class="form-label">Avatar:</label>
         <input type="file" name="AvatarArchivo" class="form-control" />
         @if (!string.IsNullOrEmpty(Model.Avatar))
         {
-            <img src="@Url.Content(Model.Avatar)" alt="Avatar actual" class="img-thumbnail mt-2" style="max-height: 150px;" />
+            <img src="@Url.Content(Model.Avatar)" alt="Avatar actual" class="img-thumbnail mt-2"
+                style="max-height: 150px;" />
         }
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">Email:</label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email:</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    }
+
+
 
     <div class="mb-3">
         <label asp-for="Clave" class="form-label">Clave:</label>
         <input asp-for="Clave" type="password" class="form-control" />
         <span asp-validation-for="Clave" class="text-danger"></span>
     </div>
-    
+
     @if (User.IsInRole("Admin"))
     {
         <div class="mb-3">

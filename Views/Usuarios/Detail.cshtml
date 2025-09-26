@@ -1,0 +1,29 @@
+@model Inmobiliaria.Models.Usuario
+
+@{
+    ViewData["Title"] = "Detalle de Usuario";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow" style="width: 24rem;">
+        <div class="card-header text-center">
+            <h4>@Model.Nombre @Model.Apellido</h4>
+        </div>
+        <div class="card-body text-center">
+            <img src="@(string.IsNullOrEmpty(Model.Avatar) ? Url.Content("~/images/AvatarDefault.png") : Model.Avatar)" alt="Avatar" class="rounded-circle mb-3" style="width:200px; height:200px; object-fit:cover;" />
+        </div>
+        <div class="card-body">
+            <p class="card-text mb-1"><strong>Legajo:</strong> @Model.Id</p>
+            <p class="card-text mb-1"><strong>Email:</strong> @Model.Email</p>
+            <p class="card-text mb-1"><strong>Rol:</strong> @Model.Rol</p>
+        </div>
+        <div class="card-footer d-flex justify-content-center gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-sm" title="Editar">
+                <i class="bi bi-pencil-square"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn btn-secondary btn-sm" title="Volver">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+</div>

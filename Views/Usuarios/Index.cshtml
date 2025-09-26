@@ -20,20 +20,29 @@
         @TempData["ErrorMessage"]
     </div>
 }
+<div class="d-flex justify-content-between align-items-center mb-3">
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <h1>Usuarios</h1>
+            <div class="btn-group pull-right">
+                <a class="btn btn-primary" asp-action="Create" title="Crear">
+                    <i class="bi bi-person-plus-fill"></i> Nuevo
+                </a>
+            </div>
+        }
+        else if (User.IsInRole("Empleado"))
+        {
+            <h1>Mi Perfil</h1>
+        }
+    }
 
-<h1>
-    Usuarios
-    <div class="btn-group pull-right">
-        <a class="btn btn-primary" asp-action="Create" title="Crear">
-            <i class="bi bi-person-plus-fill"></i> Nuevo
-        </a>
-    </div>
-</h1>
-
+</div>
 <table class="table table-bordered table-striped">
     <thead>
-        <tr>
-            <th>ID</th>
+        <tr class="table-dark text-center">
+            <th>Legajo</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Avatar</th>
@@ -45,17 +54,17 @@
     <tbody>
         @foreach (var u in Model)
         {
-            <tr>
+            <tr class="text-center align-middle">
                 <td>@u.Id</td>
                 <td>@u.Nombre</td>
                 <td>@u.Apellido</td>
                 <td>
-                    <img src="@u.Avatar" alt="Avatar" class="img-thumbnail" style="width:50px; height:50px;" />
+                    <img src="@(string.IsNullOrEmpty(u.Avatar) ? Url.Content("~/images/AvatarDefault.png") : u.Avatar)" alt="Avatar" class="rounded-circle" style="width:30px; height:30px; object-fit:cover;" />
                 </td>
                 <td>@u.Email</td>
                 <td>@u.Rol</td>
                 <td>
-                    <div class="d-flex flex-wrap gap-2">
+                    <div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
                         <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-warning btn-sm" title="Editar">
                             <i class="bi bi-pencil-square"></i>
                         </a>
@@ -68,5 +77,3 @@
         }
     </tbody>
 </table>
-
-
