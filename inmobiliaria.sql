@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 27, 2025 at 03:43 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-09-2025 a las 04:07:05
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `inmobiliaria`
+-- Base de datos: `inmobiliaria`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contratos`
+-- Estructura de tabla para la tabla `contratos`
 --
 
 CREATE TABLE `contratos` (
@@ -40,18 +40,18 @@ CREATE TABLE `contratos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `contratos`
+-- Volcado de datos para la tabla `contratos`
 --
 
 INSERT INTO `contratos` (`id_contrato`, `id_inquilino`, `id_inmueble`, `fecha_desde`, `fecha_hasta`, `cuota_mensual`, `estado_contrato`, `fecha_rescision`, `cancelado_por`) VALUES
 (1, 1, 1, '2025-09-13', '2025-12-17', 70.00, 'Cancelado', '2025-09-26', 'Admin Principal'),
-(3, 2, 15, '2025-09-12', '2026-04-30', 205.00, NULL, NULL, NULL),
+(3, 2, 15, '2025-09-12', '2026-04-30', 205.00, 'Vigente', NULL, NULL),
 (4, 64, 35, '2025-07-30', '2026-01-30', 80.00, 'Vigente', NULL, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inmuebles`
+-- Estructura de tabla para la tabla `inmuebles`
 --
 
 CREATE TABLE `inmuebles` (
@@ -68,7 +68,7 @@ CREATE TABLE `inmuebles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `inmuebles`
+-- Volcado de datos para la tabla `inmuebles`
 --
 
 INSERT INTO `inmuebles` (`id_inmueble`, `direccion`, `tipo`, `superficie`, `ambientes`, `baños`, `cochera`, `estado`, `descripcion`, `id_propietario`) VALUES
@@ -236,7 +236,7 @@ INSERT INTO `inmuebles` (`id_inmueble`, `direccion`, `tipo`, `superficie`, `ambi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inquilinos`
+-- Estructura de tabla para la tabla `inquilinos`
 --
 
 CREATE TABLE `inquilinos` (
@@ -250,7 +250,7 @@ CREATE TABLE `inquilinos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `inquilinos`
+-- Volcado de datos para la tabla `inquilinos`
 --
 
 INSERT INTO `inquilinos` (`id_inquilino`, `dni_inquilino`, `apellido`, `nombre`, `telefono`, `email`, `domicilio_personal`) VALUES
@@ -363,7 +363,7 @@ INSERT INTO `inquilinos` (`id_inquilino`, `dni_inquilino`, `apellido`, `nombre`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pagos`
+-- Estructura de tabla para la tabla `pagos`
 --
 
 CREATE TABLE `pagos` (
@@ -378,7 +378,7 @@ CREATE TABLE `pagos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pagos`
+-- Volcado de datos para la tabla `pagos`
 --
 
 INSERT INTO `pagos` (`id_pago`, `id_contrato`, `numero_pago`, `fecha_pago`, `importe`, `detalle`, `anulado`, `anulado_por`) VALUES
@@ -387,7 +387,7 @@ INSERT INTO `pagos` (`id_pago`, `id_contrato`, `numero_pago`, `fecha_pago`, `imp
 -- --------------------------------------------------------
 
 --
--- Table structure for table `propietarios`
+-- Estructura de tabla para la tabla `propietarios`
 --
 
 CREATE TABLE `propietarios` (
@@ -401,7 +401,7 @@ CREATE TABLE `propietarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `propietarios`
+-- Volcado de datos para la tabla `propietarios`
 --
 
 INSERT INTO `propietarios` (`id_propietario`, `dni_propietario`, `apellido`, `nombre`, `telefono`, `email`, `domicilio_personal`) VALUES
@@ -414,7 +414,7 @@ INSERT INTO `propietarios` (`id_propietario`, `dni_propietario`, `apellido`, `no
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -428,7 +428,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `usuarios`
+-- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `avatar`, `email`, `clave`, `rol`) VALUES
@@ -437,11 +437,11 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `avatar`, `email`, `clave`, 
 (3, 'Roque', 'Fernandez', '', 'rfernandez08@gmail.com', '$2a$11$66G38R20W2AOAHkF7k7lieiWG2hg2XNCT/fYbEFOUolzRGBB4Dvm6', 'Empleado');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `contratos`
+-- Indices de la tabla `contratos`
 --
 ALTER TABLE `contratos`
   ADD PRIMARY KEY (`id_contrato`),
@@ -449,97 +449,97 @@ ALTER TABLE `contratos`
   ADD KEY `contratos_ibfk_2` (`id_inmueble`);
 
 --
--- Indexes for table `inmuebles`
+-- Indices de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
   ADD PRIMARY KEY (`id_inmueble`),
   ADD KEY `id_propietario` (`id_propietario`);
 
 --
--- Indexes for table `inquilinos`
+-- Indices de la tabla `inquilinos`
 --
 ALTER TABLE `inquilinos`
   ADD PRIMARY KEY (`id_inquilino`);
 
 --
--- Indexes for table `pagos`
+-- Indices de la tabla `pagos`
 --
 ALTER TABLE `pagos`
   ADD PRIMARY KEY (`id_pago`),
   ADD KEY `id_contrato` (`id_contrato`);
 
 --
--- Indexes for table `propietarios`
+-- Indices de la tabla `propietarios`
 --
 ALTER TABLE `propietarios`
   ADD PRIMARY KEY (`id_propietario`);
 
 --
--- Indexes for table `usuarios`
+-- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `contratos`
+-- AUTO_INCREMENT de la tabla `contratos`
 --
 ALTER TABLE `contratos`
   MODIFY `id_contrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `inmuebles`
+-- AUTO_INCREMENT de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
   MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
--- AUTO_INCREMENT for table `inquilinos`
+-- AUTO_INCREMENT de la tabla `inquilinos`
 --
 ALTER TABLE `inquilinos`
   MODIFY `id_inquilino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
--- AUTO_INCREMENT for table `pagos`
+-- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
   MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `propietarios`
+-- AUTO_INCREMENT de la tabla `propietarios`
 --
 ALTER TABLE `propietarios`
   MODIFY `id_propietario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `usuarios`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `contratos`
+-- Filtros para la tabla `contratos`
 --
 ALTER TABLE `contratos`
   ADD CONSTRAINT `contratos_ibfk_1` FOREIGN KEY (`id_inquilino`) REFERENCES `inquilinos` (`id_inquilino`),
   ADD CONSTRAINT `contratos_ibfk_2` FOREIGN KEY (`id_inmueble`) REFERENCES `inmuebles` (`id_inmueble`);
 
 --
--- Constraints for table `inmuebles`
+-- Filtros para la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
   ADD CONSTRAINT `inmuebles_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id_propietario`);
 
 --
--- Constraints for table `pagos`
+-- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
   ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`id_contrato`) REFERENCES `contratos` (`id_contrato`);
