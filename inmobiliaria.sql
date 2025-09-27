@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2025 at 09:50 PM
+-- Generation Time: Sep 27, 2025 at 03:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,7 +35,6 @@ CREATE TABLE `contratos` (
   `fecha_hasta` date NOT NULL,
   `cuota_mensual` decimal(10,2) NOT NULL,
   `estado_contrato` enum('Vigente','Finalizado','Cancelado','') DEFAULT 'Vigente',
-  `al_dia` tinyint(1) DEFAULT 1,
   `fecha_rescision` date DEFAULT NULL,
   `cancelado_por` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -44,9 +43,10 @@ CREATE TABLE `contratos` (
 -- Dumping data for table `contratos`
 --
 
-INSERT INTO `contratos` (`id_contrato`, `id_inquilino`, `id_inmueble`, `fecha_desde`, `fecha_hasta`, `cuota_mensual`, `estado_contrato`, `al_dia`, `fecha_rescision`, `cancelado_por`) VALUES
-(1, 1, 1, '2025-09-13', '2025-12-17', 70.00, 'Cancelado', 1, '2025-09-26', 'Admin Principal'),
-(3, 2, 15, '2025-09-12', '2026-04-30', 95.00, 'Vigente', 1, NULL, NULL);
+INSERT INTO `contratos` (`id_contrato`, `id_inquilino`, `id_inmueble`, `fecha_desde`, `fecha_hasta`, `cuota_mensual`, `estado_contrato`, `fecha_rescision`, `cancelado_por`) VALUES
+(1, 1, 1, '2025-09-13', '2025-12-17', 70.00, 'Cancelado', '2025-09-26', 'Admin Principal'),
+(3, 2, 15, '2025-09-12', '2026-04-30', 205.00, NULL, NULL, NULL),
+(4, 64, 35, '2025-07-30', '2026-01-30', 80.00, 'Vigente', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -489,7 +489,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `contratos`
 --
 ALTER TABLE `contratos`
-  MODIFY `id_contrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_contrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inmuebles`
