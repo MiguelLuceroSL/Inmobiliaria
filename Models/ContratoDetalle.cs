@@ -11,8 +11,8 @@ namespace Inmobiliaria.Models
         public DateTime? fechaRescision { get; set; }
         public string? canceladoPor { get; set; }
 
-        public string nombreInquilino { get; set; }
-        public string descripcionInmueble { get; set; }
+        public string? nombreInquilino { get; set; }
+        public string? descripcionInmueble { get; set; }
         public string direccionInmueble { get; set; }
     }
 }

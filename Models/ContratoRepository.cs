@@ -32,8 +32,12 @@ namespace Inmobiliaria.Models
                                 fechaDesde = reader.GetDateTime("fecha_desde"),
                                 fechaHasta = reader.GetDateTime("fecha_hasta"),
                                 cuotaMensual = reader.GetDecimal("cuota_mensual"),
-                                estadoContrato = reader.GetString("estado_contrato"),
-                                alDia = reader.GetBoolean("al_dia"),
+                                estadoContrato = reader.IsDBNull(reader.GetOrdinal("estado_contrato"))
+                                    ? string.Empty
+                                    : reader.GetString("estado_contrato"),
+                                alDia = reader.IsDBNull(reader.GetOrdinal("al_dia"))
+                                    ? (bool?)null
+                                    : reader.GetBoolean("al_dia"),
                                 fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
                                     ? null
                                     : reader.GetDateTime("fecha_rescision"),
@@ -135,8 +139,12 @@ namespace Inmobiliaria.Models
                             idInquilino = reader.GetInt32("id_inquilino"),
                             idInmueble = reader.GetInt32("id_inmueble"),
                             cuotaMensual = reader.GetDecimal("cuota_mensual"),
-                            estadoContrato = reader.GetString("estado_contrato"),
-                            alDia = reader.GetBoolean("al_dia"),
+                            estadoContrato = reader.IsDBNull(reader.GetOrdinal("estado_contrato"))
+                                ? string.Empty
+                                : reader.GetString("estado_contrato"),
+                            alDia = reader.IsDBNull(reader.GetOrdinal("al_dia"))
+                                ? (bool?)null
+                                : reader.GetBoolean("al_dia"),
                             fechaRescision = reader.IsDBNull(reader.GetOrdinal("fecha_rescision"))
                             ? null
                             : reader.GetDateTime("fecha_rescision"),

@@ -6,13 +6,13 @@
     <div class="mb-3">
         <label for="buscarInquilino">Buscar Inquilino</label>
         <input type="text" id="buscarInquilino" placeholder="Apellido, nombre o DNI..." />
-        <select id="listaInquilinos" name="InquilinoId"></select>
+        <select id="listaInquilinos" name="idInquilino"></select>
         <button id="btnMasInq" type="button" style="display:none;">Traer 20 más</button>
     </div>
     <div class="mb-3">
         <label for="buscarInmueble">Buscar Inmueble</label>
         <input type="text" id="buscarInmueble" placeholder="Dirección o tipo..." />
-        <select id="listaInmuebles" name="InmuebleId"></select>
+        <select id="listaInmuebles" name="idInmueble"></select>
         <button id="btnMasInm" type="button" style="display:none;">Traer 20 más</button>
     </div>
     <div class="mb-3">
@@ -54,7 +54,7 @@
                 cargarResultados(false);
             });
 
-            @* function cargarResultados(limpiar) {
+            function cargarResultados(limpiar) {
                 fetch(`${url}?term=${encodeURIComponent(terminoActual)}&offset=${offset}`)
                     .then(response => response.json())
                     .then(data => {
@@ -75,33 +75,7 @@
 
                         document.getElementById(btnMasId).style.display = data.length === 20 ? "inline-block" : "none";
                     });
-            } *@
-            function cargarResultados(limpiar) {
-             fetch(`${url}?term=${encodeURIComponent(terminoActual)}&offset=${offset}`)
-                .then(response => response.json())
-                .then(data => {
-                    let select = document.getElementById(selectId);
-                    if (limpiar) select.innerHTML = "";
-
-                    data.forEach(item => {
-                        let option = document.createElement("option");
-                        option.value = item.idInmueble ?? item.idInquilino;
-                        option.textContent = item.apellido
-                            ? `${item.apellido}, ${item.nombre} - ${item.dniInquilino}`
-                            : `${item.direccion} (${item.tipo})`;
-                        select.appendChild(option);
-                    });
-
-                    // Selecciona automáticamente la primera opción si hay resultados
-                    if (data.length > 0) {
-                        select.selectedIndex = 0;
-                    }
-
-                    document.getElementById(btnMasId).style.display = data.length === 20 ? "inline-block" : "none";
-                });
-        }
-
-
+            }
         }
 
         setupBusqueda("buscarInquilino", "listaInquilinos", "btnMasInq", "/Inquilinos/Buscar");
