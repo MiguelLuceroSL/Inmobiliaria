@@ -11,7 +11,6 @@ namespace Inmobiliaria.Models
         public DateTime fechaHasta { get; set; }
         public decimal cuotaMensual { get; set; }
         public string? estadoContrato { get; set; }
-        public Boolean? alDia { get; set; }
         public DateTime? fechaRescision { get; set; }
         public string? canceladoPor { get; set; }
     }

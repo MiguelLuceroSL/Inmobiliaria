@@ -78,7 +78,6 @@ namespace Inmobiliaria.Controllers
                     }
 
                     c.estadoContrato = "Vigente";
-                    c.alDia = true;
                     c.fechaRescision = null;
                     c.canceladoPor = "";
 
